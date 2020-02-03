@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
 
 namespace FYP_ETL.Base
 {
     abstract class Database
     {
-        public String username;
-        public String password;
-        public String serverName;
-        public String databaseName;
-        public List<Table> tables;
+        private string username { get; set; }
+        private string password { get; set; }
+        private string serverName { get; set; }
+        private string databaseName { get; set; }
+        private List<Table> tables { get; set; }
 
+        abstract public List<Table> GetTablesNames();
         abstract public bool Connect();
-        abstract public List<Table> getTablesNames();
-        
-        
-
-
-
     }
 }

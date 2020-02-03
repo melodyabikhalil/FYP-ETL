@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
+﻿using System.Collections.Generic;
 
 namespace FYP_ETL.Base
 {
     abstract class Table
     {
-        public string tableName;
-        public int numberOfFields;
-        public List<Field> fields;
-        abstract public List<Field> getFields();
-        abstract public List<Field> Select(int initialRow, int endRow);
-        abstract public bool Insert(List<Field> fields);
+        private string tableName { get; set; }
+        private int numberOfFields { get; set; }
+        private List<Field> fields { get; set; }
+
+        abstract public void GetFieldsNames();
+        abstract public void Select(int initialRow, int endRow);
+        abstract public bool Insert();
+        abstract public bool Update();
+        abstract public bool Delete();
     }
 }
