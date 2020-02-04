@@ -74,10 +74,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\AccessDatabase.cs" />
     <Compile Include="Base\Database.cs" />
     <Compile Include="Base\Field.cs" />
     <Compile Include="Base\MySQLDatabase.cs" />
     <Compile Include="Base\PostgreSQLDatabase.cs" />
+    <Compile Include="Base\SQLServerDatabase.cs" />
     <Compile Include="Base\Table.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
