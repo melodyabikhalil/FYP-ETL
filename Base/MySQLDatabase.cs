@@ -13,7 +13,12 @@ namespace FYP_ETL.Base
 
         public override bool Connect()
         {
-            string connectionString = @"server=" + this.serverName + ";userid=" + this.username + ";password=" + this.password + ";database=" + this.databaseName + ";";
+            string connectionString = String.Format(
+                "server={0};" + 
+                "userid={1};" +
+                "password={2};" + 
+                "database={3};",
+                this.serverName, this.username, this.password, this.databaseName);
             MySqlConnection connection = new MySqlConnection(connectionString);
             
             try
@@ -22,7 +27,7 @@ namespace FYP_ETL.Base
                 this.connection = connection;
                 return true;
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;
@@ -35,7 +40,7 @@ namespace FYP_ETL.Base
                 connection.Close();
                 return true;
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;
@@ -57,7 +62,7 @@ namespace FYP_ETL.Base
                 }
                 return tablesNames;
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return tablesNames;
