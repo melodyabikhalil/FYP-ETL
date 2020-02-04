@@ -31,7 +31,7 @@ namespace FYP_ETL.Base
                 this.connection = connection;
                 return true;
             }
-            catch (NpgsqlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;
@@ -65,7 +65,7 @@ namespace FYP_ETL.Base
                 }
                 return tablesNames;
             }
-            catch (NpgsqlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return tablesNames;
