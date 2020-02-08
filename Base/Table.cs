@@ -8,6 +8,7 @@ namespace FYP_ETL.Base
     {
         public string tableName { get; set; }
         public int numberOfFields { get; set; }
+        public string primaryKeyName { get; set; }
         public List<Field> fields { get; set; }
         public DataTable dataTable { get; set; }
 
