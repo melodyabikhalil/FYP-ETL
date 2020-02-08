@@ -30,6 +30,17 @@ namespace FYP_ETL.Base
             return -1;
         }
 
+        public void CreateTables(List<string> tablesNames)
+        {
+            Table table;
+            for (int i = 0; i < tablesNames.Count; ++i)
+            {
+                table = new Table();
+                table.tableName = tablesNames[i];
+                this.tables.Add(table);
+            }
+        }
+
         abstract public List<string> GetTablesNames();
         abstract public bool Connect();
         abstract public bool Close();
