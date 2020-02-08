@@ -17,7 +17,14 @@ namespace FYP_ETL.Base
             this.type = type;
             this.canBeNull = canBeNull;
             this.isPrimaryKey = isPrimaryKey;
-            this.length = -1;
+            if (length == null)
+            {
+                this.length = -1;
+            }
+            else
+            {
+                this.length = (int) length;
+            }
         }
         public override string ToString()
         {
