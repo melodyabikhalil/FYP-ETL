@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 
 namespace FYP_ETL.Base
 {
@@ -42,8 +43,12 @@ namespace FYP_ETL.Base
         }
 
         abstract public List<string> GetTablesNames();
-        abstract public List<Field> GetFieldsWithDetails(string tableName); //get columns details (type, can be null, ...) from database and create the Field instances and return the list
+        abstract public void GetFieldsWithDetails(string tableName);
         abstract public bool Connect();
         abstract public bool Close();
+        abstract public void insert(string tableName);
+        abstract public void selectAll(string tableName);
+        abstract public void update(DataTable dataTable);
+        abstract public void delete(DataTable dataTable);
     }
 }
