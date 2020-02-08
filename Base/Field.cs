@@ -11,13 +11,13 @@ namespace FYP_ETL.Base
         public bool canBeNull { get; set; }
         public bool isPrimaryKey { get; set; }
 
-        public Field(string fieldName, string type, int length, bool canBeNull, bool isPrimaryKey = false)
+        public Field(string fieldName, string type, Nullable<int> length, bool canBeNull, bool isPrimaryKey = false)
         {
             this.fieldName = fieldName;
             this.type = type;
-            this.length = length;
             this.canBeNull = canBeNull;
             this.isPrimaryKey = isPrimaryKey;
+            this.length = -1;
         }
         public override string ToString()
         {
