@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace FYP_ETL.Base
 {
     class Field
@@ -16,6 +18,10 @@ namespace FYP_ETL.Base
             this.length = length;
             this.canBeNull = canBeNull;
             this.isPrimaryKey = isPrimaryKey;
+        }
+        public override string ToString()
+        {
+            return String.Format("Name:{0}, Type:{1}, Length:{2}, Can be null:{3}, Is primary key:{4}", this.fieldName, this.type, this.length, this.canBeNull, this.isPrimaryKey);
         }
     }
 }
