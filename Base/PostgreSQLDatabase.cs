@@ -220,6 +220,7 @@ namespace FYP_ETL.Base
                 return;
             }
             string primaryKeyName = this.GetPrimaryKeyName(tableName);
+            table.primaryKeyName = primaryKeyName;
             foreach (Field field in table.fields)
             {
                 if (field.fieldName == primaryKeyName)
