@@ -143,7 +143,7 @@ namespace FYP_ETL.Base
             {
                 return false;
             }
-            string query = "SELECT column_name,data_type,character_maximum_length,is_nullable FROM information_schema.columns where table_name = " + tableName + ";";
+            string query = "SELECT column_name,data_type,character_maximum_length,is_nullable FROM information_schema.columns where table_name = '" + tableName + "';";
             NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
 
             try
@@ -173,7 +173,7 @@ namespace FYP_ETL.Base
             {
                 string fieldName = dataRow.Field<string>("column_name");
                 string type = dataRow.Field<string>("data_type");
-                int length = dataRow.Field<int>("character_maximum_length");
+                Nullable<int> length = dataRow.Field<Nullable<Int32>>("character_maximum_length");
                 string isNullableString = dataRow.Field<string>("is_nullable");
                 bool canBeNull = false;
                 if (isNullableString == "YES")
@@ -181,6 +181,7 @@ namespace FYP_ETL.Base
                     canBeNull = true;
                 }
                 field = new Field(fieldName, type, length, canBeNull);
+                fields.Add(field);
             }
             return fields;
         }
