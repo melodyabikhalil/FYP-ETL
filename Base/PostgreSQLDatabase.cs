@@ -74,7 +74,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public bool SelectAll(string tableName)
+        public override bool SelectAll(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
@@ -103,7 +103,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public  bool Insert(string tableName)
+        public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
@@ -136,7 +136,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public  bool GetFieldsWithDetails(string tableName)
+        public override bool SetFieldsWithDetails(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
@@ -154,7 +154,8 @@ namespace FYP_ETL.Base
                 DataSet dataSet = new DataSet();
 
                 dataAdapter.Fill(dataSet);
-                table.fields = this.parseFieldsDataTable(dataSet.Tables[0]);
+                table.fields = this.ParseFieldsDataTable(dataSet.Tables[0]);
+                this.SetPrimaryKeyField(tableName);
                 return true;
             }
             catch (Exception e)
@@ -164,7 +165,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        private List<Field> parseFieldsDataTable(DataTable datatable)
+        private List<Field> ParseFieldsDataTable(DataTable datatable)
         {
             List<Field> fields = new List<Field>();
             Field field;
@@ -172,16 +173,15 @@ namespace FYP_ETL.Base
             {
                 string fieldName = dataRow.Field<string>("column_name");
                 string type = dataRow.Field<string>("data_type");
-                string length = dataRow.Field<string>("character_maximum_length");
+                int length = dataRow.Field<int>("character_maximum_length");
                 string isNullableString = dataRow.Field<string>("is_nullable");
                 bool canBeNull = false;
                 if (isNullableString == "YES")
                 {
                     canBeNull = true;
                 }
-                //field = new Field(fieldName, type, length, canBeNull);
+                field = new Field(fieldName, type, length, canBeNull);
             }
-
             return fields;
         }
 
@@ -209,6 +209,24 @@ namespace FYP_ETL.Base
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        private void SetPrimaryKeyField(string tableName)
+        {
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return;
+            }
+            string primaryKeyName = this.GetPrimaryKeyName(tableName);
+            foreach (Field field in table.fields)
+            {
+                if (field.fieldName == primaryKeyName)
+                {
+                    field.isPrimaryKey = true;
+                    return;
+                }
             }
         }
     }
