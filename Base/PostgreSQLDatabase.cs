@@ -1,6 +1,8 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace FYP_ETL.Base
 {
@@ -69,6 +71,68 @@ namespace FYP_ETL.Base
             {
                 Console.WriteLine(e.Message);
                 return tablesNames;
+            }
+        }
+
+        public override bool SelectAll(string tableName)
+        {
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            string query = "SELECT * FROM public.\"" + tableName + "\";";
+            //string query = "SELECT * FROM " + tableName + ";";
+            NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
+
+            try
+            {
+                command.Prepare();
+                NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(command);
+
+                DataSet dataSet = new DataSet();
+
+                dataAdapter.Fill(dataSet);
+                table.dataTable = dataSet.Tables[0];
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public override bool Insert(string tableName)
+        {
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            DataTable dataTable = table.dataTable;
+            if (dataTable == null)
+            {
+                return false;
+            }
+            List<string> listDataTable =
+                dataTable.Select()
+                    .Select(dr => "("+ string.Join(",", dr.ItemArray.Select(x => string.Format("\'{0}\'", x))) + ")")
+                    .ToList();
+            string values = string.Join(",", listDataTable);
+            //string query = "INSERT INTO public.\"" + tableName + "\" VALUES " + values + ";";
+            string query = "INSERT INTO " + tableName + " VALUES " + values + ";";
+
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
             }
         }
     }
