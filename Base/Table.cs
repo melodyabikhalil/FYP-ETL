@@ -1,17 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace FYP_ETL.Base
 {
-    abstract class Table
+    class Table
     {
-        private string tableName { get; set; }
-        private int numberOfFields { get; set; }
-        private List<Field> fields { get; set; }
+        public string tableName { get; set; }
+        public int numberOfFields { get; set; }
+        public List<Field> fields { get; set; }
+        public DataTable dataTable { get; set; }
 
-        abstract public void GetFieldsNames();
-        abstract public void Select(int initialRow, int endRow);
-        abstract public bool Insert();
-        abstract public bool Update();
-        abstract public bool Delete();
+        public List<string> GetFieldsNames()
+        {
+            List<string> fieldsNames = new List<string>();
+            for (int i = 0; i < fields.Count; ++i)
+            {
+                fieldsNames.Add(fields[i].fieldName);
+            }
+            return fieldsNames;
+        }
     }
-}
