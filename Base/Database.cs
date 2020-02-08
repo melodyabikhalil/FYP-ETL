@@ -17,6 +17,7 @@ namespace FYP_ETL.Base
             this.username = username;
             this.password = password;
             this.databaseName = databaseName;
+            this.tables = new List<Table>();
         }
 
         public int GetTableIndexByName(string tableName)

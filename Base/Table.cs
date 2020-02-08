@@ -11,6 +11,12 @@ namespace FYP_ETL.Base
         public List<Field> fields { get; set; }
         public DataTable dataTable { get; set; }
 
+        public Table()
+        {
+            this.fields = new List<Field>();
+            this.dataTable = new DataTable();
+        }
+
         public List<string> GetFieldsNames()
         {
             List<string> fieldsNames = new List<string>();
