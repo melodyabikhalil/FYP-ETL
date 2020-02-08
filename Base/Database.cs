@@ -9,6 +9,7 @@ namespace FYP_ETL.Base
         public string password { get; set; }
         public string serverName { get; set; }
         public string databaseName { get; set; }
+        public string primaryKeyName { get; set; }
         public List<Table> tables { get; set; }
 
         public Database(string serverName, string username, string password, string databaseName)
