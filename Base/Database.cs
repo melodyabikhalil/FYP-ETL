@@ -42,6 +42,7 @@ namespace FYP_ETL.Base
         }
 
         abstract public List<string> GetTablesNames();
+        abstract public Dictionary<string, string> GetFieldsWithTypes(); 
         abstract public bool Connect();
         abstract public bool Close();
     }
