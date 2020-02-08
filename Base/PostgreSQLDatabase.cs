@@ -71,5 +71,20 @@ namespace FYP_ETL.Base
                 return tablesNames;
             }
         }
+
+        public override bool SetFieldsWithDetails(string tableName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Insert(string tableName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SelectAll(string tableName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

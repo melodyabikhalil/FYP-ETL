@@ -46,7 +46,7 @@ namespace FYP_ETL.Base
 
         public override string ToString()
         {
-            return String.Format("Database name:{0}, Username:{1}, Password:{2}, Server name:{3}", this.databaseName, this.password, this.password, this.serverName);
+            return String.Format("Database name:{0}, Username:{1}, Password:{2}, Server name:{3}", this.databaseName, this.username, this.password, this.serverName);
         }
 
         abstract public List<string> GetTablesNames();
