@@ -42,7 +42,7 @@ namespace FYP_ETL.Base
         }
 
         abstract public List<string> GetTablesNames();
-        abstract public Dictionary<string, string> GetFieldsWithTypes(); 
+        abstract public List<Field> GetFieldsWithDetails(string tableName); //get columns details (type, can be null, ...) from database and create the Field instances and return the list
         abstract public bool Connect();
         abstract public bool Close();
     }
