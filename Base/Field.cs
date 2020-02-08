@@ -9,7 +9,7 @@ namespace FYP_ETL.Base
         public bool canBeNull { get; set; }
         public bool isPrimaryKey { get; set; }
 
-        public Field(string fieldName, string type, int length, bool canBeNull, bool isPrimaryKey)
+        public Field(string fieldName, string type, int length, bool canBeNull, bool isPrimaryKey = false)
         {
             this.fieldName = fieldName;
             this.type = type;
