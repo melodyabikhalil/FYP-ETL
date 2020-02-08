@@ -32,7 +32,7 @@ namespace FYP_ETL.Base
             return -1;
         }
 
-        public void CreateTables(List<string> tablesNames)
+        public void CreateTablesList(List<string> tablesNames)
         {
             Table table;
             for (int i = 0; i < tablesNames.Count; ++i)
