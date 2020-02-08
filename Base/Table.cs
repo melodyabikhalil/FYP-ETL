@@ -13,6 +13,12 @@ namespace FYP_ETL.Base
         private string primaryKey { get; set; }
 
 
+        public Table()
+        {
+            this.fields = new List<Field>();
+            this.dataTable = new DataTable();
+        }
+
         public List<string> GetFieldsNames()
         {
             List<string> fieldsNames = new List<string>();
