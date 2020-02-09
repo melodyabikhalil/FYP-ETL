@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -102,7 +103,6 @@ namespace FYP_ETL.Base
                 return false;
             }
         }
-
         public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
@@ -115,18 +115,22 @@ namespace FYP_ETL.Base
             {
                 return false;
             }
-            List<string> listDataTable =
-                dataTable.Select()
-                    .Select(dr => "(" + string.Join(",", dr.ItemArray.Select(x => string.Format("\'{0}\'", x))) + ")")
-                    .ToList();
-            string values = string.Join(",", listDataTable);
-            //string query = "INSERT INTO public.\"" + tableName + "\" VALUES " + values + ";";
-            string query = "INSERT INTO " + tableName + " VALUES " + values + ";";
 
+            List<string> fieldsNames = table.GetFieldsNames();
+            string fields = "(" + string.Join(",", fieldsNames.Select(x => string.Format("\"{0}\"", x))) + ")";
+            Dictionary<string, NpgsqlDbType> columnsWithTypes = HelperPostgreSQL.GetsColumnsWithTypes(dataTable.Columns);
+            string values = HelperPostgreSQL.GetValuesStringForInsertQuery(dataTable.Columns);
+
+            string selectQuery = "SELECT * FROM public.\"" + tableName + "\"";
+            string insertQuery = "INSERT INTO public.\"" + tableName + "\"" + fields + " values " + values;
             try
             {
-                NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
-                command.ExecuteNonQuery();
+                NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(selectQuery, connection);
+                dataAdapter.InsertCommand = new NpgsqlCommand(insertQuery, connection);
+                HelperPostgreSQL.SetParametersForInsertQuery(columnsWithTypes, dataAdapter);
+
+                dataAdapter.Update(dataTable);
+                dataTable.AcceptChanges();
                 return true;
             }
             catch (Exception e)

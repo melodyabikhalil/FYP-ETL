@@ -77,6 +77,7 @@
     <Compile Include="Base\AccessDatabase.cs" />
     <Compile Include="Base\Database.cs" />
     <Compile Include="Base\Field.cs" />
+    <Compile Include="Base\HelperPostgreSQL.cs" />
     <Compile Include="Base\MySQLDatabase.cs" />
     <Compile Include="Base\PostgreSQLDatabase.cs" />
     <Compile Include="Base\SQLServerDatabase.cs" />
