@@ -11,11 +11,13 @@ namespace FYP_ETL.Base
     {
         private NpgsqlConnection connection { get; set; }
         public string port { get; set; }
+        public string schema { get; set; }
 
-        public PostgreSQLDatabase(string serverName, string username, string password, string databaseName, string port) :
+        public PostgreSQLDatabase(string serverName, string username, string password, string databaseName, string port, string schema) :
             base(serverName, username, password, databaseName)
         {
             this.port = port;
+            this.schema = schema;
         }
 
         public override bool Connect()
@@ -56,7 +58,11 @@ namespace FYP_ETL.Base
 
         public override List<string> GetTablesNames()
         {
-            string query = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE';";
+            string query = "SELECT table_name FROM information_schema.tables AND table_type = 'BASE TABLE';";
+            if (this.schema != "")
+            {
+                query = "SELECT table_name FROM information_schema.tables WHERE table_schema = '" + this.schema + "' AND table_type = 'BASE TABLE';";
+            }
             List<string> tablesNames = new List<string>();
             NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
             try
@@ -82,8 +88,11 @@ namespace FYP_ETL.Base
             {
                 return false;
             }
-            string query = "SELECT * FROM public.\"" + tableName + "\";";
-            //string query = "SELECT * FROM " + tableName + ";";
+            string query = "SELECT * FROM \"" + tableName + "\";";
+            if (this.schema != "")
+            {
+                query = "SELECT * FROM " + this.schema + ".\"" + tableName + "\";";
+            }
             NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
 
             try
@@ -121,8 +130,15 @@ namespace FYP_ETL.Base
             Dictionary<string, NpgsqlDbType> columnsWithTypes = HelperPostgreSQL.GetsColumnsWithTypes(dataTable.Columns);
             string values = HelperPostgreSQL.GetValuesStringForInsertQuery(dataTable.Columns);
 
-            string selectQuery = "SELECT * FROM public.\"" + tableName + "\"";
-            string insertQuery = "INSERT INTO public.\"" + tableName + "\"" + fields + " values " + values;
+
+            string selectQuery = "SELECT * FROM \"" + tableName + "\"";
+            string insertQuery = "INSERT INTO \"" + tableName + "\"" + fields + " values " + values;
+            if (this.schema != "")
+            {
+                selectQuery = "SELECT * FROM " + this.schema + ".\"" + tableName + "\"";
+                insertQuery = "INSERT INTO " + this.schema + ".\"" + tableName + "\"" + fields + " values " + values;
+            }
+
             try
             {
                 NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(selectQuery, connection);
@@ -193,11 +209,20 @@ namespace FYP_ETL.Base
         private string GetPrimaryKeyName(string tableName)
         {
             string query = "SELECT a.attname "
+                             + "FROM pg_index i "
+                             + "JOIN   pg_attribute a ON a.attrelid = i.indrelid "
+                             + "AND a.attnum = ANY(i.indkey) "
+                             + "WHERE i.indrelid = '\"" + tableName + "\"'::regclass "
+                             + "AND i.indisprimary;";
+            if (this.schema != "")
+            {
+                query = "SELECT a.attname "
                             + "FROM pg_index i "
                             + "JOIN   pg_attribute a ON a.attrelid = i.indrelid "
                             + "AND a.attnum = ANY(i.indkey) "
-                            + "WHERE i.indrelid = 'public.\"" + tableName + "\"'::regclass "
+                            + "WHERE i.indrelid = '" + this.schema + ".\"" + tableName + "\"'::regclass "
                             + "AND i.indisprimary;";
+            }
             NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
 
             try
