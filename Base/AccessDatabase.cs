@@ -72,6 +72,5 @@ namespace FYP_ETL.Base
             }
         }
 
-        
     }
 }

@@ -71,7 +71,5 @@ namespace FYP_ETL.Base
                 return tablesNames;
             }
         }
-
-        
     }
 }
