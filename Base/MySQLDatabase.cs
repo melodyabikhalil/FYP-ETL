@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using MySql.Data;
+using System.Text;
 
 namespace FYP_ETL.Base
 {
@@ -47,6 +50,36 @@ namespace FYP_ETL.Base
                 return false;
             }
         }
+        
+        
+        public  MySqlDataAdapter CreateCustomerAdapter(MySqlConnection conn, string tableName)
+        {
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            MySqlCommand cmd;
+            
+
+            // Create the SelectCommand.
+            cmd = new MySqlCommand("SELECT * FROM "+ tableName , conn);
+            
+            da.SelectCommand = cmd;
+
+            // Create the InsertCommand.
+            List<string> fieldsList;
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            fieldsList = table.GetFieldsNames();
+            string fieldsString = HelperMySQL.CreateFieldsString(fieldsList);
+            string valuesString = HelperMySQL.CreateValuesString(fieldsList);
+            cmd = new MySqlCommand("INSERT INTO "+ tableName + fieldsString +" VALUES" + valuesString , conn);
+            
+
+
+            da.InsertCommand = cmd;
+
+            return da;
+        }
+        
+       
+        
 
         public override List<string> GetTablesNames()
         {
@@ -77,11 +110,12 @@ namespace FYP_ETL.Base
                 return false;
             }
             string query  = "SELECT * FROM " + tableName + ";";
-            MySqlCommand cmd = new MySqlCommand(query, this.connection);
+            MySqlDataAdapter da = this.CreateCustomerAdapter(this.connection, "users");
+            
+            
             try
             {
-                cmd.ExecuteNonQuery();
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                
                 da.Fill(table.dataTable);
                 return true;
             }
@@ -158,7 +192,32 @@ namespace FYP_ETL.Base
 
         public override bool Insert(string tableName)
         {
-            throw new NotImplementedException();
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            DataTable dataTable = table.dataTable;
+            if (dataTable == null)
+            {
+                return false;
+            }
+            Dictionary<string, MySqlDbType> columnsWithTypes = HelperMySQL.GetsColumnsWithTypes(dataTable.Columns);
+            MySqlDataAdapter da = this.CreateCustomerAdapter(this.connection, "users");
+            try
+            {
+                HelperMySQL.SetParametersForInsertQuery(columnsWithTypes, da);
+                da.Update(dataTable);
+                dataTable.AcceptChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+
         }
     }
 }
