@@ -37,6 +37,7 @@ namespace FYP_ETL.Base
                 return false;
             }
         }
+
         public override bool Close()
         {
             try
@@ -50,6 +51,7 @@ namespace FYP_ETL.Base
                 return false;
             }
         }
+
         public override List<string> GetTablesNames()
         {
             string query = "SHOW TABLES;";
@@ -71,6 +73,7 @@ namespace FYP_ETL.Base
                 return tablesNames;
             }
         }
+
         public override bool SelectAll(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
@@ -95,6 +98,7 @@ namespace FYP_ETL.Base
                 return false;
             }
         }
+
         public override bool SetFieldsWithDetails(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
@@ -154,6 +158,7 @@ namespace FYP_ETL.Base
             }
             return fields;
         }
+
         public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
