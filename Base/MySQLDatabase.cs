@@ -52,7 +52,7 @@ namespace FYP_ETL.Base
         }
         
         
-        public  MySqlDataAdapter CreateCustomerAdapter(MySqlConnection conn, string tableName)
+        public  MySqlDataAdapter CreateAdapter(MySqlConnection conn, string tableName)
         {
             MySqlDataAdapter da = new MySqlDataAdapter();
             MySqlCommand cmd;
@@ -110,7 +110,7 @@ namespace FYP_ETL.Base
                 return false;
             }
             string query  = "SELECT * FROM " + tableName + ";";
-            MySqlDataAdapter da = this.CreateCustomerAdapter(this.connection, "users");
+            MySqlDataAdapter da = this.CreateAdapter(this.connection, "users");
             
             
             try
@@ -203,7 +203,7 @@ namespace FYP_ETL.Base
                 return false;
             }
             Dictionary<string, MySqlDbType> columnsWithTypes = HelperMySQL.GetsColumnsWithTypes(dataTable.Columns);
-            MySqlDataAdapter da = this.CreateCustomerAdapter(this.connection, "users");
+            MySqlDataAdapter da = this.CreateAdapter(this.connection, "users");
             try
             {
                 HelperMySQL.SetParametersForInsertQuery(columnsWithTypes, da);
