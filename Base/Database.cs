@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace FYP_ETL.Base
@@ -43,8 +44,13 @@ namespace FYP_ETL.Base
             }
         }
 
+        public override string ToString()
+        {
+            return String.Format("Database name:{0}, Username:{1}, Password:{2}, Server name:{3}", this.databaseName, this.username, this.password, this.serverName);
+        }
+
         abstract public List<string> GetTablesNames();
-        abstract public bool GetFieldsWithDetails(string tableName);
+        abstract public bool SetFieldsWithDetails(string tableName);
         abstract public bool Connect();
         abstract public bool Close();
         abstract public bool Insert(string tableName);

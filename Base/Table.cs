@@ -8,9 +8,9 @@ namespace FYP_ETL.Base
     {
         public string tableName { get; set; }
         public int numberOfFields { get; set; }
+        public string primaryKeyName { get; set; }
         public List<Field> fields { get; set; }
         public DataTable dataTable { get; set; }
-        public string primaryKey { get; set; }
 
         public Table()
         {
@@ -30,7 +30,7 @@ namespace FYP_ETL.Base
 
         public string SelectValue(string fieldName, string primaryKeyValue)
         {
-            string expression = this.primaryKey + " = " + primaryKeyValue;
+            string expression = this.primaryKeyName + " = " + primaryKeyValue;
             DataRow[] result = this.dataTable.Select(expression);
             if (result.Length != 1)
             {
@@ -77,6 +77,10 @@ namespace FYP_ETL.Base
                 }
             }
             return result;
+        }
+        public override string ToString()
+        {
+            return String.Format("Name:{0}, Number of fields:{1}, Primary key:{2}", this.tableName, this.numberOfFields, this.primaryKeyName);
         }
     }
 }
