@@ -52,35 +52,6 @@ namespace FYP_ETL.Base
         }
         
         
-        public  MySqlDataAdapter CreateAdapter(MySqlConnection conn, string tableName)
-        {
-            MySqlDataAdapter da = new MySqlDataAdapter();
-            MySqlCommand cmd;
-            
-
-            // Create the SelectCommand.
-            cmd = new MySqlCommand("SELECT * FROM "+ tableName , conn);
-            
-            da.SelectCommand = cmd;
-
-            // Create the InsertCommand.
-            List<string> fieldsList;
-            Table table = this.tables[this.GetTableIndexByName(tableName)];
-            fieldsList = table.GetFieldsNames();
-            string fieldsString = HelperMySQL.CreateFieldsString(fieldsList);
-            string valuesString = HelperMySQL.CreateValuesString(fieldsList);
-            cmd = new MySqlCommand("INSERT INTO "+ tableName + fieldsString +" VALUES" + valuesString , conn);
-            
-
-
-            da.InsertCommand = cmd;
-
-            return da;
-        }
-        
-       
-        
-
         public override List<string> GetTablesNames()
         {
             string query = "SHOW TABLES;";
@@ -109,10 +80,12 @@ namespace FYP_ETL.Base
             {
                 return false;
             }
-            string query  = "SELECT * FROM " + tableName + ";";
-            MySqlDataAdapter da = this.CreateAdapter(this.connection, "users");
-            
-            
+
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            MySqlCommand cmd;
+            // Create the SelectCommand.
+            cmd = new MySqlCommand("SELECT * FROM " + tableName, this.connection);
+            da.SelectCommand = cmd;
             try
             {
                 
@@ -203,7 +176,14 @@ namespace FYP_ETL.Base
                 return false;
             }
             Dictionary<string, MySqlDbType> columnsWithTypes = HelperMySQL.GetsColumnsWithTypes(dataTable.Columns);
-            MySqlDataAdapter da = this.CreateAdapter(this.connection, "users");
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            MySqlCommand cmd;
+            List<string> fieldsList = table.GetFieldsNames();
+            string fieldsString = HelperMySQL.CreateFieldsString(fieldsList);
+            string valuesString = HelperMySQL.CreateValuesString(fieldsList);
+            cmd = new MySqlCommand("INSERT INTO " + tableName + fieldsString + " VALUES" + valuesString, this.connection);
+            da.InsertCommand = cmd;
+
             try
             {
                 HelperMySQL.SetParametersForInsertQuery(columnsWithTypes, da);
