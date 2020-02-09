@@ -72,19 +72,6 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SetFieldsWithDetails(string tableName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool Insert(string tableName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool SelectAll(string tableName)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

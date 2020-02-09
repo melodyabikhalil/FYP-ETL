@@ -10,7 +10,7 @@ namespace FYP_ETL.Base
 {
     class HelperMySQL
     {
-        public static MySqlDbType MapCsharpTypeToNpsglType(Type dataType)
+        public static MySqlDbType MapCsharpTypeToMySQLType(Type dataType)
         {
             //by default hatayta bigint
             MySqlDbType mysqlDbType = MySqlDbType.Int32;
@@ -54,7 +54,7 @@ namespace FYP_ETL.Base
             Dictionary<string, MySqlDbType> columnsWithTypes = new Dictionary<string, MySqlDbType>();
             foreach (DataColumn col in columns)
             {
-                MySqlDbType type = HelperMySQL.MapCsharpTypeToNpsglType(col.DataType);
+                MySqlDbType type = HelperMySQL.MapCsharpTypeToMySQLType(col.DataType);
                 columnsWithTypes.Add(col.ColumnName, type);
             }
             return columnsWithTypes;
