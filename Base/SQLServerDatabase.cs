@@ -65,6 +65,6 @@ namespace FYP_ETL.Base
                 Console.WriteLine(e.Message);
                 return tablesNames;
             }
-        }  
+        }
     }
 }
