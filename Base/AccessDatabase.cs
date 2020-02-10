@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
 
 namespace FYP_ETL.Base
@@ -50,6 +51,36 @@ namespace FYP_ETL.Base
             }
         }
 
+        public override bool SetFieldsWithDetails(string tableName)
+        {
+           /* Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            string query = "select * from " + tableName;
+            List<Field> fields = new List<Field>();
+            using (var cmd = new OleDbCommand(query, this.connection))
+            using (var reader = cmd.ExecuteReader(CommandBehavior.SchemaOnly))
+            {
+                var tableSchema = reader.GetSchemaTable();
+                var nameCol = tableSchema.Columns["ColumnName"];
+                foreach (DataRow row in tableSchema.Rows)
+                {
+                    //fields.Add(row[nameCol].ToString());
+                    Field field = new Field(row[nameCol].ToString(), nameCol.ToString() ,null,  true);
+                    //Console.WriteLine("columns");
+                    //Console.WriteLine(row[nameCol].ToString());
+                    fields.Add(field);
+                }
+
+            }
+            table.fields = fields;*/
+            return true;
+
+
+        }
+
         public override List<string> GetTablesNames()
         {
             string query = "SELECT MSysObjects.name FROM MSysObjects WHERE MSysObjects.type IN(1, 4, 6) AND MSysObjects.name NOT LIKE '~*' AND MSysObjects.name NOT LIKE 'MSys*' ORDER BY MSysObjects.name";
@@ -69,6 +100,66 @@ namespace FYP_ETL.Base
             {
                 Console.WriteLine(e.Message);
                 return tablesNames;
+            }
+        }
+        public override bool SelectAll(string tableName)
+        {
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            string query = "select * from " + tableName;
+            OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
+            dataAdapter.SelectCommand = selectCommand;
+
+            try
+            {
+                dataAdapter.Fill(table.dataTable);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+        }
+
+       
+        public override bool Insert(string tableName)
+        {
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            DataTable dataTable = table.dataTable;
+            if (dataTable == null)
+            {
+                return false;
+            }
+            Dictionary<string, OleDbType> columnsWithTypes = HelperAccess.GetsColumnsWithTypes(dataTable.Columns);
+            OleDbDataAdapter da = new OleDbDataAdapter();
+            OleDbCommand cmd;
+            List<string> fieldsList = table.GetFieldsNames();
+            string fieldsString = HelperAccess.CreateFieldsString(fieldsList);
+            string valuesString = HelperAccess.CreateValuesString(fieldsList);
+            cmd = new OleDbCommand("INSERT INTO " + tableName + fieldsString + " VALUES" + valuesString, this.connection);
+            da.InsertCommand = cmd;
+
+            try
+            {
+                HelperAccess.SetParametersForInsertQuery(columnsWithTypes, da);
+                da.Update(dataTable);
+                dataTable.AcceptChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
             }
         }
     }

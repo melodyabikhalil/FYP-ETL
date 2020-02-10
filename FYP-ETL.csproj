@@ -106,6 +106,7 @@
     <Compile Include="Base\AccessDatabase.cs" />
     <Compile Include="Base\Database.cs" />
     <Compile Include="Base\Field.cs" />
+    <Compile Include="Base\HelperAccess.cs" />
     <Compile Include="Base\HelperMySQL.cs" />
     <Compile Include="Base\HelperPostgreSQL.cs" />
     <Compile Include="Base\MySQLDatabase.cs" />
