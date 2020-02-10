@@ -135,5 +135,38 @@ namespace FYP_ETL.Base
             }
             return fields;
         }
+
+        public override bool SelectAll(string tableName)
+        {
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            string tableNameInQuery = tableName;
+            if (this.schema != "")
+            {
+                tableNameInQuery = "[" + this.schema + "].[" + tableName + "]";
+            }
+            string query = "SELECT * FROM " + tableNameInQuery + ";";
+            SqlCommand command = new SqlCommand(query, this.connection);
+
+            try
+            {
+                command.Prepare();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                DataSet dataSet = new DataSet();
+
+                dataAdapter.Fill(dataSet);
+                table.dataTable = dataSet.Tables[0];
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
     }
 }
