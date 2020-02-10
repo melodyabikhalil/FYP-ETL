@@ -13,7 +13,7 @@ namespace FYP_ETL.Base
         public string port { get; set; }
         public string schema { get; set; }
 
-        public PostgreSQLDatabase(string serverName, string username, string password, string databaseName, string port, string schema) :
+        public PostgreSQLDatabase(string serverName, string username, string password, string databaseName, string port, string schema = "") :
             base(serverName, username, password, databaseName)
         {
             this.port = port;
