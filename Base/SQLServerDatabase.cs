@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace FYP_ETL.Base
 {
@@ -160,6 +161,49 @@ namespace FYP_ETL.Base
 
                 dataAdapter.Fill(dataSet);
                 table.dataTable = dataSet.Tables[0];
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public override bool Insert(string tableName)
+        {
+            Table table = this.tables[this.GetTableIndexByName(tableName)];
+            if (table == null)
+            {
+                return false;
+            }
+            DataTable dataTable = table.dataTable;
+            if (dataTable == null)
+            {
+                return false;
+            }
+
+            List<string> fieldsNames = table.GetFieldsNames();
+            string fields = "(" + string.Join(",", fieldsNames.Select(x => string.Format("\"{0}\"", x))) + ")";
+            Dictionary<string, SqlDbType> columnsWithTypes = HelperSQLServer.GetsColumnsWithTypes(dataTable.Columns);
+            string values = HelperSQLServer.GetValuesStringForInsertQuery(dataTable.Columns);
+
+            string tableNameInQuery = tableName;
+            if (this.schema != "")
+            {
+                tableNameInQuery = "[" + this.schema + "].[" + tableName + "]";
+            }
+            string insertQuery = "INSERT INTO "+ tableName + fields + " values " + values;
+
+            try
+            {
+                SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                SqlCommand command = new SqlCommand(insertQuery, this.connection);
+                HelperSQLServer.SetParametersForInsertQuery(columnsWithTypes, command, table);
+                dataAdapter.InsertCommand = command;
+
+                dataAdapter.Update(dataTable);
+                dataTable.AcceptChanges();
                 return true;
             }
             catch (Exception e)
