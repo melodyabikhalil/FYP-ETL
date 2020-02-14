@@ -77,7 +77,7 @@ namespace FYP_ETL.Base
         {
             foreach (KeyValuePair<string, SqlDbType> column in columnsWithTypes)
             {
-                command.Parameters.Add("@" + column.Key, column.Value, table.GetFieldByName(column.Key).length, column.Key);
+                command.Parameters.Add("@" + column.Key, column.Value, table.GetColumnByName(column.Key).MaxLength, column.Key);
             }
         }
     }

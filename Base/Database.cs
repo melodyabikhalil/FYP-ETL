@@ -50,7 +50,6 @@ namespace FYP_ETL.Base
         }
 
         abstract public List<string> GetTablesNames();
-        abstract public bool SetFieldsWithDetails(string tableName);
         abstract public bool Connect();
         abstract public bool Close();
         abstract public bool Insert(string tableName);

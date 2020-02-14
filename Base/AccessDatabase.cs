@@ -51,36 +51,6 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SetFieldsWithDetails(string tableName)
-        {
-           /* Table table = this.tables[this.GetTableIndexByName(tableName)];
-            if (table == null)
-            {
-                return false;
-            }
-            string query = "select * from " + tableName;
-            List<Field> fields = new List<Field>();
-            using (var cmd = new OleDbCommand(query, this.connection))
-            using (var reader = cmd.ExecuteReader(CommandBehavior.SchemaOnly))
-            {
-                var tableSchema = reader.GetSchemaTable();
-                var nameCol = tableSchema.Columns["ColumnName"];
-                foreach (DataRow row in tableSchema.Rows)
-                {
-                    //fields.Add(row[nameCol].ToString());
-                    Field field = new Field(row[nameCol].ToString(), nameCol.ToString() ,null,  true);
-                    //Console.WriteLine("columns");
-                    //Console.WriteLine(row[nameCol].ToString());
-                    fields.Add(field);
-                }
-
-            }
-            table.fields = fields;*/
-            return true;
-
-
-        }
-
         public override List<string> GetTablesNames()
         {
             string query = "SELECT MSysObjects.name FROM MSysObjects WHERE MSysObjects.type IN(1, 4, 6) AND MSysObjects.name NOT LIKE '~*' AND MSysObjects.name NOT LIKE 'MSys*' ORDER BY MSysObjects.name";
@@ -126,7 +96,6 @@ namespace FYP_ETL.Base
             }
 
         }
-
        
         public override bool Insert(string tableName)
         {
@@ -143,7 +112,7 @@ namespace FYP_ETL.Base
             Dictionary<string, OleDbType> columnsWithTypes = HelperAccess.GetsColumnsWithTypes(dataTable.Columns);
             OleDbDataAdapter da = new OleDbDataAdapter();
             OleDbCommand cmd;
-            List<string> fieldsList = table.GetFieldsNames();
+            List<string> fieldsList = table.GetColumnsNames();
             string fieldsString = HelperAccess.CreateFieldsString(fieldsList);
             string valuesString = HelperAccess.CreateValuesString(fieldsList);
             cmd = new OleDbCommand("INSERT INTO " + tableName + fieldsString + " VALUES" + valuesString, this.connection);

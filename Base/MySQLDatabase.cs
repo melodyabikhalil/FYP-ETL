@@ -99,66 +99,6 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SetFieldsWithDetails(string tableName)
-        {
-            Table table = this.tables[this.GetTableIndexByName(tableName)];
-            if (table == null)
-            {
-                return false;
-            }
-            string query = "DESCRIBE " + tableName + ";";
-            MySqlCommand cmd = new MySqlCommand(query, this.connection);
-            try
-            {
-                cmd.ExecuteNonQuery();
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                DataSet dataSet = new DataSet();
-                da.Fill(dataSet);
-                table.fields = this.ParseFieldsDataTable(dataSet.Tables[0]);
-                foreach(Field field in table.fields)
-                {
-                    if (field.isPrimaryKey)
-                    {
-                        table.primaryKeyName = field.fieldName;
-                        break;
-                    }
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-        }
-
-        private List<Field> ParseFieldsDataTable(DataTable datatable)
-        {
-            List<Field> fields = new List<Field>();
-            Field field;
-            foreach (DataRow dataRow in datatable.Rows)
-            {
-                string fieldName = dataRow.Field<string>("Field");
-                string type = dataRow.Field<string>("Type");
-                string isNullableString = dataRow.Field<string>("NULL");
-                string isPrimaryKey = dataRow.Field<string>("Key");
-                bool canBeNull = false;
-                bool isPrimKey = false;
-                if(isPrimaryKey == "PRI")
-                {
-                    isPrimKey = true;
-                }
-                if (isNullableString == "YES")
-                {
-                    canBeNull = true;
-                }
-                field = new Field(fieldName, type, null, canBeNull, isPrimKey);
-                
-                fields.Add(field);
-            }
-            return fields;
-        }
-
         public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
@@ -174,7 +114,7 @@ namespace FYP_ETL.Base
             Dictionary<string, MySqlDbType> columnsWithTypes = HelperMySQL.GetsColumnsWithTypes(dataTable.Columns);
             MySqlDataAdapter da = new MySqlDataAdapter();
             MySqlCommand cmd;
-            List<string> fieldsList = table.GetFieldsNames();
+            List<string> fieldsList = table.GetColumnsNames();
             string fieldsString = HelperMySQL.CreateFieldsString(fieldsList);
             string valuesString = HelperMySQL.CreateValuesString(fieldsList);
             cmd = new MySqlCommand("INSERT INTO " + tableName + fieldsString + " VALUES" + valuesString, this.connection);

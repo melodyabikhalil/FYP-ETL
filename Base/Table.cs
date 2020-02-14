@@ -9,32 +9,32 @@ namespace FYP_ETL.Base
         public string tableName { get; set; }
         public int numberOfFields { get; set; }
         public string primaryKeyName { get; set; }
-        public List<Field> fields { get; set; }
+        public List<DataColumn> columns { get; set; }
         public DataTable dataTable { get; set; }
 
         public Table()
         {
-            this.fields = new List<Field>();
+            this.columns = new List<DataColumn>();
             this.dataTable = new DataTable();
         }
 
-        public List<string> GetFieldsNames()
+        public List<string> GetColumnsNames()
         {
-            List<string> fieldsNames = new List<string>();
-            for (int i = 0; i < fields.Count; ++i)
+            List<string> columnsNames = new List<string>();
+            for (int i = 0; i < columns.Count; ++i)
             {
-                fieldsNames.Add(fields[i].fieldName);
+                columnsNames.Add(columns[i].ColumnName);
             }
-            return fieldsNames;
+            return columnsNames;
         }
 
-        public Field GetFieldByName(string fieldName)
+        public DataColumn GetColumnByName(string fieldName)
         {
-            foreach (Field field in this.fields)
+            foreach (DataColumn column in this.columns)
             {
-                if (field.fieldName == fieldName)
+                if (column.ColumnName == fieldName)
                 {
-                    return field;
+                    return column;
                 }
             }
             return null;
