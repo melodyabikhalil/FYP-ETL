@@ -56,6 +56,21 @@ namespace FYP_ETL.Base
             return value;
            
         }
+        public static void AddValuesToDatatableDestination(DataTable source, DataTable dest, DataTable expressionDt, DataTable mapDt)
+        {
+            foreach(DataRow row in source.Rows)
+            {
+                DataRow newRow = dest.NewRow();
+                foreach(DataColumn col in dest.Columns)
+                {
+                    DataRow [] expRows = expressionDt.Select("TableNameDest = '" + dest.TableName + "' AND ColumnDest = '" + col.ColumnName + "'");
+                    DataRow expRow = expRows[0];
+                    string value = GetValue(expRow, row, col, mapDt);
+                    newRow[col] = value;
+                }
+                dest.Rows.Add(newRow);
+            }
+        }
         private Expression()
         {
             //we have to construct the datatables expressionDt and mapDt
