@@ -22,11 +22,9 @@ namespace FYP_ETL.Base
                 "Provider=Microsoft.Jet.OLEDB.4.0;" +
                 "Data Source={0};",
                 this.path);
-
-            OleDbConnection connection = new OleDbConnection(connectionString);
-
             try
             {
+                OleDbConnection connection = new OleDbConnection(connectionString);
                 connection.Open();
                 this.connection = connection;
                 return true;
@@ -129,6 +127,12 @@ namespace FYP_ETL.Base
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        public override bool SetDatatableSchema(string tableName)
+        {
+            string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
+            return this.Select(tableName, query);
         }
     }
 }

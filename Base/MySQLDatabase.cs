@@ -23,10 +23,9 @@ namespace FYP_ETL.Base
                 "password={2};" + 
                 "database={3};",
                 this.serverName, this.username, this.password, this.databaseName);
-            this.connection = new MySqlConnection(connectionString);
-            
             try
             {
+                this.connection = new MySqlConnection(connectionString);
                 connection.Open();
                 this.connection = connection;
                 return true;
@@ -132,6 +131,12 @@ namespace FYP_ETL.Base
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        public override bool SetDatatableSchema(string tableName)
+        {
+            string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
+            return this.Select(tableName, query);
         }
     }
 }
