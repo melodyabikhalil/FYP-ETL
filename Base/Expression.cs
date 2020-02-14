@@ -10,9 +10,9 @@ namespace FYP_ETL.Base
 {
     class Expression
     {
-        DataTable expressionDt;
-        DataTable mapDt;
-        Expression instance;
+        public DataTable expressionDt = new DataTable();
+        public DataTable mapDt = new DataTable();
+        private Expression instance;
 
         public static string Replace(string expression, DataRow row)   
         {
@@ -74,15 +74,15 @@ namespace FYP_ETL.Base
         private Expression()
         {
             //we have to construct the datatables expressionDt and mapDt
-            expressionDt.Columns.Add("TableNameDest");
-            expressionDt.Columns.Add("ColumnDest");
-            expressionDt.Columns.Add("ExpressionType");
-            expressionDt.Columns.Add("RegexpColumnName");
-            expressionDt.Columns.Add("Expression", Type.GetType("System.String"));
-            expressionDt.Columns.Add("SectionName");
-            mapDt.Columns.Add("Section");
-            mapDt.Columns.Add("FromValue");
-            mapDt.Columns.Add("ToValue");
+            this.expressionDt.Columns.Add("TableNameDest");
+            this.expressionDt.Columns.Add("ColumnDest");
+            this.expressionDt.Columns.Add("ExpressionType");
+            this.expressionDt.Columns.Add("RegexpColumnName");
+            this.expressionDt.Columns.Add("Expression", Type.GetType("System.String"));
+            this.expressionDt.Columns.Add("SectionName");
+            this.mapDt.Columns.Add("Section");
+            this.mapDt.Columns.Add("FromValue");
+            this.mapDt.Columns.Add("ToValue");
         }
         public Expression getInstance()
         {

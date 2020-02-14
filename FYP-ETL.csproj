@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="Base\AccessDatabase.cs" />
     <Compile Include="Base\Database.cs" />
+    <Compile Include="Base\Expression.cs" />
     <Compile Include="Base\Field.cs" />
     <Compile Include="Base\HelperAccess.cs" />
     <Compile Include="Base\HelperMySQL.cs" />
