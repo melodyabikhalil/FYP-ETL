@@ -18,7 +18,7 @@ namespace FYP_ETL.Base
             this.dataTable = new DataTable();
         }
 
-        public List<string> GetFieldsNames()
+        public List<string> GetColumnsNames()
         {
             List<string> columnsNames = new List<string>();
             for (int i = 0; i < columns.Count; ++i)
@@ -28,7 +28,7 @@ namespace FYP_ETL.Base
             return columnsNames;
         }
 
-        public DataColumn GetFieldByName(string fieldName)
+        public DataColumn GetColumnByName(string fieldName)
         {
             foreach (DataColumn column in this.columns)
             {
