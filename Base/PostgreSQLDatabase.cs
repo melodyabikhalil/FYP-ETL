@@ -29,9 +29,9 @@ namespace FYP_ETL.Base
                 "Password={3};" +
                 "Database={4};",
                  this.serverName, this.port, this.username, this.password, this.databaseName);
-            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
             try
             {
+                NpgsqlConnection connection = new NpgsqlConnection(connectionString);
                 connection.Open();
                 this.connection = connection;
                 return true;
@@ -149,6 +149,17 @@ namespace FYP_ETL.Base
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        public override bool SetDatatableSchema(string tableName)
+        {
+            string tableInQuery = tableName;
+            if (this.schema != "")
+            {
+                tableInQuery = this.schema + ".\"" + tableName + "\"";
+            }
+            string query = "SELECT * FROM " + tableInQuery + " WHERE 1=0;";
+            return this.Select(tableName, query);
         }
     }
 }
