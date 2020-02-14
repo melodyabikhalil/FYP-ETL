@@ -28,6 +28,18 @@ namespace FYP_ETL.Base
             return fieldsNames;
         }
 
+        public Field GetFieldByName(string fieldName)
+        {
+            foreach (Field field in this.fields)
+            {
+                if (field.fieldName == fieldName)
+                {
+                    return field;
+                }
+            }
+            return null;
+        }
+
         public override string ToString()
         {
             return String.Format("Name:{0}, Number of fields:{1}, Primary key:{2}", this.tableName, this.numberOfFields, this.primaryKeyName);
