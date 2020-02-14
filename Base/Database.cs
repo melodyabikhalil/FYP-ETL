@@ -54,6 +54,7 @@ namespace FYP_ETL.Base
         abstract public bool Close();
         abstract public bool Insert(string tableName);
         abstract public bool Select(string tableName, string query);
+        abstract public bool SetDatatableSchema(string tableName);
 
         //for later
         //abstract public void Update(DataTable dataTable);
