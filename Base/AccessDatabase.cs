@@ -72,7 +72,7 @@ namespace FYP_ETL.Base
                 return tablesNames;
             }
         }
-        public override bool SelectAll(string tableName)
+        public override bool Select(string tableName, string query)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
@@ -80,7 +80,6 @@ namespace FYP_ETL.Base
                 return false;
             }
             OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
-            string query = "select * from " + tableName;
             OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
             dataAdapter.SelectCommand = selectCommand;
 

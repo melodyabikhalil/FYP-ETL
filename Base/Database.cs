@@ -53,7 +53,7 @@ namespace FYP_ETL.Base
         abstract public bool Connect();
         abstract public bool Close();
         abstract public bool Insert(string tableName);
-        abstract public bool SelectAll(string tableName);
+        abstract public bool Select(string tableName, string query);
 
         //for later
         //abstract public void Update(DataTable dataTable);

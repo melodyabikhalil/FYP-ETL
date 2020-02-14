@@ -73,19 +73,13 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SelectAll(string tableName)
+        public override bool Select(string tableName, string query)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
             {
                 return false;
             }
-            string tableNameInQuery = tableName;
-            if (this.schema != "")
-            {
-                tableNameInQuery = "[" + this.schema + "].[" + tableName + "]";
-            }
-            string query = "SELECT * FROM " + tableNameInQuery + ";";
             SqlCommand command = new SqlCommand(query, this.connection);
 
             try

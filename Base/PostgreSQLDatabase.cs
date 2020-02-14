@@ -81,17 +81,12 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SelectAll(string tableName)
+        public override bool Select(string tableName, string query)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
             {
                 return false;
-            }
-            string query = "SELECT * FROM \"" + tableName + "\";";
-            if (this.schema != "")
-            {
-                query = "SELECT * FROM " + this.schema + ".\"" + tableName + "\";";
             }
             NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
 
