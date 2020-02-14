@@ -74,7 +74,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SelectAll(string tableName)
+        public override bool Select(string tableName, string query)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
@@ -85,7 +85,7 @@ namespace FYP_ETL.Base
             MySqlDataAdapter da = new MySqlDataAdapter();
             MySqlCommand cmd;
             // Create the SelectCommand.
-            cmd = new MySqlCommand("SELECT * FROM " + tableName, this.connection);
+            cmd = new MySqlCommand(query, this.connection);
             da.SelectCommand = cmd;
             try
             {
