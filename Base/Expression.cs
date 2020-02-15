@@ -10,16 +10,16 @@ namespace FYP_ETL.Base
 {
     class Expression
     {
-        public DataTable expressionDt = new DataTable();
-        public DataTable mapDt = new DataTable();
-        private Expression instance;
+        public DataTable expressionDt;
+        public DataTable mapDt;
+        private static Expression instance;
 
         public static string Replace(string expression, DataRow row)   
         {
             string result = expression;
             foreach(DataColumn col in row.Table.Columns)
             {
-                result = result.Replace(row[col].ToString(), col.ColumnName);
+                result = result.Replace(col.ColumnName, row[col].ToString());
             }
             return result;
         }
@@ -34,6 +34,7 @@ namespace FYP_ETL.Base
             }
             return null;
         }
+
         public static string GetValue(DataRow expRow, DataRow row, DataColumn col, DataTable mapDt)
         {
             string value = "";
@@ -49,13 +50,14 @@ namespace FYP_ETL.Base
             if(type == "Map")
             {
                 string sectionName = expRow["SectionName"].ToString();
-                string fromValue = row[col].ToString();
-                DataRow [] mapRows = mapDt.Select("Section = '" + sectionName + "' AND FromValue = '" + fromValue + "'");
+                string fromValue = row[col.ColumnName].ToString();
+                DataRow [] mapRows = mapDt.Select("SectionName = '" + sectionName + "' AND FromValue = '" + fromValue + "'");
                 value = mapRows[0]["ToValue"].ToString();
             }
             return value;
            
         }
+
         public static void AddValuesToDatatableDestination(DataTable source, DataTable dest, DataTable expressionDt, DataTable mapDt)
         {
             foreach(DataRow row in source.Rows)
@@ -71,27 +73,31 @@ namespace FYP_ETL.Base
                 dest.Rows.Add(newRow);
             }
         }
+
         private Expression()
         {
             //we have to construct the datatables expressionDt and mapDt
+            this.expressionDt = new DataTable();
+            this.mapDt = new DataTable();
             this.expressionDt.Columns.Add("TableNameDest");
             this.expressionDt.Columns.Add("ColumnDest");
             this.expressionDt.Columns.Add("ExpressionType");
             this.expressionDt.Columns.Add("RegexpColumnName");
             this.expressionDt.Columns.Add("Expression", Type.GetType("System.String"));
             this.expressionDt.Columns.Add("SectionName");
-            this.mapDt.Columns.Add("Section");
+            this.mapDt.Columns.Add("SectionName");
             this.mapDt.Columns.Add("FromValue");
             this.mapDt.Columns.Add("ToValue");
         }
-        public Expression getInstance()
+
+        public static Expression getInstance()
         {
             //lazy initialization
-            if(this.instance == null)
+            if(instance == null)
             {
-                this.instance = new Expression();
+                instance = new Expression();
             }
-            return this.instance;
+            return instance;
         }
     }
 }
