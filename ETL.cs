@@ -26,5 +26,11 @@ namespace FYP_ETL
         {
 
         }
+
+        private void SourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
+            newDatabaseForm.Show();
+        }
     }
 }
