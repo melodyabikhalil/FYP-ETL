@@ -51,10 +51,36 @@ namespace FYP_ETL
                 database = this.CreateMysqlDatabase(); //to be removed once odbc is implemented
             }
 
-            bool databaseExistsAlready = this.DatabaseExistsAlready(database);
-            if (databaseExistsAlready)
+            
+            bool connected = database.Connect();
+            if (connected)
             {
-                var pressed = MessageBox.Show("Already connected to this database", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                bool isSource = sourceRadioButton.Checked;
+                if (isSource)
+                {
+                    bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesSource);
+                    if (databaseExistsAlready)
+                    {
+                        this.ShowErrorDialogAndClose();
+                    }
+                    else
+                    {
+                        Global.DatabasesSource.Add(database);
+                    }
+                }
+                else
+                {
+                    bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesDestination);
+                    if (databaseExistsAlready)
+                    {
+                        this.ShowErrorDialogAndClose();
+                    }
+                    else
+                    {
+                        Global.DatabasesDestination.Add(database);
+                    }
+                }
+                var pressed = MessageBox.Show("Successfully connected to database", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (pressed == DialogResult.OK)
                 {
                     this.Close();
@@ -62,28 +88,16 @@ namespace FYP_ETL
             }
             else
             {
-                bool connected = database.Connect();
-                if (connected)
+                var pressed = MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                if (pressed == DialogResult.Cancel)
                 {
-                    Global.Databases.Add(database);
-                    var pressed = MessageBox.Show("Successfully connected to database", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (pressed == DialogResult.OK)
-                    {
-                        this.Close();
-                    }
-                }
-                else
-                {
-                    var pressed = MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-                    if (pressed == DialogResult.Cancel)
-                    {
-                        this.Close();
-                    }
+                    this.Close();
                 }
             }
             
+            
 
-            MessageBox.Show(Global.Databases.Count.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Global.DatabasesSource.Count.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
@@ -146,9 +160,9 @@ namespace FYP_ETL
             func(Controls);
         }
 
-        private bool DatabaseExistsAlready(Database database)
+        private bool DatabaseExistsAlready(Database database, List<Database> databases)
         {
-            foreach (Database existingDatabase in Global.Databases)
+            foreach (Database existingDatabase in databases)
             {
                 if (database.Equals(existingDatabase))
                 {
@@ -156,6 +170,15 @@ namespace FYP_ETL
                 }
             }
             return false;
+        }
+
+        private void ShowErrorDialogAndClose()
+        {
+            var okPressed = MessageBox.Show("Already connected to this database", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (okPressed == DialogResult.OK)
+            {
+                this.Close();
+            }
         }
     }
 }

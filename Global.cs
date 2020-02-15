@@ -9,12 +9,19 @@ namespace FYP_ETL
 {
     static class Global
     {
-        private static List<Database> databases = new List<Database>();
+        private static List<Database> databasesSource = new List<Database>();
+        private static List<Database> databasesDestination = new List<Database>();
 
-        public static List<Database> Databases
+        public static List<Database> DatabasesSource
         {
-            get { return databases; }
-            set { databases = value; }
+            get { return databasesSource; }
+            set { databasesSource = value; }
+        }
+
+        public static List<Database> DatabasesDestination
+        {
+            get { return databasesDestination; }
+            set { databasesDestination = value; }
         }
     }
 }

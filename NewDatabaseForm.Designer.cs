@@ -77,12 +77,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.connectButton = new System.Windows.Forms.Button();
+            this.sourceRadioButton = new System.Windows.Forms.RadioButton();
+            this.destinationRadioButton = new System.Windows.Forms.RadioButton();
+            this.sourceDestinationGroupbox = new System.Windows.Forms.GroupBox();
             this.DatabaseTab.SuspendLayout();
             this.MysqlTabPage.SuspendLayout();
             this.postgresTabPage.SuspendLayout();
             this.sqlServerTabPage.SuspendLayout();
             this.accessTabPage.SuspendLayout();
             this.odbcTabPage.SuspendLayout();
+            this.sourceDestinationGroupbox.SuspendLayout();
             this.SuspendLayout();
             // 
             // DatabaseTab
@@ -560,12 +564,45 @@
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.ConnectButton_Click);
             // 
+            // sourceRadioButton
+            // 
+            this.sourceRadioButton.AutoSize = true;
+            this.sourceRadioButton.Checked = true;
+            this.sourceRadioButton.Location = new System.Drawing.Point(20, 21);
+            this.sourceRadioButton.Name = "sourceRadioButton";
+            this.sourceRadioButton.Size = new System.Drawing.Size(59, 17);
+            this.sourceRadioButton.TabIndex = 11;
+            this.sourceRadioButton.TabStop = true;
+            this.sourceRadioButton.Text = "Source";
+            this.sourceRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // destinationRadioButton
+            // 
+            this.destinationRadioButton.AutoSize = true;
+            this.destinationRadioButton.Location = new System.Drawing.Point(100, 21);
+            this.destinationRadioButton.Name = "destinationRadioButton";
+            this.destinationRadioButton.Size = new System.Drawing.Size(78, 17);
+            this.destinationRadioButton.TabIndex = 12;
+            this.destinationRadioButton.Text = "Destination";
+            this.destinationRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // sourceDestinationGroupbox
+            // 
+            this.sourceDestinationGroupbox.Controls.Add(this.destinationRadioButton);
+            this.sourceDestinationGroupbox.Controls.Add(this.sourceRadioButton);
+            this.sourceDestinationGroupbox.Location = new System.Drawing.Point(173, 339);
+            this.sourceDestinationGroupbox.Name = "sourceDestinationGroupbox";
+            this.sourceDestinationGroupbox.Size = new System.Drawing.Size(199, 48);
+            this.sourceDestinationGroupbox.TabIndex = 13;
+            this.sourceDestinationGroupbox.TabStop = false;
+            // 
             // NewDatabaseForm
             // 
             this.AcceptButton = this.connectButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(575, 395);
+            this.Controls.Add(this.sourceDestinationGroupbox);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.DatabaseTab);
             this.Name = "NewDatabaseForm";
@@ -581,6 +618,8 @@
             this.accessTabPage.PerformLayout();
             this.odbcTabPage.ResumeLayout(false);
             this.odbcTabPage.PerformLayout();
+            this.sourceDestinationGroupbox.ResumeLayout(false);
+            this.sourceDestinationGroupbox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -635,5 +674,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button connectButton;
+        private System.Windows.Forms.RadioButton sourceRadioButton;
+        private System.Windows.Forms.RadioButton destinationRadioButton;
+        private System.Windows.Forms.GroupBox sourceDestinationGroupbox;
     }
 }
