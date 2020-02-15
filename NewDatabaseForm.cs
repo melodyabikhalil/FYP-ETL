@@ -51,23 +51,37 @@ namespace FYP_ETL
                 database = this.CreateMysqlDatabase(); //to be removed once odbc is implemented
             }
 
-            bool connected = database.Connect();
-            if (connected)
+            bool databaseExistsAlready = this.DatabaseExistsAlready(database);
+            if (databaseExistsAlready)
             {
-                Global.Databases.Add(database);
-                var pressed = MessageBox.Show("Successfully connected to database", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var pressed = MessageBox.Show("Already connected to this database", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 if (pressed == DialogResult.OK)
                 {
                     this.Close();
                 }
-            } else
+            }
+            else
             {
-                var pressed = MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-                if (pressed == DialogResult.Cancel)
+                bool connected = database.Connect();
+                if (connected)
                 {
-                    this.Close();
+                    Global.Databases.Add(database);
+                    var pressed = MessageBox.Show("Successfully connected to database", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (pressed == DialogResult.OK)
+                    {
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    var pressed = MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    if (pressed == DialogResult.Cancel)
+                    {
+                        this.Close();
+                    }
                 }
             }
+            
 
             MessageBox.Show(Global.Databases.Count.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -130,6 +144,18 @@ namespace FYP_ETL
                         func(control.Controls);
             };
             func(Controls);
+        }
+
+        private bool DatabaseExistsAlready(Database database)
+        {
+            foreach (Database existingDatabase in Global.Databases)
+            {
+                if (database.Equals(existingDatabase))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
