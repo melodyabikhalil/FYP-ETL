@@ -50,11 +50,11 @@ namespace FYP_ETL.Base
         }
 
         abstract public List<string> GetTablesNames();
-        abstract public bool SetFieldsWithDetails(string tableName);
         abstract public bool Connect();
         abstract public bool Close();
         abstract public bool Insert(string tableName);
-        abstract public bool SelectAll(string tableName);
+        abstract public bool Select(string tableName, string query);
+        abstract public bool SetDatatableSchema(string tableName);
 
         //for later
         //abstract public void Update(DataTable dataTable);

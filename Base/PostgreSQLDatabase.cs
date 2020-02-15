@@ -29,9 +29,9 @@ namespace FYP_ETL.Base
                 "Password={3};" +
                 "Database={4};",
                  this.serverName, this.port, this.username, this.password, this.databaseName);
-            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
             try
             {
+                NpgsqlConnection connection = new NpgsqlConnection(connectionString);
                 connection.Open();
                 this.connection = connection;
                 return true;
@@ -81,17 +81,12 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SelectAll(string tableName)
+        public override bool Select(string tableName, string query)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
             {
                 return false;
-            }
-            string query = "SELECT * FROM \"" + tableName + "\";";
-            if (this.schema != "")
-            {
-                query = "SELECT * FROM " + this.schema + ".\"" + tableName + "\";";
             }
             NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
 
@@ -125,7 +120,7 @@ namespace FYP_ETL.Base
                 return false;
             }
 
-            List<string> fieldsNames = table.GetFieldsNames();
+            List<string> fieldsNames = table.GetColumnsNames();
             string fields = "(" + string.Join(",", fieldsNames.Select(x => string.Format("\"{0}\"", x))) + ")";
             Dictionary<string, NpgsqlDbType> columnsWithTypes = HelperPostgreSQL.GetsColumnsWithTypes(dataTable.Columns);
             string values = HelperPostgreSQL.GetValuesStringForInsertQuery(dataTable.Columns);
@@ -156,109 +151,15 @@ namespace FYP_ETL.Base
             }
         }
 
-        public override bool SetFieldsWithDetails(string tableName)
+        public override bool SetDatatableSchema(string tableName)
         {
-            Table table = this.tables[this.GetTableIndexByName(tableName)];
-            if (table == null)
-            {
-                return false;
-            }
-            string query = "SELECT column_name,data_type,character_maximum_length,is_nullable FROM information_schema.columns where table_name = '" + tableName + "';";
-            NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
-
-            try
-            {
-                command.Prepare();
-                NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(command);
-
-                DataSet dataSet = new DataSet();
-
-                dataAdapter.Fill(dataSet);
-                table.fields = this.ParseFieldsDataTable(dataSet.Tables[0]);
-                this.SetPrimaryKeyField(tableName);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-        }
-
-        private List<Field> ParseFieldsDataTable(DataTable datatable)
-        {
-            List<Field> fields = new List<Field>();
-            Field field;
-            foreach (DataRow dataRow in datatable.Rows)
-            {
-                string fieldName = dataRow.Field<string>("column_name");
-                string type = dataRow.Field<string>("data_type");
-                Nullable<int> length = dataRow.Field<Nullable<Int32>>("character_maximum_length");
-                string isNullableString = dataRow.Field<string>("is_nullable");
-                bool canBeNull = false;
-                if (isNullableString == "YES")
-                {
-                    canBeNull = true;
-                }
-                field = new Field(fieldName, type, length, canBeNull);
-                fields.Add(field);
-            }
-            return fields;
-        }
-
-        private string GetPrimaryKeyName(string tableName)
-        {
-            string query = "SELECT a.attname "
-                             + "FROM pg_index i "
-                             + "JOIN   pg_attribute a ON a.attrelid = i.indrelid "
-                             + "AND a.attnum = ANY(i.indkey) "
-                             + "WHERE i.indrelid = '\"" + tableName + "\"'::regclass "
-                             + "AND i.indisprimary;";
+            string tableInQuery = tableName;
             if (this.schema != "")
             {
-                query = "SELECT a.attname "
-                            + "FROM pg_index i "
-                            + "JOIN   pg_attribute a ON a.attrelid = i.indrelid "
-                            + "AND a.attnum = ANY(i.indkey) "
-                            + "WHERE i.indrelid = '" + this.schema + ".\"" + tableName + "\"'::regclass "
-                            + "AND i.indisprimary;";
+                tableInQuery = this.schema + ".\"" + tableName + "\"";
             }
-            NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
-
-            try
-            {
-                NpgsqlDataReader reader = command.ExecuteReader();
-                string primaryKeyName = "";
-                while (reader.Read())
-                {
-                    primaryKeyName = reader.GetString(0);
-                }
-                return primaryKeyName;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        private void SetPrimaryKeyField(string tableName)
-        {
-            Table table = this.tables[this.GetTableIndexByName(tableName)];
-            if (table == null)
-            {
-                return;
-            }
-            string primaryKeyName = this.GetPrimaryKeyName(tableName);
-            table.primaryKeyName = primaryKeyName;
-            foreach (Field field in table.fields)
-            {
-                if (field.fieldName == primaryKeyName)
-                {
-                    field.isPrimaryKey = true;
-                    return;
-                }
-            }
+            string query = "SELECT * FROM " + tableInQuery + " WHERE 1=0;";
+            return this.Select(tableName, query);
         }
     }
 }
