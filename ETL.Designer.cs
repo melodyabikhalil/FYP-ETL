@@ -28,17 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mainMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.destinationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sourceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.destinationToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -74,34 +68,6 @@
             this.destinationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.destinationToolStripMenuItem.Text = "Destination";
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addDatabaseToolStripMenuItem,
-            this.sourceToolStripMenuItem1,
-            this.destinationToolStripMenuItem1});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
-            // 
-            // addDatabaseToolStripMenuItem
-            // 
-            this.addDatabaseToolStripMenuItem.Name = "addDatabaseToolStripMenuItem";
-            this.addDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addDatabaseToolStripMenuItem.Text = "Add Database";
-            // 
-            // sourceToolStripMenuItem1
-            // 
-            this.sourceToolStripMenuItem1.Name = "sourceToolStripMenuItem1";
-            this.sourceToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.sourceToolStripMenuItem1.Text = "Source";
-            // 
-            // destinationToolStripMenuItem1
-            // 
-            this.destinationToolStripMenuItem1.Name = "destinationToolStripMenuItem1";
-            this.destinationToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.destinationToolStripMenuItem1.Text = "Destination";
-            // 
             // ETL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,7 +80,6 @@
             this.Load += new System.EventHandler(this.ETL_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,10 +91,6 @@
         private System.Windows.Forms.ToolStripMenuItem mainMenuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem destinationToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem addDatabaseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sourceToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem destinationToolStripMenuItem1;
     }
 }
 
