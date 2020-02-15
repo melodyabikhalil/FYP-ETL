@@ -148,5 +148,13 @@ namespace FYP_ETL.Base
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
             return this.Select(tableName, query);
         }
+        public override bool Equals(Object obj)
+        {
+            return (obj is SQLServerDatabase)
+                && ((SQLServerDatabase)obj).databaseName == this.databaseName
+                 && ((SQLServerDatabase)obj).username == this.username
+                  && ((SQLServerDatabase)obj).password == this.password
+                   && ((SQLServerDatabase)obj).serverName == this.serverName;
+        }
     }
 }

@@ -134,5 +134,10 @@ namespace FYP_ETL.Base
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
             return this.Select(tableName, query);
         }
+
+        public override bool Equals(Object obj)
+        {
+            return (obj is AccessDatabase) && ((AccessDatabase)obj).path == this.path;
+        }
     }
 }
