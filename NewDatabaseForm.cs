@@ -83,6 +83,8 @@ namespace FYP_ETL
                 var pressed = MessageBox.Show("Successfully connected to database", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (pressed == DialogResult.OK)
                 {
+                    ETLParent.ShowDestinationTreeView();
+                    ETLParent.ShowSourceTreeView();
                     this.Close();
                 }
             }
@@ -94,11 +96,6 @@ namespace FYP_ETL
                     this.Close();
                 }
             }
-            
-            
-
-            MessageBox.Show(Global.DatabasesSource.Count.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
         private MySQLDatabase CreateMysqlDatabase()

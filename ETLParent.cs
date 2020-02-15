@@ -13,10 +13,18 @@ namespace FYP_ETL
     public partial class ETLParent : Form
     {
         private int childFormNumber = 0;
+        private static ETLParent _instance;
 
         public ETLParent()
         {
             InitializeComponent();
+            _instance = this;
+            this.HideTreeViews();
+        }
+
+        private void ETLParent_Activated(object sender, System.EventArgs e)
+        {
+            MessageBox.Show("activated:");
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -106,13 +114,37 @@ namespace FYP_ETL
 
         private void ETLParent_Load(object sender, EventArgs e)
         {
-
         }
 
         private void Add_Click(object sender, EventArgs e)
         {
             NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
             newDatabaseForm.Show();
+        }
+
+        private void SourceTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        private void HideTreeViews()
+        {
+            destinationDatabasesLabel.Visible = false;
+            sourceDatabasesLabel.Visible = false;
+            destinationTreeView.Visible = false;
+            sourceTreeView.Visible = false;
+        }
+
+        public static void ShowSourceTreeView()
+        {
+            _instance.sourceDatabasesLabel.Visible = true;
+            _instance.sourceTreeView.Visible = true;
+        }
+
+        public static void ShowDestinationTreeView()
+        {
+            _instance.destinationDatabasesLabel.Visible = true;
+            _instance.destinationTreeView.Visible = true;
         }
     }
 }

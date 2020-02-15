@@ -72,6 +72,10 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.sourceTreeView = new System.Windows.Forms.TreeView();
+            this.destinationTreeView = new System.Windows.Forms.TreeView();
+            this.sourceDatabasesLabel = new System.Windows.Forms.Label();
+            this.destinationDatabasesLabel = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -89,7 +93,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(632, 24);
+            this.menuStrip.Size = new System.Drawing.Size(943, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -346,7 +350,7 @@
             this.helpToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(632, 25);
+            this.toolStrip.Size = new System.Drawing.Size(943, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -420,9 +424,9 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 431);
+            this.statusStrip.Location = new System.Drawing.Point(0, 624);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(632, 22);
+            this.statusStrip.Size = new System.Drawing.Size(943, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -432,11 +436,50 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // sourceTreeView
+            // 
+            this.sourceTreeView.Location = new System.Drawing.Point(12, 88);
+            this.sourceTreeView.Name = "sourceTreeView";
+            this.sourceTreeView.Size = new System.Drawing.Size(154, 358);
+            this.sourceTreeView.TabIndex = 4;
+            this.sourceTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.SourceTreeView_AfterSelect);
+            // 
+            // destinationTreeView
+            // 
+            this.destinationTreeView.Location = new System.Drawing.Point(777, 88);
+            this.destinationTreeView.Name = "destinationTreeView";
+            this.destinationTreeView.Size = new System.Drawing.Size(154, 358);
+            this.destinationTreeView.TabIndex = 5;
+            // 
+            // sourceDatabasesLabel
+            // 
+            this.sourceDatabasesLabel.AutoSize = true;
+            this.sourceDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.sourceDatabasesLabel.Location = new System.Drawing.Point(13, 72);
+            this.sourceDatabasesLabel.Name = "sourceDatabasesLabel";
+            this.sourceDatabasesLabel.Size = new System.Drawing.Size(95, 13);
+            this.sourceDatabasesLabel.TabIndex = 6;
+            this.sourceDatabasesLabel.Text = "Source Databases";
+            // 
+            // destinationDatabasesLabel
+            // 
+            this.destinationDatabasesLabel.AutoSize = true;
+            this.destinationDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.destinationDatabasesLabel.Location = new System.Drawing.Point(778, 72);
+            this.destinationDatabasesLabel.Name = "destinationDatabasesLabel";
+            this.destinationDatabasesLabel.Size = new System.Drawing.Size(114, 13);
+            this.destinationDatabasesLabel.TabIndex = 7;
+            this.destinationDatabasesLabel.Text = "Destination Databases";
+            // 
             // ETLParent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 453);
+            this.ClientSize = new System.Drawing.Size(943, 646);
+            this.Controls.Add(this.destinationDatabasesLabel);
+            this.Controls.Add(this.sourceDatabasesLabel);
+            this.Controls.Add(this.destinationTreeView);
+            this.Controls.Add(this.sourceTreeView);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
@@ -500,6 +543,10 @@
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem Add;
+        private System.Windows.Forms.TreeView sourceTreeView;
+        private System.Windows.Forms.TreeView destinationTreeView;
+        private System.Windows.Forms.Label sourceDatabasesLabel;
+        private System.Windows.Forms.Label destinationDatabasesLabel;
     }
 }
 
