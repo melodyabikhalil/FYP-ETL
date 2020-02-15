@@ -138,5 +138,13 @@ namespace FYP_ETL.Base
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
             return this.Select(tableName, query);
         }
+        public override bool Equals(Object obj)
+        {
+            return (obj is MySQLDatabase) 
+                && ((MySQLDatabase)obj).databaseName == this.databaseName
+                 && ((MySQLDatabase)obj).username == this.username
+                  && ((MySQLDatabase)obj).password == this.password
+                   && ((MySQLDatabase)obj).serverName == this.serverName;
+        }
     }
 }

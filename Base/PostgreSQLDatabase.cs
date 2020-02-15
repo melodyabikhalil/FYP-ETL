@@ -161,5 +161,15 @@ namespace FYP_ETL.Base
             string query = "SELECT * FROM " + tableInQuery + " WHERE 1=0;";
             return this.Select(tableName, query);
         }
+
+        public override bool Equals(Object obj)
+        {
+            return (obj is PostgreSQLDatabase)
+                && ((PostgreSQLDatabase)obj).databaseName == this.databaseName
+                 && ((PostgreSQLDatabase)obj).username == this.username
+                  && ((PostgreSQLDatabase)obj).password == this.password
+                   && ((PostgreSQLDatabase)obj).serverName == this.serverName
+                  && ((PostgreSQLDatabase)obj).port == this.port;
+        }
     }
 }
