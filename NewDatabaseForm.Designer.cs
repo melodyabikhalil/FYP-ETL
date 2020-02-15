@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mysqlConnectButton = new System.Windows.Forms.Button();
             this.DatabaseTab = new System.Windows.Forms.TabControl();
             this.MysqlTabPage = new System.Windows.Forms.TabPage();
             this.mysqlHostTextbox = new System.Windows.Forms.TextBox();
@@ -45,7 +44,6 @@
             this.postgresSchemaLabel = new System.Windows.Forms.Label();
             this.postgresPortLabel = new System.Windows.Forms.Label();
             this.postgresHostTextbox = new System.Windows.Forms.TextBox();
-            this.postgresConnectButton = new System.Windows.Forms.Button();
             this.postgresUsernameTextbox = new System.Windows.Forms.TextBox();
             this.postgresPasswordTextbox = new System.Windows.Forms.TextBox();
             this.postgresDatabaseNameTextbox = new System.Windows.Forms.TextBox();
@@ -57,7 +55,6 @@
             this.sqlserverSchemaTextbox = new System.Windows.Forms.TextBox();
             this.sqlserverSchemaLabel = new System.Windows.Forms.Label();
             this.sqlserverHostTextbox = new System.Windows.Forms.TextBox();
-            this.sqlserverConnectButton = new System.Windows.Forms.Button();
             this.sqlserverUsernameTextbox = new System.Windows.Forms.TextBox();
             this.sqlserverPasswordTextbox = new System.Windows.Forms.TextBox();
             this.sqlserverDatabaseNameTextbox = new System.Windows.Forms.TextBox();
@@ -66,14 +63,12 @@
             this.sqlserverUsernameLabel = new System.Windows.Forms.Label();
             this.sqlserverHostLabel = new System.Windows.Forms.Label();
             this.accessTabPage = new System.Windows.Forms.TabPage();
-            this.accessConnectButton = new System.Windows.Forms.Button();
             this.accessPathTextbox = new System.Windows.Forms.TextBox();
             this.accessPathLabel = new System.Windows.Forms.Label();
             this.odbcTabPage = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.odbcConnectButton = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
@@ -81,6 +76,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.connectButton = new System.Windows.Forms.Button();
             this.DatabaseTab.SuspendLayout();
             this.MysqlTabPage.SuspendLayout();
             this.postgresTabPage.SuspendLayout();
@@ -88,17 +84,6 @@
             this.accessTabPage.SuspendLayout();
             this.odbcTabPage.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mysqlConnectButton
-            // 
-            this.mysqlConnectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mysqlConnectButton.Location = new System.Drawing.Point(392, 276);
-            this.mysqlConnectButton.Name = "mysqlConnectButton";
-            this.mysqlConnectButton.Size = new System.Drawing.Size(93, 27);
-            this.mysqlConnectButton.TabIndex = 0;
-            this.mysqlConnectButton.Text = "Connect";
-            this.mysqlConnectButton.UseVisualStyleBackColor = true;
-            this.mysqlConnectButton.Click += new System.EventHandler(this.MysqlConnectButton_Click);
             // 
             // DatabaseTab
             // 
@@ -110,14 +95,13 @@
             this.DatabaseTab.Location = new System.Drawing.Point(2, 1);
             this.DatabaseTab.Name = "DatabaseTab";
             this.DatabaseTab.SelectedIndex = 0;
-            this.DatabaseTab.Size = new System.Drawing.Size(576, 390);
+            this.DatabaseTab.Size = new System.Drawing.Size(576, 332);
             this.DatabaseTab.TabIndex = 9;
             // 
             // MysqlTabPage
             // 
             this.MysqlTabPage.BackColor = System.Drawing.Color.WhiteSmoke;
             this.MysqlTabPage.Controls.Add(this.mysqlHostTextbox);
-            this.MysqlTabPage.Controls.Add(this.mysqlConnectButton);
             this.MysqlTabPage.Controls.Add(this.mysqlUsernameTextbox);
             this.MysqlTabPage.Controls.Add(this.mysqlPasswordTextbox);
             this.MysqlTabPage.Controls.Add(this.mysqlDatabaseNameTextbox);
@@ -128,7 +112,7 @@
             this.MysqlTabPage.Location = new System.Drawing.Point(4, 22);
             this.MysqlTabPage.Name = "MysqlTabPage";
             this.MysqlTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MysqlTabPage.Size = new System.Drawing.Size(568, 364);
+            this.MysqlTabPage.Size = new System.Drawing.Size(568, 306);
             this.MysqlTabPage.TabIndex = 0;
             this.MysqlTabPage.Text = "MySQL";
             // 
@@ -137,28 +121,29 @@
             this.mysqlHostTextbox.Location = new System.Drawing.Point(176, 34);
             this.mysqlHostTextbox.Name = "mysqlHostTextbox";
             this.mysqlHostTextbox.Size = new System.Drawing.Size(309, 20);
-            this.mysqlHostTextbox.TabIndex = 16;
+            this.mysqlHostTextbox.TabIndex = 1;
+            this.mysqlHostTextbox.Text = " ";
             // 
             // mysqlUsernameTextbox
             // 
             this.mysqlUsernameTextbox.Location = new System.Drawing.Point(176, 74);
             this.mysqlUsernameTextbox.Name = "mysqlUsernameTextbox";
             this.mysqlUsernameTextbox.Size = new System.Drawing.Size(309, 20);
-            this.mysqlUsernameTextbox.TabIndex = 15;
+            this.mysqlUsernameTextbox.TabIndex = 2;
             // 
             // mysqlPasswordTextbox
             // 
             this.mysqlPasswordTextbox.Location = new System.Drawing.Point(176, 116);
             this.mysqlPasswordTextbox.Name = "mysqlPasswordTextbox";
             this.mysqlPasswordTextbox.Size = new System.Drawing.Size(309, 20);
-            this.mysqlPasswordTextbox.TabIndex = 14;
+            this.mysqlPasswordTextbox.TabIndex = 3;
             // 
             // mysqlDatabaseNameTextbox
             // 
             this.mysqlDatabaseNameTextbox.Location = new System.Drawing.Point(176, 159);
             this.mysqlDatabaseNameTextbox.Name = "mysqlDatabaseNameTextbox";
             this.mysqlDatabaseNameTextbox.Size = new System.Drawing.Size(309, 20);
-            this.mysqlDatabaseNameTextbox.TabIndex = 13;
+            this.mysqlDatabaseNameTextbox.TabIndex = 4;
             // 
             // mysqlDatabaseNameLabel
             // 
@@ -197,7 +182,7 @@
             this.mysqlHostLabel.Location = new System.Drawing.Point(52, 39);
             this.mysqlHostLabel.Name = "mysqlHostLabel";
             this.mysqlHostLabel.Size = new System.Drawing.Size(32, 15);
-            this.mysqlHostLabel.TabIndex = 9;
+            this.mysqlHostLabel.TabIndex = 0;
             this.mysqlHostLabel.Text = "Host";
             // 
             // postgresTabPage
@@ -208,7 +193,6 @@
             this.postgresTabPage.Controls.Add(this.postgresSchemaLabel);
             this.postgresTabPage.Controls.Add(this.postgresPortLabel);
             this.postgresTabPage.Controls.Add(this.postgresHostTextbox);
-            this.postgresTabPage.Controls.Add(this.postgresConnectButton);
             this.postgresTabPage.Controls.Add(this.postgresUsernameTextbox);
             this.postgresTabPage.Controls.Add(this.postgresPasswordTextbox);
             this.postgresTabPage.Controls.Add(this.postgresDatabaseNameTextbox);
@@ -219,7 +203,7 @@
             this.postgresTabPage.Location = new System.Drawing.Point(4, 22);
             this.postgresTabPage.Name = "postgresTabPage";
             this.postgresTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.postgresTabPage.Size = new System.Drawing.Size(568, 364);
+            this.postgresTabPage.Size = new System.Drawing.Size(568, 306);
             this.postgresTabPage.TabIndex = 1;
             this.postgresTabPage.Text = "PostgreSQL";
             // 
@@ -228,14 +212,14 @@
             this.postgresPortTextbox.Location = new System.Drawing.Point(179, 204);
             this.postgresPortTextbox.Name = "postgresPortTextbox";
             this.postgresPortTextbox.Size = new System.Drawing.Size(309, 20);
-            this.postgresPortTextbox.TabIndex = 29;
+            this.postgresPortTextbox.TabIndex = 5;
             // 
             // postgresSchemaTextbox
             // 
             this.postgresSchemaTextbox.Location = new System.Drawing.Point(179, 247);
             this.postgresSchemaTextbox.Name = "postgresSchemaTextbox";
             this.postgresSchemaTextbox.Size = new System.Drawing.Size(309, 20);
-            this.postgresSchemaTextbox.TabIndex = 28;
+            this.postgresSchemaTextbox.TabIndex = 6;
             // 
             // postgresSchemaLabel
             // 
@@ -262,38 +246,28 @@
             this.postgresHostTextbox.Location = new System.Drawing.Point(179, 37);
             this.postgresHostTextbox.Name = "postgresHostTextbox";
             this.postgresHostTextbox.Size = new System.Drawing.Size(309, 20);
-            this.postgresHostTextbox.TabIndex = 25;
-            // 
-            // postgresConnectButton
-            // 
-            this.postgresConnectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.postgresConnectButton.Location = new System.Drawing.Point(395, 293);
-            this.postgresConnectButton.Name = "postgresConnectButton";
-            this.postgresConnectButton.Size = new System.Drawing.Size(93, 27);
-            this.postgresConnectButton.TabIndex = 17;
-            this.postgresConnectButton.Text = "Connect";
-            this.postgresConnectButton.UseVisualStyleBackColor = true;
+            this.postgresHostTextbox.TabIndex = 1;
             // 
             // postgresUsernameTextbox
             // 
             this.postgresUsernameTextbox.Location = new System.Drawing.Point(179, 77);
             this.postgresUsernameTextbox.Name = "postgresUsernameTextbox";
             this.postgresUsernameTextbox.Size = new System.Drawing.Size(309, 20);
-            this.postgresUsernameTextbox.TabIndex = 24;
+            this.postgresUsernameTextbox.TabIndex = 2;
             // 
             // postgresPasswordTextbox
             // 
             this.postgresPasswordTextbox.Location = new System.Drawing.Point(179, 119);
             this.postgresPasswordTextbox.Name = "postgresPasswordTextbox";
             this.postgresPasswordTextbox.Size = new System.Drawing.Size(309, 20);
-            this.postgresPasswordTextbox.TabIndex = 23;
+            this.postgresPasswordTextbox.TabIndex = 3;
             // 
             // postgresDatabaseNameTextbox
             // 
             this.postgresDatabaseNameTextbox.Location = new System.Drawing.Point(179, 162);
             this.postgresDatabaseNameTextbox.Name = "postgresDatabaseNameTextbox";
             this.postgresDatabaseNameTextbox.Size = new System.Drawing.Size(309, 20);
-            this.postgresDatabaseNameTextbox.TabIndex = 22;
+            this.postgresDatabaseNameTextbox.TabIndex = 4;
             // 
             // databaseNameLabel
             // 
@@ -341,7 +315,6 @@
             this.sqlServerTabPage.Controls.Add(this.sqlserverSchemaTextbox);
             this.sqlServerTabPage.Controls.Add(this.sqlserverSchemaLabel);
             this.sqlServerTabPage.Controls.Add(this.sqlserverHostTextbox);
-            this.sqlServerTabPage.Controls.Add(this.sqlserverConnectButton);
             this.sqlServerTabPage.Controls.Add(this.sqlserverUsernameTextbox);
             this.sqlServerTabPage.Controls.Add(this.sqlserverPasswordTextbox);
             this.sqlServerTabPage.Controls.Add(this.sqlserverDatabaseNameTextbox);
@@ -352,7 +325,7 @@
             this.sqlServerTabPage.Location = new System.Drawing.Point(4, 22);
             this.sqlServerTabPage.Name = "sqlServerTabPage";
             this.sqlServerTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.sqlServerTabPage.Size = new System.Drawing.Size(568, 364);
+            this.sqlServerTabPage.Size = new System.Drawing.Size(568, 306);
             this.sqlServerTabPage.TabIndex = 2;
             this.sqlServerTabPage.Text = "SQL Server";
             // 
@@ -361,7 +334,7 @@
             this.sqlserverSchemaTextbox.Location = new System.Drawing.Point(192, 208);
             this.sqlserverSchemaTextbox.Name = "sqlserverSchemaTextbox";
             this.sqlserverSchemaTextbox.Size = new System.Drawing.Size(309, 20);
-            this.sqlserverSchemaTextbox.TabIndex = 42;
+            this.sqlserverSchemaTextbox.TabIndex = 5;
             // 
             // sqlserverSchemaLabel
             // 
@@ -378,38 +351,28 @@
             this.sqlserverHostTextbox.Location = new System.Drawing.Point(192, 41);
             this.sqlserverHostTextbox.Name = "sqlserverHostTextbox";
             this.sqlserverHostTextbox.Size = new System.Drawing.Size(309, 20);
-            this.sqlserverHostTextbox.TabIndex = 38;
-            // 
-            // sqlserverConnectButton
-            // 
-            this.sqlserverConnectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sqlserverConnectButton.Location = new System.Drawing.Point(408, 297);
-            this.sqlserverConnectButton.Name = "sqlserverConnectButton";
-            this.sqlserverConnectButton.Size = new System.Drawing.Size(93, 27);
-            this.sqlserverConnectButton.TabIndex = 30;
-            this.sqlserverConnectButton.Text = "Connect";
-            this.sqlserverConnectButton.UseVisualStyleBackColor = true;
+            this.sqlserverHostTextbox.TabIndex = 1;
             // 
             // sqlserverUsernameTextbox
             // 
             this.sqlserverUsernameTextbox.Location = new System.Drawing.Point(192, 81);
             this.sqlserverUsernameTextbox.Name = "sqlserverUsernameTextbox";
             this.sqlserverUsernameTextbox.Size = new System.Drawing.Size(309, 20);
-            this.sqlserverUsernameTextbox.TabIndex = 37;
+            this.sqlserverUsernameTextbox.TabIndex = 2;
             // 
             // sqlserverPasswordTextbox
             // 
             this.sqlserverPasswordTextbox.Location = new System.Drawing.Point(192, 123);
             this.sqlserverPasswordTextbox.Name = "sqlserverPasswordTextbox";
             this.sqlserverPasswordTextbox.Size = new System.Drawing.Size(309, 20);
-            this.sqlserverPasswordTextbox.TabIndex = 36;
+            this.sqlserverPasswordTextbox.TabIndex = 3;
             // 
             // sqlserverDatabaseNameTextbox
             // 
             this.sqlserverDatabaseNameTextbox.Location = new System.Drawing.Point(192, 166);
             this.sqlserverDatabaseNameTextbox.Name = "sqlserverDatabaseNameTextbox";
             this.sqlserverDatabaseNameTextbox.Size = new System.Drawing.Size(309, 20);
-            this.sqlserverDatabaseNameTextbox.TabIndex = 35;
+            this.sqlserverDatabaseNameTextbox.TabIndex = 4;
             // 
             // sqlserverDatabaseNameLabel
             // 
@@ -454,32 +417,21 @@
             // accessTabPage
             // 
             this.accessTabPage.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.accessTabPage.Controls.Add(this.accessConnectButton);
             this.accessTabPage.Controls.Add(this.accessPathTextbox);
             this.accessTabPage.Controls.Add(this.accessPathLabel);
             this.accessTabPage.Location = new System.Drawing.Point(4, 22);
             this.accessTabPage.Name = "accessTabPage";
             this.accessTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.accessTabPage.Size = new System.Drawing.Size(568, 364);
+            this.accessTabPage.Size = new System.Drawing.Size(568, 306);
             this.accessTabPage.TabIndex = 3;
             this.accessTabPage.Text = "MS Access";
-            // 
-            // accessConnectButton
-            // 
-            this.accessConnectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.accessConnectButton.Location = new System.Drawing.Point(408, 297);
-            this.accessConnectButton.Name = "accessConnectButton";
-            this.accessConnectButton.Size = new System.Drawing.Size(93, 27);
-            this.accessConnectButton.TabIndex = 43;
-            this.accessConnectButton.Text = "Connect";
-            this.accessConnectButton.UseVisualStyleBackColor = true;
             // 
             // accessPathTextbox
             // 
             this.accessPathTextbox.Location = new System.Drawing.Point(192, 123);
             this.accessPathTextbox.Name = "accessPathTextbox";
             this.accessPathTextbox.Size = new System.Drawing.Size(309, 20);
-            this.accessPathTextbox.TabIndex = 49;
+            this.accessPathTextbox.TabIndex = 1;
             // 
             // accessPathLabel
             // 
@@ -497,7 +449,6 @@
             this.odbcTabPage.Controls.Add(this.textBox1);
             this.odbcTabPage.Controls.Add(this.label2);
             this.odbcTabPage.Controls.Add(this.textBox2);
-            this.odbcTabPage.Controls.Add(this.odbcConnectButton);
             this.odbcTabPage.Controls.Add(this.textBox3);
             this.odbcTabPage.Controls.Add(this.textBox4);
             this.odbcTabPage.Controls.Add(this.textBox5);
@@ -508,7 +459,7 @@
             this.odbcTabPage.Location = new System.Drawing.Point(4, 22);
             this.odbcTabPage.Name = "odbcTabPage";
             this.odbcTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.odbcTabPage.Size = new System.Drawing.Size(568, 364);
+            this.odbcTabPage.Size = new System.Drawing.Size(568, 306);
             this.odbcTabPage.TabIndex = 4;
             this.odbcTabPage.Text = "ODBC";
             // 
@@ -517,7 +468,7 @@
             this.textBox1.Location = new System.Drawing.Point(192, 208);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(309, 20);
-            this.textBox1.TabIndex = 53;
+            this.textBox1.TabIndex = 5;
             // 
             // label2
             // 
@@ -534,38 +485,28 @@
             this.textBox2.Location = new System.Drawing.Point(192, 41);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(309, 20);
-            this.textBox2.TabIndex = 51;
-            // 
-            // odbcConnectButton
-            // 
-            this.odbcConnectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.odbcConnectButton.Location = new System.Drawing.Point(408, 297);
-            this.odbcConnectButton.Name = "odbcConnectButton";
-            this.odbcConnectButton.Size = new System.Drawing.Size(93, 27);
-            this.odbcConnectButton.TabIndex = 43;
-            this.odbcConnectButton.Text = "Connect";
-            this.odbcConnectButton.UseVisualStyleBackColor = true;
+            this.textBox2.TabIndex = 1;
             // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(192, 81);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(309, 20);
-            this.textBox3.TabIndex = 50;
+            this.textBox3.TabIndex = 2;
             // 
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(192, 123);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(309, 20);
-            this.textBox4.TabIndex = 49;
+            this.textBox4.TabIndex = 3;
             // 
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(192, 166);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(309, 20);
-            this.textBox5.TabIndex = 48;
+            this.textBox5.TabIndex = 4;
             // 
             // label3
             // 
@@ -607,11 +548,25 @@
             this.label6.TabIndex = 44;
             this.label6.Text = "Host";
             // 
+            // connectButton
+            // 
+            this.connectButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.connectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.connectButton.Location = new System.Drawing.Point(401, 356);
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(93, 27);
+            this.connectButton.TabIndex = 10;
+            this.connectButton.Text = "Connect";
+            this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.ConnectButton_Click);
+            // 
             // NewDatabaseForm
             // 
+            this.AcceptButton = this.connectButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(575, 395);
+            this.Controls.Add(this.connectButton);
             this.Controls.Add(this.DatabaseTab);
             this.Name = "NewDatabaseForm";
             this.Text = "Add database";
@@ -631,8 +586,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button mysqlConnectButton;
         private System.Windows.Forms.TabControl DatabaseTab;
         private System.Windows.Forms.TabPage MysqlTabPage;
         private System.Windows.Forms.TabPage postgresTabPage;
@@ -649,7 +602,6 @@
         private System.Windows.Forms.Label postgresSchemaLabel;
         private System.Windows.Forms.Label postgresPortLabel;
         private System.Windows.Forms.TextBox postgresHostTextbox;
-        private System.Windows.Forms.Button postgresConnectButton;
         private System.Windows.Forms.TextBox postgresUsernameTextbox;
         private System.Windows.Forms.TextBox postgresPasswordTextbox;
         private System.Windows.Forms.TextBox postgresDatabaseNameTextbox;
@@ -661,7 +613,6 @@
         private System.Windows.Forms.TextBox sqlserverSchemaTextbox;
         private System.Windows.Forms.Label sqlserverSchemaLabel;
         private System.Windows.Forms.TextBox sqlserverHostTextbox;
-        private System.Windows.Forms.Button sqlserverConnectButton;
         private System.Windows.Forms.TextBox sqlserverUsernameTextbox;
         private System.Windows.Forms.TextBox sqlserverPasswordTextbox;
         private System.Windows.Forms.TextBox sqlserverDatabaseNameTextbox;
@@ -670,14 +621,12 @@
         private System.Windows.Forms.Label sqlserverUsernameLabel;
         private System.Windows.Forms.Label sqlserverHostLabel;
         private System.Windows.Forms.TabPage accessTabPage;
-        private System.Windows.Forms.Button accessConnectButton;
         private System.Windows.Forms.TextBox accessPathTextbox;
         private System.Windows.Forms.Label accessPathLabel;
         private System.Windows.Forms.TabPage odbcTabPage;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button odbcConnectButton;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
@@ -685,5 +634,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button connectButton;
     }
 }
