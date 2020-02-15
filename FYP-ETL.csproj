@@ -113,11 +113,11 @@
     <Compile Include="Base\PostgreSQLDatabase.cs" />
     <Compile Include="Base\SQLServerDatabase.cs" />
     <Compile Include="Base\Table.cs" />
-    <Compile Include="ETL.cs">
+    <Compile Include="ETLParent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ETL.Designer.cs">
-      <DependentUpon>ETL.cs</DependentUpon>
+    <Compile Include="ETLParent.Designer.cs">
+      <DependentUpon>ETLParent.cs</DependentUpon>
     </Compile>
     <Compile Include="NewDatabaseForm.cs">
       <SubType>Form</SubType>
@@ -127,8 +127,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ETL.resx">
-      <DependentUpon>ETL.cs</DependentUpon>
+    <EmbeddedResource Include="ETLParent.resx">
+      <DependentUpon>ETLParent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewDatabaseForm.resx">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>
