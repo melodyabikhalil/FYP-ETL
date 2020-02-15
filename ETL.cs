@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace FYP_ETL
 {
-    public partial class Form1 : Form
+    public partial class ETL : Form
     {
-        public Form1()
+        public ETL()
         {
             InitializeComponent();
+        }
+
+        private void ETL_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainMenuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
