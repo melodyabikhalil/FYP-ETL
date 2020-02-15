@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ETLParent));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.DatabaseMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.Add = new System.Windows.Forms.ToolStripMenuItem();
             this.editMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +72,6 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.Add = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -101,6 +101,13 @@
             this.DatabaseMenu.Name = "DatabaseMenu";
             this.DatabaseMenu.Size = new System.Drawing.Size(67, 20);
             this.DatabaseMenu.Text = "&Database";
+            // 
+            // Add
+            // 
+            this.Add.Name = "Add";
+            this.Add.Size = new System.Drawing.Size(180, 22);
+            this.Add.Text = "Add";
+            this.Add.Click += new System.EventHandler(this.Add_Click);
             // 
             // editMenu
             // 
@@ -425,13 +432,7 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // Add
-            // 
-            this.Add.Name = "Add";
-            this.Add.Size = new System.Drawing.Size(180, 22);
-            this.Add.Text = "Add";
-            // 
-            // MDIParent1
+            // ETLParent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -441,8 +442,9 @@
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "MDIParent1";
-            this.Text = "MDIParent1";
+            this.Name = "ETLParent";
+            this.Text = "ETL";
+            this.Load += new System.EventHandler(this.ETLParent_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);

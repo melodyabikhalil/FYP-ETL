@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FYP_ETL.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,24 +18,23 @@ namespace FYP_ETL
             InitializeComponent();
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void MysqlConnectButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void ServerTextbox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PostgresTabPage_Click(object sender, EventArgs e)
-        {
-
+            string databaseName = mysqlDatabaseNameTextbox.Text;
+            string username = mysqlUsernameTextbox.Text;
+            string password = mysqlPasswordTextbox.Text;
+            string serverName = mysqlHostTextbox.Text;
+            MySQLDatabase mySQLDatabase = new MySQLDatabase(serverName, username, password, databaseName);
+            bool connected = mySQLDatabase.Connect();
+            if (connected)
+            {
+                
+            }
+            else
+            {
+                this.Close();
+                MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

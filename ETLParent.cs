@@ -103,5 +103,16 @@ namespace FYP_ETL
                 childForm.Close();
             }
         }
+
+        private void ETLParent_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Add_Click(object sender, EventArgs e)
+        {
+            NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
+            newDatabaseForm.Show();
+        }
     }
 }
