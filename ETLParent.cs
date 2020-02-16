@@ -158,7 +158,7 @@ namespace FYP_ETL
             dataGridUserControl.TableNameLabel = tableName;
             dataGridUserControl.GridViewSource = dataTable;
             dataGridUserControl.isSource = true;
-            dataGridUserControl.Top = tableIndex * 260 + 50;
+            dataGridUserControl.Top = tableIndex * 260 + 30;
             dataGridUserControl.Left = 50;
             dataGridUserControl.Width = 140;
             dataGridUserControl.Height = 180;

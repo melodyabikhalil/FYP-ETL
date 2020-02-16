@@ -540,6 +540,10 @@
             this.splitContainerMiddle.Location = new System.Drawing.Point(0, 0);
             this.splitContainerMiddle.Name = "splitContainerMiddle";
             // 
+            // splitContainerMiddle.Panel1
+            // 
+            this.splitContainerMiddle.Panel1.AutoScroll = true;
+            // 
             // splitContainerMiddle.Panel2
             // 
             this.splitContainerMiddle.Panel2.Controls.Add(this.splitContainerDestination);
