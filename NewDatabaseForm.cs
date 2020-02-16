@@ -55,6 +55,9 @@ namespace FYP_ETL
             bool connected = database.Connect();
             if (connected)
             {
+                database.tablesNames = database.GetTablesNames();
+                database.CreateTablesList(database.tablesNames);
+
                 bool isSource = sourceRadioButton.Checked;
                 if (isSource)
                 {
@@ -83,6 +86,7 @@ namespace FYP_ETL
                 var pressed = MessageBox.Show("Successfully connected to database", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (pressed == DialogResult.OK)
                 {
+                    this.AddNodesToTreeView(isSource, database);
                     ETLParent.ShowDestinationTreeView();
                     ETLParent.ShowSourceTreeView();
                     this.Close();
@@ -176,6 +180,17 @@ namespace FYP_ETL
             {
                 this.Close();
             }
+        }
+
+        private void AddNodesToTreeView(bool isSource, Database database)
+        {
+            TreeView treeview = ETLParent.GetDestinationTreeView();
+            if (isSource)
+            {
+                treeview = ETLParent.GetSourceTreeView();
+            }
+            TreeNode node = ETLParent.AddBranch(database.databaseName, treeview);
+            ETLParent.AddChildrenNodes(database.tablesNames, node.Index, treeview);
         }
     }
 }

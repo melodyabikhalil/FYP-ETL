@@ -146,5 +146,31 @@ namespace FYP_ETL
             _instance.destinationDatabasesLabel.Visible = true;
             _instance.destinationTreeView.Visible = true;
         }
+
+        public static TreeView GetSourceTreeView()
+        {
+            return _instance.sourceTreeView;
+        }
+
+        public static TreeView GetDestinationTreeView()
+        {
+            return _instance.destinationTreeView;
+        }
+
+        public static TreeNode AddBranch(string nodeName, TreeView treeView)
+        {
+            treeView.BeginUpdate();
+            TreeNode treeNodeCreated = treeView.Nodes.Add(nodeName);
+            treeView.EndUpdate();
+            return treeNodeCreated;
+        }
+
+        public static void AddChildrenNodes(List<string> childrenNames, int parentIndex, TreeView treeView)
+        {
+            foreach (string childName in childrenNames)
+            {
+                treeView.Nodes[parentIndex].Nodes.Add(childName);
+            }
+        }
     }
 }
