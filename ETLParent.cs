@@ -154,17 +154,16 @@ namespace FYP_ETL
             {
                 return;
             }
-            DataGridView dataGridView = new DataGridView();
-            dataGridView.Top = tableIndex * 260 + 50;
-            dataGridView.Left = 50;
-            dataGridView.Width = 140;
-            dataGridView.Height = 180;
-            dataGridView.DataSource = dataTable;
-            dataGridView.AllowUserToAddRows = false;
-            dataGridView.RowHeadersVisible = false;
-            dataGridView.ColumnHeadersVisible = false;
-            dataGridView.Show();
-            splitContainerMiddle.Panel1.Controls.Add(dataGridView);
+            DataGridUserControl dataGridUserControl = new DataGridUserControl();
+            dataGridUserControl.TableNameLabel = tableName;
+            dataGridUserControl.GridViewSource = dataTable;
+            dataGridUserControl.isSource = true;
+            dataGridUserControl.Top = tableIndex * 260 + 50;
+            dataGridUserControl.Left = 50;
+            dataGridUserControl.Width = 140;
+            dataGridUserControl.Height = 180;
+            dataGridUserControl.Show();
+            splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
         }
 
         private void HideMainContainer()

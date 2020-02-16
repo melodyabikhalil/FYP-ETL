@@ -114,6 +114,12 @@
     <Compile Include="Base\PostgreSQLDatabase.cs" />
     <Compile Include="Base\SQLServerDatabase.cs" />
     <Compile Include="Base\Table.cs" />
+    <Compile Include="DataGridUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataGridUserControl.Designer.cs">
+      <DependentUpon>DataGridUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ETLParent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DataGridUserControl.resx">
+      <DependentUpon>DataGridUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ETLParent.resx">
       <DependentUpon>ETLParent.cs</DependentUpon>
     </EmbeddedResource>

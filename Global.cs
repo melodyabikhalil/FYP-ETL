@@ -78,5 +78,25 @@ namespace FYP_ETL
             }
             return -1;
         }
+
+        public static void RemoveTable(bool isSource, string tableName)
+        {
+            if (isSource)
+            {
+                tablesSourceExpanded.Remove(GetSourceTableByName(tableName));
+            }
+        }
+
+        public static Table GetSourceTableByName(string tableName)
+        {
+            foreach (Table table in tablesSourceExpanded)
+            {
+                if (table.tableName == tableName)
+                {
+                    return table;
+                }
+            }
+            return null;
+        }
     }
 }
