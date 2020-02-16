@@ -30,5 +30,53 @@ namespace FYP_ETL
             get { return tablesSourceExpanded; }
             set { tablesSourceExpanded = value; }
         }
+
+        public static Database GetSourceDatabaseByName(string databaseName)
+        {
+            foreach(Database database in databasesSource)
+            {
+                if (database.databaseName == databaseName)
+                {
+                    return database;
+                }
+            }
+            return null;
+        }
+
+        public static Database GetDestinationDatabaseByName(string databaseName)
+        {
+            foreach (Database database in databasesDestination)
+            {
+                if (database.databaseName == databaseName)
+                {
+                    return database;
+                }
+            }
+            return null;
+        }
+
+        public static bool TableSourceAlreadyExpanded(Table table)
+        {
+            foreach (Table tableExpanded in TablesSourceExpanded)
+            {
+                if  (table == tableExpanded)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static int GetTableSourceExpandedIndex(Table table)
+        {
+            for (int i = 0; i < tablesSourceExpanded.Count; ++i)
+            {
+                if (table == tablesSourceExpanded[i])
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
 }
