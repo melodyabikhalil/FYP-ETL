@@ -19,7 +19,7 @@ namespace FYP_ETL
         {
             InitializeComponent();
             _instance = this;
-            this.HideTreeViews();
+            this.HideMainContainer();
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)
@@ -127,24 +127,14 @@ namespace FYP_ETL
 
         }
 
-        private void HideTreeViews()
+        private void HideMainContainer()
         {
-            destinationDatabasesLabel.Visible = false;
-            sourceDatabasesLabel.Visible = false;
-            destinationTreeView.Visible = false;
-            sourceTreeView.Visible = false;
+            splitContainerMain.Visible = false;
         }
 
-        public static void ShowSourceTreeView()
+        public static void ShowMainContainer()
         {
-            _instance.sourceDatabasesLabel.Visible = true;
-            _instance.sourceTreeView.Visible = true;
-        }
-
-        public static void ShowDestinationTreeView()
-        {
-            _instance.destinationDatabasesLabel.Visible = true;
-            _instance.destinationTreeView.Visible = true;
+            _instance.splitContainerMain.Visible = true;
         }
 
         public static TreeView GetSourceTreeView()
@@ -171,6 +161,16 @@ namespace FYP_ETL
             {
                 treeView.Nodes[parentIndex].Nodes.Add(childName);
             }
+        }
+
+        private void SplitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void SourceDatabasesLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -18,7 +18,7 @@ namespace FYP_ETL.Base
             {
                 int indexOfLastBackslash = this.path.LastIndexOf("\\");
                 int indexOfExtension = this.path.LastIndexOf(".");
-                this.databaseName = this.path.Substring(indexOfLastBackslash + 1, indexOfExtension - indexOfLastBackslash);
+                this.databaseName = this.path.Substring(indexOfLastBackslash + 1, indexOfExtension - indexOfLastBackslash - 1 );
             }
         }
 

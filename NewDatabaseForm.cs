@@ -65,6 +65,7 @@ namespace FYP_ETL
                     if (databaseExistsAlready)
                     {
                         this.ShowErrorDialogAndClose();
+                        return;
                     }
                     else
                     {
@@ -77,6 +78,7 @@ namespace FYP_ETL
                     if (databaseExistsAlready)
                     {
                         this.ShowErrorDialogAndClose();
+                        return;
                     }
                     else
                     {
@@ -87,8 +89,7 @@ namespace FYP_ETL
                 if (pressed == DialogResult.OK)
                 {
                     this.AddNodesToTreeView(isSource, database);
-                    ETLParent.ShowDestinationTreeView();
-                    ETLParent.ShowSourceTreeView();
+                    ETLParent.ShowMainContainer();
                     this.Close();
                 }
             }
