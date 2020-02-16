@@ -16,6 +16,7 @@ namespace FYP_ETL
         public NewDatabaseForm()
         {
             InitializeComponent();
+            this.CenterToParent();
         }
 
         private void ConnectButton_Click(object sender, EventArgs e)
