@@ -14,6 +14,12 @@ namespace FYP_ETL.Base
             base(serverName, username, password, databaseName)
         {
             this.path = path;
+            if (databaseName == null)
+            {
+                int indexOfLastBackslash = this.path.LastIndexOf("\\");
+                int indexOfExtension = this.path.LastIndexOf(".");
+                this.databaseName = this.path.Substring(indexOfLastBackslash + 1, indexOfExtension - indexOfLastBackslash);
+            }
         }
 
         public override bool Connect()
