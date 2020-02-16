@@ -45,6 +45,19 @@ namespace FYP_ETL.Base
             }
         }
 
+        public Table GetTable(string tableName)
+        {
+            foreach (Table table in tables)
+            {
+                if (table.tableName == tableName)
+                {
+                    return table;
+                }
+            }
+            return null;
+
+        }
+
         public override string ToString()
         {
             return String.Format("Database name:{0}, Username:{1}, Password:{2}, Server name:{3}", this.databaseName, this.username, this.password, this.serverName);
