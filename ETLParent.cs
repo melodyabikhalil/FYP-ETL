@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FYP_ETL.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -124,7 +125,46 @@ namespace FYP_ETL
 
         private void SourceTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (e.Node.Level == 0)
+            {
+                return;
+            }
+            string tableName = e.Node.Text;
+            string databaseName = e.Node.Parent.Text;
+            Database database = Global.GetSourceDatabaseByName(databaseName);
+            Table table = database.GetTable(tableName);
+            if (Global.TableSourceAlreadyExpanded(table))
+            {
+                return;
+            }
+            database.Close();
+            database.Connect();
+            bool gotTableSchema = database.SetDatatableSchema(tableName);
+            database.Close();
+            if (!gotTableSchema)
+            {
+                return;
+            }
+            List<string> columns = table.GetColumnsNames();
+            DataTable dataTable = Helper.ConvertListToDataTable(columns);
+            Global.TablesSourceExpanded.Add(table);
 
+            int tableIndex = Global.GetTableSourceExpandedIndex(table);
+            if (tableIndex == -1)
+            {
+                return;
+            }
+            DataGridView dataGridView = new DataGridView();
+            dataGridView.Top = tableIndex * 260 + 50;
+            dataGridView.Left = 50;
+            dataGridView.Width = 140;
+            dataGridView.Height = 180;
+            dataGridView.DataSource = dataTable;
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.RowHeadersVisible = false;
+            dataGridView.ColumnHeadersVisible = false;
+            dataGridView.Show();
+            splitContainerMiddle.Panel1.Controls.Add(dataGridView);
         }
 
         private void HideMainContainer()
@@ -162,6 +202,11 @@ namespace FYP_ETL
                 treeView.Nodes[parentIndex].Nodes.Add(childName);
             }
         }
+
+        //private void SourceTreeView_MouseDoubleClick(object sender, TreeViewEventArgs e)
+        //{
+        //    MessageBox.Show(e.Node.Level.ToString(), e.Node.Parent.Text.ToString());
+        //}
 
         private void SplitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {

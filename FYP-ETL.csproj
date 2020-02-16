@@ -121,6 +121,7 @@
       <DependentUpon>ETLParent.cs</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="NewDatabaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
