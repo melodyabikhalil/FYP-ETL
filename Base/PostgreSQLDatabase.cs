@@ -159,7 +159,12 @@ namespace FYP_ETL.Base
                 tableInQuery = this.schema + ".\"" + tableName + "\"";
             }
             string query = "SELECT * FROM " + tableInQuery + " WHERE 1=0;";
-            return this.Select(tableName, query);
+            bool result = this.Select(tableName, query);
+            if (result)
+            {
+                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+            }
+            return result;
         }
 
         public override bool Equals(Object obj)

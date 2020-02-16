@@ -146,7 +146,12 @@ namespace FYP_ETL.Base
         public override bool SetDatatableSchema(string tableName)
         {
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            return this.Select(tableName, query);
+            bool result = this.Select(tableName, query);
+            if (result)
+            {
+                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+            }
+            return result;
         }
         public override bool Equals(Object obj)
         {
