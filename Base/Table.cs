@@ -44,5 +44,12 @@ namespace FYP_ETL.Base
         {
             return String.Format("Name:{0}, Number of fields:{1}, Primary key:{2}", this.tableName, this.numberOfFields, this.primaryKeyName);
         }
+
+        public override bool Equals(Object obj)
+        {
+            return (obj is Table)
+                && ((Table)obj).tableName == this.tableName
+                 && ((Table)obj).columns == this.columns;
+        }
     }
 }
