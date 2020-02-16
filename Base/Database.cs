@@ -11,6 +11,7 @@ namespace FYP_ETL.Base
         public string serverName { get; set; }
         public string databaseName { get; set; }
         public List<Table> tables { get; set; }
+        public List<string> tablesNames { get; set; }
 
         public Database(string serverName, string username, string password, string databaseName)
         {
