@@ -57,7 +57,6 @@
             this.tableNameLabel.Size = new System.Drawing.Size(35, 13);
             this.tableNameLabel.TabIndex = 1;
             this.tableNameLabel.Text = "label1";
-            this.tableNameLabel.Click += new System.EventHandler(this.TableNameLabel_Click);
             // 
             // closeButton
             // 
