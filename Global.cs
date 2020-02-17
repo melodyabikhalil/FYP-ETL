@@ -92,6 +92,10 @@ namespace FYP_ETL
             {
                 tablesSourceExpanded.Remove(GetSourceTableByName(tableName));
             }
+            else
+            {
+                tableDestinationExpanded = new Table();
+            }
         }
 
         public static Table GetSourceTableByName(string tableName)
