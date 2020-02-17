@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Linq;
 
 namespace FYP_ETL.Base
 {
@@ -14,6 +15,12 @@ namespace FYP_ETL.Base
             base(serverName, username, password, databaseName)
         {
             this.path = path;
+            if (databaseName == null)
+            {
+                int indexOfLastBackslash = this.path.LastIndexOf("\\");
+                int indexOfExtension = this.path.LastIndexOf(".");
+                this.databaseName = this.path.Substring(indexOfLastBackslash + 1, indexOfExtension - indexOfLastBackslash - 1 );
+            }
         }
 
         public override bool Connect()
@@ -51,7 +58,7 @@ namespace FYP_ETL.Base
 
         public override List<string> GetTablesNames()
         {
-            string query = "SELECT MSysObjects.name FROM MSysObjects WHERE MSysObjects.type IN(1, 4, 6) AND MSysObjects.name NOT LIKE '~*' AND MSysObjects.name NOT LIKE 'MSys*' ORDER BY MSysObjects.name";
+            string query = "SELECT MSysObjects.Name AS table_name FROM MSysObjects WHERE(((Left([Name], 1)) <> \"~\") AND((Left([Name], 4)) <> \"MSys\")  AND((MSysObjects.Type)In(1, 4, 6)) AND((MSysObjects.Flags) = 0)) order by MSysObjects.Name ";
             List<string> tablesNames = new List<string>();
             OleDbCommand command = new OleDbCommand(query, this.connection);
 
@@ -132,7 +139,12 @@ namespace FYP_ETL.Base
         public override bool SetDatatableSchema(string tableName)
         {
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            return this.Select(tableName, query);
+            bool result = this.Select(tableName, query);
+            if (result)
+            {
+                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+            }
+            return result;
         }
 
         public override bool Equals(Object obj)

@@ -11,6 +11,7 @@ namespace FYP_ETL.Base
         public string serverName { get; set; }
         public string databaseName { get; set; }
         public List<Table> tables { get; set; }
+        public List<string> tablesNames { get; set; }
 
         public Database(string serverName, string username, string password, string databaseName)
         {
@@ -42,6 +43,19 @@ namespace FYP_ETL.Base
                 table.tableName = tablesNames[i];
                 this.tables.Add(table);
             }
+        }
+
+        public Table GetTable(string tableName)
+        {
+            foreach (Table table in tables)
+            {
+                if (table.tableName == tableName)
+                {
+                    return table;
+                }
+            }
+            return null;
+
         }
 
         public override string ToString()

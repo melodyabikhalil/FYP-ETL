@@ -114,14 +114,37 @@
     <Compile Include="Base\PostgreSQLDatabase.cs" />
     <Compile Include="Base\SQLServerDatabase.cs" />
     <Compile Include="Base\Table.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="DataGridUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataGridUserControl.Designer.cs">
+      <DependentUpon>DataGridUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ETLParent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ETLParent.Designer.cs">
+      <DependentUpon>ETLParent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="NewDatabaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewDatabaseForm.Designer.cs">
+      <DependentUpon>NewDatabaseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DataGridUserControl.resx">
+      <DependentUpon>DataGridUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ETLParent.resx">
+      <DependentUpon>ETLParent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewDatabaseForm.resx">
+      <DependentUpon>NewDatabaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
