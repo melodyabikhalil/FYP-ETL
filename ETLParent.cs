@@ -308,7 +308,6 @@ namespace FYP_ETL
             }
             this.splitContainerMiddle.Panel1.Invalidate();
             this.splitContainerMiddle.Panel1.Update();
-            this.splitContainerMiddle.Panel1.Refresh();
         }
         
         private void SplitContainerMiddle_Panel1_Paint(object sender, PaintEventArgs e)

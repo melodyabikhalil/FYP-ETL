@@ -46,6 +46,7 @@ namespace FYP_ETL
             ColumnsDataGridView.RowHeadersVisible = false;
             ColumnsDataGridView.ColumnHeadersVisible = false;
             ColumnsDataGridView.AllowUserToResizeRows = false;
+            ColumnsDataGridView.ReadOnly = true;
             closeButton.ForeColor = Color.Red;
         }
 
