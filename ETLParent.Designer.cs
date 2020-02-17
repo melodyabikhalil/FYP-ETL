@@ -458,6 +458,7 @@
             // sourceTreeView
             // 
             this.sourceTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sourceTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sourceTreeView.Location = new System.Drawing.Point(0, 0);
             this.sourceTreeView.Name = "sourceTreeView";
             this.sourceTreeView.Size = new System.Drawing.Size(167, 529);
@@ -467,28 +468,30 @@
             // destinationTreeView
             // 
             this.destinationTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.destinationTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.destinationTreeView.Location = new System.Drawing.Point(0, 0);
             this.destinationTreeView.Name = "destinationTreeView";
             this.destinationTreeView.Size = new System.Drawing.Size(166, 527);
             this.destinationTreeView.TabIndex = 5;
+            this.destinationTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DestinationTreeView_AfterSelect);
             // 
             // sourceDatabasesLabel
             // 
             this.sourceDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.sourceDatabasesLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sourceDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sourceDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sourceDatabasesLabel.Location = new System.Drawing.Point(0, 0);
             this.sourceDatabasesLabel.Name = "sourceDatabasesLabel";
             this.sourceDatabasesLabel.Size = new System.Drawing.Size(167, 40);
             this.sourceDatabasesLabel.TabIndex = 6;
-            this.sourceDatabasesLabel.Text = "Source Databases";
+            this.sourceDatabasesLabel.Text = "Source \r\nDatabases";
             this.sourceDatabasesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // destinationDatabasesLabel
             // 
             this.destinationDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.destinationDatabasesLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.destinationDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.destinationDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.destinationDatabasesLabel.Location = new System.Drawing.Point(0, 0);
             this.destinationDatabasesLabel.Name = "destinationDatabasesLabel";
             this.destinationDatabasesLabel.Size = new System.Drawing.Size(166, 42);
@@ -543,6 +546,7 @@
             // splitContainerMiddle.Panel1
             // 
             this.splitContainerMiddle.Panel1.AutoScroll = true;
+            this.splitContainerMiddle.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // splitContainerMiddle.Panel2
             // 

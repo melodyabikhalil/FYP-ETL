@@ -12,6 +12,7 @@ namespace FYP_ETL
         private static List<Database> databasesSource = new List<Database>();
         private static List<Database> databasesDestination = new List<Database>();
         private static List<Table> tablesSourceExpanded = new List<Table>();
+        private static Table tableDestinationExpanded = new Table();
 
         public static List<Database> DatabasesSource
         {
@@ -29,6 +30,12 @@ namespace FYP_ETL
         {
             get { return tablesSourceExpanded; }
             set { tablesSourceExpanded = value; }
+        }
+
+        public static Table TableDestinationExpanded
+        {
+            get { return tableDestinationExpanded; }
+            set { tableDestinationExpanded = value; }
         }
 
         public static Database GetSourceDatabaseByName(string databaseName)

@@ -15,8 +15,8 @@ namespace FYP_ETL
     {
         private int childFormNumber = 0;
         private static ETLParent _instance;
-        private List<DataGridUserControl> dataGridUserControls = new List<DataGridUserControl>();
-
+        private List<DataGridUserControl> dataGridUserControlsSource = new List<DataGridUserControl>();
+        private DataGridUserControl dataGridUserControlDestination = new DataGridUserControl();
         public ETLParent()
         {
             InitializeComponent();
@@ -159,13 +159,13 @@ namespace FYP_ETL
             dataGridUserControl.TableNameLabel = tableName;
             dataGridUserControl.GridViewSource = dataTable;
             dataGridUserControl.isSource = true;
-            dataGridUserControl.Top = tableIndex * 260 + 15;
+            dataGridUserControl.Top = tableIndex * 200 + 10;
             dataGridUserControl.Left = 50;
             dataGridUserControl.Width = 140;
             dataGridUserControl.Height = 180;
             dataGridUserControl.Show();
             splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
-            this.dataGridUserControls.Add(dataGridUserControl);
+            this.dataGridUserControlsSource.Add(dataGridUserControl);
         }
 
         private void HideMainContainer()
@@ -209,19 +209,68 @@ namespace FYP_ETL
         //    MessageBox.Show(e.Node.Level.ToString(), e.Node.Parent.Text.ToString());
         //}
 
-        public static void ReloadGridUserControls(string tableName, DataTable dataTable)
+        public static void ReloadGridUserControls(string tableName, DataTable dataTable, bool isSource)
         {
-            foreach (DataGridUserControl dataGridUserControl in _instance.dataGridUserControls)
+            if (isSource)
             {
-                if (dataGridUserControl.TableNameLabel == tableName && dataGridUserControl.GridViewSource == dataTable)
+                foreach (DataGridUserControl dataGridUserControl in _instance.dataGridUserControlsSource)
                 {
-                    _instance.dataGridUserControls.Remove(dataGridUserControl);
-                    break;
+                    if (dataGridUserControl.TableNameLabel == tableName && dataGridUserControl.GridViewSource == dataTable)
+                    {
+                        _instance.dataGridUserControlsSource.Remove(dataGridUserControl);
+                        break;
+                    }
                 }
-            }
-            for (int i = 0; i < _instance.dataGridUserControls.Count; ++i)
+                for (int i = 0; i < _instance.dataGridUserControlsSource.Count; ++i)
+                {
+                    _instance.dataGridUserControlsSource[i].Top = i * 200 + 10;
+                }
+            } 
+            else
             {
-                _instance.dataGridUserControls[i].Top = i * 260 + 15;
+                _instance.dataGridUserControlDestination = new DataGridUserControl();
+            }
+        }
+
+        private void DestinationTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Level == 0)
+            {
+                return;
+            }
+            string tableName = e.Node.Text;
+            string databaseName = e.Node.Parent.Text;
+            Database database = Global.GetDestinationDatabaseByName(databaseName);
+            Table table = database.GetTable(tableName);
+            if (this.dataGridUserControlDestination.TableNameLabel != "label1")
+            {
+                MessageBox.Show("Only 1 database destination can be expanded", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                database.Close();
+                database.Connect();
+                bool gotTableSchema = database.SetDatatableSchema(tableName);
+                database.Close();
+                if (!gotTableSchema)
+                {
+                    return;
+                }
+                List<string> columns = table.GetColumnsNames();
+                DataTable dataTable = Helper.ConvertListToDataTable(columns);
+                Global.TableDestinationExpanded = table;
+
+                DataGridUserControl dataGridUserControl = new DataGridUserControl();
+                dataGridUserControl.TableNameLabel = tableName;
+                dataGridUserControl.GridViewSource = dataTable;
+                dataGridUserControl.isSource = false;
+                dataGridUserControl.Top = 10;
+                dataGridUserControl.Left = 450; //to be fixed
+                dataGridUserControl.Width = 140;
+                dataGridUserControl.Height = 280;
+                dataGridUserControl.Show();
+                splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
+                this.dataGridUserControlDestination = dataGridUserControl;
             }
         }
     }

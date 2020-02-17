@@ -86,13 +86,9 @@ namespace FYP_ETL
                         Global.DatabasesDestination.Add(database);
                     }
                 }
-                var pressed = MessageBox.Show("Successfully connected to database", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (pressed == DialogResult.OK)
-                {
-                    this.AddNodesToTreeView(isSource, database);
-                    ETLParent.ShowMainContainer();
-                    this.Close();
-                }
+                this.AddNodesToTreeView(isSource, database);
+                ETLParent.ShowMainContainer();
+                this.Close();
             }
             else
             {

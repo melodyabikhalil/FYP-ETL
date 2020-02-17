@@ -51,7 +51,7 @@ namespace FYP_ETL
 
             }
             this.Parent.Controls.Remove(this);
-            ETLParent.ReloadGridUserControls(this.tableNameLabel.Text, this.GridViewSource);
+            ETLParent.ReloadGridUserControls(this.tableNameLabel.Text, this.GridViewSource, this.isSource);
         }
     }
 }

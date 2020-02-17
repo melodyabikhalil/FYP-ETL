@@ -139,6 +139,7 @@
             // 
             this.mysqlPasswordTextbox.Location = new System.Drawing.Point(176, 116);
             this.mysqlPasswordTextbox.Name = "mysqlPasswordTextbox";
+            this.mysqlPasswordTextbox.PasswordChar = '*';
             this.mysqlPasswordTextbox.Size = new System.Drawing.Size(309, 20);
             this.mysqlPasswordTextbox.TabIndex = 3;
             // 
@@ -263,6 +264,7 @@
             // 
             this.postgresPasswordTextbox.Location = new System.Drawing.Point(179, 119);
             this.postgresPasswordTextbox.Name = "postgresPasswordTextbox";
+            this.postgresPasswordTextbox.PasswordChar = '*';
             this.postgresPasswordTextbox.Size = new System.Drawing.Size(309, 20);
             this.postgresPasswordTextbox.TabIndex = 3;
             // 
@@ -368,6 +370,7 @@
             // 
             this.sqlserverPasswordTextbox.Location = new System.Drawing.Point(192, 123);
             this.sqlserverPasswordTextbox.Name = "sqlserverPasswordTextbox";
+            this.sqlserverPasswordTextbox.PasswordChar = '*';
             this.sqlserverPasswordTextbox.Size = new System.Drawing.Size(309, 20);
             this.sqlserverPasswordTextbox.TabIndex = 3;
             // 
@@ -502,6 +505,7 @@
             // 
             this.textBox4.Location = new System.Drawing.Point(192, 123);
             this.textBox4.Name = "textBox4";
+            this.textBox4.PasswordChar = '*';
             this.textBox4.Size = new System.Drawing.Size(309, 20);
             this.textBox4.TabIndex = 3;
             // 
