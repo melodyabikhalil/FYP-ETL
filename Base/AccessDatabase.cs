@@ -58,7 +58,7 @@ namespace FYP_ETL.Base
 
         public override List<string> GetTablesNames()
         {
-            string query = "SELECT MSysObjects.name FROM MSysObjects WHERE MSysObjects.type IN(1, 4, 6) AND MSysObjects.name NOT LIKE '~*' AND MSysObjects.name NOT LIKE 'MSys*' ORDER BY MSysObjects.name";
+            string query = "SELECT MSysObjects.Name AS table_name FROM MSysObjects WHERE(((Left([Name], 1)) <> \"~\") AND((Left([Name], 4)) <> \"MSys\")  AND((MSysObjects.Type)In(1, 4, 6)) AND((MSysObjects.Flags) = 0)) order by MSysObjects.Name ";
             List<string> tablesNames = new List<string>();
             OleDbCommand command = new OleDbCommand(query, this.connection);
 
