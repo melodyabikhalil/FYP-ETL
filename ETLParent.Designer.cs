@@ -474,26 +474,28 @@
             // 
             // sourceDatabasesLabel
             // 
-            this.sourceDatabasesLabel.AutoSize = true;
             this.sourceDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.sourceDatabasesLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sourceDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sourceDatabasesLabel.Location = new System.Drawing.Point(20, 16);
+            this.sourceDatabasesLabel.Location = new System.Drawing.Point(0, 0);
             this.sourceDatabasesLabel.Name = "sourceDatabasesLabel";
-            this.sourceDatabasesLabel.Size = new System.Drawing.Size(125, 17);
+            this.sourceDatabasesLabel.Size = new System.Drawing.Size(167, 40);
             this.sourceDatabasesLabel.TabIndex = 6;
             this.sourceDatabasesLabel.Text = "Source Databases";
+            this.sourceDatabasesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.sourceDatabasesLabel.Click += new System.EventHandler(this.SourceDatabasesLabel_Click);
             // 
             // destinationDatabasesLabel
             // 
-            this.destinationDatabasesLabel.AutoSize = true;
             this.destinationDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.destinationDatabasesLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.destinationDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.destinationDatabasesLabel.Location = new System.Drawing.Point(12, 16);
+            this.destinationDatabasesLabel.Location = new System.Drawing.Point(0, 0);
             this.destinationDatabasesLabel.Name = "destinationDatabasesLabel";
-            this.destinationDatabasesLabel.Size = new System.Drawing.Size(151, 17);
+            this.destinationDatabasesLabel.Size = new System.Drawing.Size(166, 42);
             this.destinationDatabasesLabel.TabIndex = 7;
             this.destinationDatabasesLabel.Text = "Destination Databases";
+            this.destinationDatabasesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // splitContainerMain
             // 
@@ -595,7 +597,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
             this.splitContainerMain.ResumeLayout(false);
             this.splitContainerSource.Panel1.ResumeLayout(false);
-            this.splitContainerSource.Panel1.PerformLayout();
             this.splitContainerSource.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerSource)).EndInit();
             this.splitContainerSource.ResumeLayout(false);
@@ -603,7 +604,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMiddle)).EndInit();
             this.splitContainerMiddle.ResumeLayout(false);
             this.splitContainerDestination.Panel1.ResumeLayout(false);
-            this.splitContainerDestination.Panel1.PerformLayout();
             this.splitContainerDestination.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerDestination)).EndInit();
             this.splitContainerDestination.ResumeLayout(false);
