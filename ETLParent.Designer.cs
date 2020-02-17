@@ -483,7 +483,6 @@
             this.sourceDatabasesLabel.TabIndex = 6;
             this.sourceDatabasesLabel.Text = "Source Databases";
             this.sourceDatabasesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.sourceDatabasesLabel.Click += new System.EventHandler(this.SourceDatabasesLabel_Click);
             // 
             // destinationDatabasesLabel
             // 
@@ -526,7 +525,6 @@
             // splitContainerSource.Panel1
             // 
             this.splitContainerSource.Panel1.Controls.Add(this.sourceDatabasesLabel);
-            this.splitContainerSource.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.SplitContainer1_Panel1_Paint);
             // 
             // splitContainerSource.Panel2
             // 

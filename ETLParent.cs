@@ -15,6 +15,7 @@ namespace FYP_ETL
     {
         private int childFormNumber = 0;
         private static ETLParent _instance;
+        private List<DataGridUserControl> dataGridUserControls = new List<DataGridUserControl>();
 
         public ETLParent()
         {
@@ -158,12 +159,13 @@ namespace FYP_ETL
             dataGridUserControl.TableNameLabel = tableName;
             dataGridUserControl.GridViewSource = dataTable;
             dataGridUserControl.isSource = true;
-            dataGridUserControl.Top = tableIndex * 260 + 30;
+            dataGridUserControl.Top = tableIndex * 260 + 15;
             dataGridUserControl.Left = 50;
             dataGridUserControl.Width = 140;
             dataGridUserControl.Height = 180;
             dataGridUserControl.Show();
             splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
+            this.dataGridUserControls.Add(dataGridUserControl);
         }
 
         private void HideMainContainer()
@@ -207,14 +209,20 @@ namespace FYP_ETL
         //    MessageBox.Show(e.Node.Level.ToString(), e.Node.Parent.Text.ToString());
         //}
 
-        private void SplitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        public static void ReloadGridUserControls(string tableName, DataTable dataTable)
         {
-
-        }
-
-        private void SourceDatabasesLabel_Click(object sender, EventArgs e)
-        {
-
+            foreach (DataGridUserControl dataGridUserControl in _instance.dataGridUserControls)
+            {
+                if (dataGridUserControl.TableNameLabel == tableName && dataGridUserControl.GridViewSource == dataTable)
+                {
+                    _instance.dataGridUserControls.Remove(dataGridUserControl);
+                    break;
+                }
+            }
+            for (int i = 0; i < _instance.dataGridUserControls.Count; ++i)
+            {
+                _instance.dataGridUserControls[i].Top = i * 260 + 15;
+            }
         }
     }
 }
