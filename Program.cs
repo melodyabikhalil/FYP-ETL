@@ -9,17 +9,12 @@ namespace FYP_ETL
 {
     static class Program
     {
-
-        static List<Database> databases;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            databases = new List<Database>();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ETLParent());
