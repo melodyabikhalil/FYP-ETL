@@ -17,11 +17,13 @@ namespace FYP_ETL
         private static ETLParent _instance;
         private List<DataGridUserControl> dataGridUserControlsSource = new List<DataGridUserControl>();
         private DataGridUserControl dataGridUserControlDestination = new DataGridUserControl();
+        private List<Point> points = new List<Point>();
         public ETLParent()
         {
             InitializeComponent();
             _instance = this;
             this.HideMainContainer();
+            this.joinButton.Visible = false;
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)
@@ -166,6 +168,7 @@ namespace FYP_ETL
             dataGridUserControl.Show();
             splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
             this.dataGridUserControlsSource.Add(dataGridUserControl);
+            this.joinButton.Visible = true;
         }
 
         private void HideMainContainer()
@@ -221,11 +224,16 @@ namespace FYP_ETL
                         break;
                     }
                 }
+                if (_instance.dataGridUserControlsSource.Count == 0)
+                {
+                    _instance.joinButton.Visible = false;
+                    return;
+                }
                 for (int i = 0; i < _instance.dataGridUserControlsSource.Count; ++i)
                 {
                     _instance.dataGridUserControlsSource[i].Top = i * 200 + 10;
                 }
-            } 
+            }
             else
             {
                 _instance.dataGridUserControlDestination = new DataGridUserControl();
@@ -271,6 +279,52 @@ namespace FYP_ETL
                 dataGridUserControl.Show();
                 splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
                 this.dataGridUserControlDestination = dataGridUserControl;
+            }
+        }
+
+        private void JoinButton_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridUserControl dataGridUserControl in this.dataGridUserControlsSource)
+            {
+                DataGridViewCell dgv = dataGridUserControl.DataGridViewColumns.CurrentCell;
+                if (dataGridUserControl.DataGridViewColumns.CurrentCell.Selected)
+                {
+                    Point point = new Point(dataGridUserControl.Right, (int)(dataGridUserControl.Top + 30 + dataGridUserControl.DataGridViewColumns.RowTemplate.Height * 1.2 * dataGridUserControl.DataGridViewColumns.CurrentCell.RowIndex));
+                    bool pointExists = false;
+                    foreach (Point existingPoint in points)
+                    {
+                        if (existingPoint.X == point.X && existingPoint.Y == point.Y)
+                        {
+                            pointExists = true;
+                            break;
+                        }
+                    }
+                    if (!pointExists)
+                    {
+                        points.Add(point);
+                    }
+                }
+            }
+            this.splitContainerMiddle.Panel1.Invalidate();
+            this.splitContainerMiddle.Panel1.Update();
+            this.splitContainerMiddle.Panel1.Refresh();
+        }
+        
+        private void SplitContainerMiddle_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+            if (points.Count > 1)
+            {
+                for (int i = 0; i < points.Count - 1; ++i)
+                {
+                    for (int j = i+1; j < points.Count; ++j)
+                    {
+                        Point cornerOne = new Point(points[i].X + 20, points[i].Y);
+                        Point cornertwo = new Point(points[j].X + 20, points[j].Y);
+                        e.Graphics.DrawLine(Pens.Black, points[i], cornerOne);
+                        e.Graphics.DrawLine(Pens.Black, points[j], cornertwo);
+                        e.Graphics.DrawLine(Pens.Black, cornerOne, cornertwo);
+                    }
+                }
             }
         }
     }

@@ -80,6 +80,7 @@
             this.splitContainerSource = new System.Windows.Forms.SplitContainer();
             this.splitContainerMiddle = new System.Windows.Forms.SplitContainer();
             this.splitContainerDestination = new System.Windows.Forms.SplitContainer();
+            this.joinButton = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -92,6 +93,7 @@
             this.splitContainerSource.Panel2.SuspendLayout();
             this.splitContainerSource.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMiddle)).BeginInit();
+            this.splitContainerMiddle.Panel1.SuspendLayout();
             this.splitContainerMiddle.Panel2.SuspendLayout();
             this.splitContainerMiddle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerDestination)).BeginInit();
@@ -546,7 +548,9 @@
             // splitContainerMiddle.Panel1
             // 
             this.splitContainerMiddle.Panel1.AutoScroll = true;
+            this.splitContainerMiddle.Panel1.Controls.Add(this.joinButton);
             this.splitContainerMiddle.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainerMiddle.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.SplitContainerMiddle_Panel1_Paint);
             // 
             // splitContainerMiddle.Panel2
             // 
@@ -573,6 +577,16 @@
             this.splitContainerDestination.Size = new System.Drawing.Size(166, 573);
             this.splitContainerDestination.SplitterDistance = 42;
             this.splitContainerDestination.TabIndex = 0;
+            // 
+            // joinButton
+            // 
+            this.joinButton.Location = new System.Drawing.Point(0, -1);
+            this.joinButton.Name = "joinButton";
+            this.joinButton.Size = new System.Drawing.Size(53, 23);
+            this.joinButton.TabIndex = 0;
+            this.joinButton.Text = "Join";
+            this.joinButton.UseVisualStyleBackColor = true;
+            this.joinButton.Click += new System.EventHandler(this.JoinButton_Click);
             // 
             // ETLParent
             // 
@@ -602,6 +616,7 @@
             this.splitContainerSource.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerSource)).EndInit();
             this.splitContainerSource.ResumeLayout(false);
+            this.splitContainerMiddle.Panel1.ResumeLayout(false);
             this.splitContainerMiddle.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMiddle)).EndInit();
             this.splitContainerMiddle.ResumeLayout(false);
@@ -666,6 +681,7 @@
         private System.Windows.Forms.SplitContainer splitContainerSource;
         private System.Windows.Forms.SplitContainer splitContainerMiddle;
         private System.Windows.Forms.SplitContainer splitContainerDestination;
+        private System.Windows.Forms.Button joinButton;
     }
 }
 
