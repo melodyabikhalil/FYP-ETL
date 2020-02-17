@@ -271,6 +271,7 @@ namespace FYP_ETL
                 DataGridUserControl dataGridUserControl = new DataGridUserControl();
                 dataGridUserControl.TableNameLabel = tableName;
                 dataGridUserControl.GridViewSource = dataTable;
+                dataGridUserControl.databaseName = e.Node.Text;
                 dataGridUserControl.isSource = false;
                 dataGridUserControl.Top = 10;
                 dataGridUserControl.Left = 450; //to be fixed

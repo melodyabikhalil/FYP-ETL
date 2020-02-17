@@ -1,6 +1,7 @@
 ﻿using FYP_ETL.Base;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace FYP_ETL
         private static List<Database> databasesDestination = new List<Database>();
         private static List<Table> tablesSourceExpanded = new List<Table>();
         private static Table tableDestinationExpanded = new Table();
+        private static string joinQuery = "";
+        private static DataTable joinDatatable = SetJoinDatatableSchema();
 
         public static List<Database> DatabasesSource
         {
@@ -36,6 +39,17 @@ namespace FYP_ETL
         {
             get { return tableDestinationExpanded; }
             set { tableDestinationExpanded = value; }
+        }
+        public static string JoinQuery
+        {
+            get { return joinQuery; }
+            set { joinQuery = value; }
+        }
+
+        public static DataTable JoinDatatable
+        {
+            get { return joinDatatable; }
+            set { joinDatatable = value; }
         }
 
         public static Database GetSourceDatabaseByName(string databaseName)
@@ -108,6 +122,17 @@ namespace FYP_ETL
                 }
             }
             return null;
+        }
+
+        private static DataTable SetJoinDatatableSchema()
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Database");
+            dataTable.Columns.Add("Table1");
+            dataTable.Columns.Add("Table2");
+            dataTable.Columns.Add("FieldTable1");
+            dataTable.Columns.Add("FieldTable2");
+            return dataTable;
         }
     }
 }

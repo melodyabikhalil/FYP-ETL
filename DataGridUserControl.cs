@@ -14,6 +14,8 @@ namespace FYP_ETL
     public partial class DataGridUserControl : UserControl
     {
         public bool isSource { get; set; }
+        public string databaseName { get; set; }
+
         public string TableNameLabel
         {
             get { return this.tableNameLabel.Text; }
@@ -27,6 +29,7 @@ namespace FYP_ETL
             {
                 this.ColumnsDataGridView.DataSource = value;
                 ColumnsDataGridView.ClearSelection();
+                ColumnsDataGridView.Update();
             }
         }
 
