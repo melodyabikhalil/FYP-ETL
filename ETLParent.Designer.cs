@@ -486,7 +486,7 @@
             this.sourceDatabasesLabel.Name = "sourceDatabasesLabel";
             this.sourceDatabasesLabel.Size = new System.Drawing.Size(167, 40);
             this.sourceDatabasesLabel.TabIndex = 6;
-            this.sourceDatabasesLabel.Text = "Source \r\nDatabases";
+            this.sourceDatabasesLabel.Text = "Source Databases";
             this.sourceDatabasesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // destinationDatabasesLabel
