@@ -24,7 +24,7 @@ namespace FYP_ETL
 
         public DataTable GridViewSource
         {
-            get { return (DataTable) this.ColumnsDataGridView.DataSource; }
+            get { return (DataTable)this.ColumnsDataGridView.DataSource; }
             set
             {
                 this.ColumnsDataGridView.DataSource = value;
@@ -57,5 +57,87 @@ namespace FYP_ETL
             ETLParent.ReloadGridUserControls(this.tableNameLabel.Text, this.GridViewSource, this.isSource);
         }
 
+        private void ColumnsDataGridView_DragDrop(object sender, DragEventArgs e)
+        {
+            Console.WriteLine("drag drop sender: " + sender.ToString());
+            Console.WriteLine("drag drop: " + e.X.ToString() + ", " + e.Y.ToString());
+            if (sender.Equals(this))
+            {
+                Console.WriteLine("drag drop: sender== this");
+            }
+            if (e.Data.GetDataPresent("data"))
+            {
+                KeyValuePair<Point, Dictionary<string, string>> data1 = (KeyValuePair<Point, Dictionary<string, string>>) e.Data.GetData("data");
+                //Point point = new Point(this.Right, (int)(this.Top + 30 + this.DataGridViewColumns.RowTemplate.Height * this.DataGridViewColumns.CurrentCell.RowIndex));
+
+                Point currentPoint = new Point(Cursor.Position.X, Cursor.Position.Y);
+                Point cursorPos = DataGridViewColumns.PointToClient(currentPoint);
+                if (this.isInsideCurrentUserControl(cursorPos) && this.isInsideCurrentUserControl(data1.Key))
+                {
+                    Console.WriteLine("same user control");
+                    return;
+                }
+
+                Point point = new Point(this.Right, e.Y);
+                DataGridViewCell clickedCell;
+                DataGridView.HitTestInfo hit = DataGridViewColumns.HitTest(cursorPos.X, cursorPos.Y);
+                if (hit.Type == DataGridViewHitTestType.Cell)
+                {
+                    clickedCell = DataGridViewColumns.Rows[hit.RowIndex].Cells[hit.ColumnIndex];
+                    Dictionary<string, string> tableAndColumn = new Dictionary<string, string>();
+                    tableAndColumn.Add("table", this.tableNameLabel.Text);
+                    tableAndColumn.Add("column", clickedCell.Value.ToString());
+
+                    KeyValuePair<Point, Dictionary<string, string>> data2 = new KeyValuePair<Point, Dictionary<string, string>>();
+                    data2 = new KeyValuePair<Point, Dictionary<string, string>>(point, tableAndColumn);
+                    ETLParent.SetJoinedColumns(data1, data2);
+                }
+            }
+        }
+
+        private void ColumnsDataGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("mouse down sender: " + sender.ToString());
+            if (sender.Equals(this))
+            {
+                Console.WriteLine("mouse down: sender== this");
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                DataGridView.HitTestInfo info = DataGridViewColumns.HitTest(e.X, e.Y);
+                if (info.RowIndex >= 0)
+                {
+                    if (info.RowIndex >= 0 && info.ColumnIndex >= 0)
+                    {
+                        string column = (String)DataGridViewColumns.Rows[info.RowIndex].Cells[info.ColumnIndex].Value;
+                        if (column != null)
+                        {
+                            Point point = new Point(this.Right, e.Y);
+                            Dictionary<string, string> tableAndColumn = new Dictionary<string, string>();
+                            tableAndColumn.Add("table", this.tableNameLabel.Text);
+                            tableAndColumn.Add("column", column);
+
+                            KeyValuePair<Point, Dictionary<string, string>> data = new KeyValuePair<Point, Dictionary<string, string>>();
+                            data = new KeyValuePair<Point, Dictionary<string, string>>(point, tableAndColumn);
+
+                            Console.WriteLine("Mouse down: " + e.X.ToString() + ", " + e.Y.ToString());
+                            DataObject dragData = new DataObject("data", data);
+                            ColumnsDataGridView.DoDragDrop(dragData, DragDropEffects.Copy);
+                        }
+                    }
+                }       
+            }
+        }
+
+        private void ColumnsDataGridView_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private bool isInsideCurrentUserControl(Point point)
+        {
+            bool isInside = point.X > this.Left && point.X < this.Right && point.Y > this.Top && point.Y < this.Bottom;
+            return isInside;
+        }
     }
 }

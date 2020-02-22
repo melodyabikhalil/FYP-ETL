@@ -41,6 +41,7 @@
             // 
             // ColumnsDataGridView
             // 
+            this.ColumnsDataGridView.AllowDrop = true;
             this.ColumnsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ColumnsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -48,6 +49,9 @@
             this.ColumnsDataGridView.Name = "ColumnsDataGridView";
             this.ColumnsDataGridView.Size = new System.Drawing.Size(145, 202);
             this.ColumnsDataGridView.TabIndex = 0;
+            this.ColumnsDataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColumnsDataGridView_DragDrop);
+            this.ColumnsDataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.ColumnsDataGridView_DragEnter);
+            this.ColumnsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColumnsDataGridView_MouseDown);
             // 
             // tableNameLabel
             // 

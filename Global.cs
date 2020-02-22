@@ -134,5 +134,35 @@ namespace FYP_ETL
             dataTable.Columns.Add("FieldTable2");
             return dataTable;
         }
+
+        public static string GetJoinQuery(List<Tuple<Dictionary<string, string>, Dictionary<string, string>>> tablesAndColumnsToJoinOn)
+        {
+            string query = "";
+            if (tablesAndColumnsToJoinOn.Count > 0)
+            {
+                query = "SELECT * FROM ";
+                string table1 = "";
+                string column1 = "";
+                string table2 = "";
+                string column2 = "";
+
+                for (int i = 0; i < tablesAndColumnsToJoinOn.Count; ++i)
+                {
+                    Tuple < Dictionary<string, string>, Dictionary<string, string>> tuple = tablesAndColumnsToJoinOn[i];
+                    table1 = tuple.Item1["table"];
+                    column1 = tuple.Item1["column"];
+                    table2 = tuple.Item2["table"];
+                    column2 = tuple.Item2["column"];
+
+                    if (i == 0)
+                    {
+                        query += table1;
+                    }
+                    query += " JOIN " + table2 + " ON " + table1 + "." + column1 + "=" + table2 + "." + column2;
+                }
+                query += ";";
+            }
+            return query;
+        }
     }
 }
