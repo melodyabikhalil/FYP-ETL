@@ -170,6 +170,7 @@ namespace FYP_ETL
             dataGridUserControl.Width = 140;
             dataGridUserControl.Height = 180;
             dataGridUserControl.Show();
+            dataGridUserControl.Point = new Point(50, tableIndex * 200 + 10);
             splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
             this.dataGridUserControlsSource.Add(dataGridUserControl);
             this.joinButton.Visible = true;
@@ -238,6 +239,7 @@ namespace FYP_ETL
                 for (int i = 0; i < _instance.dataGridUserControlsSource.Count; ++i)
                 {
                     _instance.dataGridUserControlsSource[i].Top = i * 200 + 10;
+                    _instance.dataGridUserControlsSource[i].Point = new Point(50, i * 200 + 10);
                 }
             }
             else
@@ -284,6 +286,7 @@ namespace FYP_ETL
                 dataGridUserControl.Width = 140;
                 dataGridUserControl.Height = 280;
                 dataGridUserControl.Show();
+                dataGridUserControl.Point = new Point(450, 10);
                 splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
                 this.dataGridUserControlDestination = dataGridUserControl;
             }
@@ -301,11 +304,15 @@ namespace FYP_ETL
             {
                 for (int i = 0; i < points.Count; ++i)
                 {
-                    Point cornerOne = new Point(points[i].Item1.X + 20, points[i].Item1.Y);
-                    Point cornertwo = new Point(points[i].Item2.X + 20, points[i].Item2.Y);
+                    Random random = new Random();
+                    int randomMargin = random.Next(15, 50);
+                    Console.WriteLine("rand margin: " + randomMargin.ToString());
+                    Point cornerOne = new Point(points[i].Item1.X + randomMargin, points[i].Item1.Y);
+                    Point cornertwo = new Point(points[i].Item2.X + randomMargin, points[i].Item2.Y);
                     e.Graphics.DrawLine(Pens.Black, points[i].Item1, cornerOne);
                     e.Graphics.DrawLine(Pens.Black, points[i].Item2, cornertwo);
                     e.Graphics.DrawLine(Pens.Black, cornerOne, cornertwo);
+                    Console.WriteLine("\n Drew line between: point1(" + points[i].Item1.X.ToString() + ", " + points[i].Item1.Y.ToString() + ") and point2(" + points[i].Item2.X.ToString() + ", " + points[i].Item2.Y.ToString() + ")");
                 }
             }
         }

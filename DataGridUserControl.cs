@@ -15,6 +15,7 @@ namespace FYP_ETL
     {
         public bool isSource { get; set; }
         public string databaseName { get; set; }
+        public Point point { get; set; }
 
         public string TableNameLabel
         {
@@ -31,6 +32,12 @@ namespace FYP_ETL
                 ColumnsDataGridView.ClearSelection();
                 ColumnsDataGridView.Update();
             }
+        }
+
+        public Point Point
+        {
+            get { return this.point; }
+            set { this.point = value; }
         }
 
         public DataGridView DataGridViewColumns
@@ -59,31 +66,21 @@ namespace FYP_ETL
 
         private void ColumnsDataGridView_DragDrop(object sender, DragEventArgs e)
         {
-            Console.WriteLine("drag drop sender: " + sender.ToString());
-            Console.WriteLine("drag drop: " + e.X.ToString() + ", " + e.Y.ToString());
-            if (sender.Equals(this))
-            {
-                Console.WriteLine("drag drop: sender== this");
-            }
             if (e.Data.GetDataPresent("data"))
             {
                 KeyValuePair<Point, Dictionary<string, string>> data1 = (KeyValuePair<Point, Dictionary<string, string>>) e.Data.GetData("data");
-                //Point point = new Point(this.Right, (int)(this.Top + 30 + this.DataGridViewColumns.RowTemplate.Height * this.DataGridViewColumns.CurrentCell.RowIndex));
 
-                Point currentPoint = new Point(Cursor.Position.X, Cursor.Position.Y);
-                Point cursorPos = DataGridViewColumns.PointToClient(currentPoint);
-                if (this.isInsideCurrentUserControl(cursorPos) && this.isInsideCurrentUserControl(data1.Key))
-                {
-                    Console.WriteLine("same user control");
-                    return;
-                }
-
-                Point point = new Point(this.Right, e.Y);
                 DataGridViewCell clickedCell;
+                Point cursorPos = DataGridViewColumns.PointToClient(new Point(e.X, e.Y));
                 DataGridView.HitTestInfo hit = DataGridViewColumns.HitTest(cursorPos.X, cursorPos.Y);
                 if (hit.Type == DataGridViewHitTestType.Cell)
                 {
                     clickedCell = DataGridViewColumns.Rows[hit.RowIndex].Cells[hit.ColumnIndex];
+                    Point point = new Point(this.Right, (int)(this.Top + 30 + this.DataGridViewColumns.RowTemplate.Height * clickedCell.RowIndex + clickedCell.RowIndex / 2));
+                    if (isInsideCurrentUserControl(point) && (isInsideCurrentUserControl(data1.Key)))
+                    {
+                        return;
+                    }
                     Dictionary<string, string> tableAndColumn = new Dictionary<string, string>();
                     tableAndColumn.Add("table", this.tableNameLabel.Text);
                     tableAndColumn.Add("column", clickedCell.Value.ToString());
@@ -97,11 +94,6 @@ namespace FYP_ETL
 
         private void ColumnsDataGridView_MouseDown(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("mouse down sender: " + sender.ToString());
-            if (sender.Equals(this))
-            {
-                Console.WriteLine("mouse down: sender== this");
-            }
             if (e.Button == MouseButtons.Left)
             {
                 DataGridView.HitTestInfo info = DataGridViewColumns.HitTest(e.X, e.Y);
@@ -112,7 +104,7 @@ namespace FYP_ETL
                         string column = (String)DataGridViewColumns.Rows[info.RowIndex].Cells[info.ColumnIndex].Value;
                         if (column != null)
                         {
-                            Point point = new Point(this.Right, e.Y);
+                            Point point = new Point(this.Right, (int)(this.Top + 30 + this.DataGridViewColumns.RowTemplate.Height * info.RowIndex + info.RowIndex / 2));
                             Dictionary<string, string> tableAndColumn = new Dictionary<string, string>();
                             tableAndColumn.Add("table", this.tableNameLabel.Text);
                             tableAndColumn.Add("column", column);
@@ -120,7 +112,6 @@ namespace FYP_ETL
                             KeyValuePair<Point, Dictionary<string, string>> data = new KeyValuePair<Point, Dictionary<string, string>>();
                             data = new KeyValuePair<Point, Dictionary<string, string>>(point, tableAndColumn);
 
-                            Console.WriteLine("Mouse down: " + e.X.ToString() + ", " + e.Y.ToString());
                             DataObject dragData = new DataObject("data", data);
                             ColumnsDataGridView.DoDragDrop(dragData, DragDropEffects.Copy);
                         }
@@ -136,7 +127,10 @@ namespace FYP_ETL
 
         private bool isInsideCurrentUserControl(Point point)
         {
-            bool isInside = point.X > this.Left && point.X < this.Right && point.Y > this.Top && point.Y < this.Bottom;
+            bool isInside = point.X > this.Left 
+                && point.X < this.Right 
+                && point.Y > this.Top + this.point.Y 
+                && point.Y < this.Bottom + this.point.Y;
             return isInside;
         }
     }
