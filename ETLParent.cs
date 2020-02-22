@@ -295,7 +295,6 @@ namespace FYP_ETL
         private void JoinButton_Click(object sender, EventArgs e)
         {
             string query = Global.GetJoinQuery(this.tablesAndColumnsToJoinOn);
-            MessageBox.Show(query);
         }
         
         private void SplitContainerMiddle_Panel1_Paint(object sender, PaintEventArgs e)
@@ -306,13 +305,11 @@ namespace FYP_ETL
                 {
                     Random random = new Random();
                     int randomMargin = random.Next(15, 50);
-                    Console.WriteLine("rand margin: " + randomMargin.ToString());
                     Point cornerOne = new Point(points[i].Item1.X + randomMargin, points[i].Item1.Y);
                     Point cornertwo = new Point(points[i].Item2.X + randomMargin, points[i].Item2.Y);
                     e.Graphics.DrawLine(Pens.Black, points[i].Item1, cornerOne);
                     e.Graphics.DrawLine(Pens.Black, points[i].Item2, cornertwo);
                     e.Graphics.DrawLine(Pens.Black, cornerOne, cornertwo);
-                    Console.WriteLine("\n Drew line between: point1(" + points[i].Item1.X.ToString() + ", " + points[i].Item1.Y.ToString() + ") and point2(" + points[i].Item2.X.ToString() + ", " + points[i].Item2.Y.ToString() + ")");
                 }
             }
         }
