@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataGridUserControl));
             this.ColumnsDataGridView = new System.Windows.Forms.DataGridView();
             this.tableNameLabel = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
@@ -56,7 +57,7 @@
             // tableNameLabel
             // 
             this.tableNameLabel.AutoSize = true;
-            this.tableNameLabel.Location = new System.Drawing.Point(32, 5);
+            this.tableNameLabel.Location = new System.Drawing.Point(3, 6);
             this.tableNameLabel.Name = "tableNameLabel";
             this.tableNameLabel.Size = new System.Drawing.Size(35, 13);
             this.tableNameLabel.TabIndex = 1;
@@ -64,12 +65,15 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(0, 0);
+            this.closeButton.BackColor = System.Drawing.SystemColors.Control;
+            this.closeButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("closeButton.BackgroundImage")));
+            this.closeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.closeButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.closeButton.Location = new System.Drawing.Point(122, 3);
             this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(29, 23);
+            this.closeButton.Size = new System.Drawing.Size(21, 20);
             this.closeButton.TabIndex = 2;
-            this.closeButton.Text = "X";
-            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.UseVisualStyleBackColor = false;
             this.closeButton.Click += new System.EventHandler(this.CloseButton_Click);
             // 
             // splitContainer1

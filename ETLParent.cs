@@ -296,7 +296,7 @@ namespace FYP_ETL
         {
             string query = Global.GetJoinQuery(this.tablesAndColumnsToJoinOn);
         }
-        
+
         private void SplitContainerMiddle_Panel1_Paint(object sender, PaintEventArgs e)
         {
             if (points.Count > 0)
