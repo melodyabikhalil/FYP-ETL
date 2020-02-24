@@ -8,57 +8,19 @@ using System.Threading.Tasks;
 
 namespace FYP_ETL.Base
 {
-    class ODBCDatabase
+    class ODBCDatabase : Database
     {
         private OdbcConnection connection { get; set; }
 
-        public List<Table> tables { get; set; }
-        public List<string> tablesNames { get; set; }
         public string connectionString { get; set; }
 
-        public ODBCDatabase(string connectionString)
+        public ODBCDatabase(string connectionString, string serverName = null, string username = null, string password = null, string databaseName = null) :
+            base(serverName, username, password, databaseName)
         {
             this.connectionString = connectionString;
-            this.tables = new List<Table>();
         }
 
-        public int GetTableIndexByName(string tableName)
-        {
-            for (int i = 0; i < tables.Count; ++i)
-            {
-                if (tables[i].tableName == tableName)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        public void CreateTablesList(List<string> tablesNames)
-        {
-            Table table;
-            for (int i = 0; i < tablesNames.Count; ++i)
-            {
-                table = new Table();
-                table.tableName = tablesNames[i];
-                this.tables.Add(table);
-            }
-        }
-
-        public Table GetTable(string tableName)
-        {
-            foreach (Table table in tables)
-            {
-                if (table.tableName == tableName)
-                {
-                    return table;
-                }
-            }
-            return null;
-
-        }
-
-        public bool Connect()
+        public override bool Connect()
         {
             try
             {
@@ -74,7 +36,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public bool Close()
+        public override bool Close()
         {
             try
             {
@@ -88,7 +50,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public List<string> GetTablesNames()
+        public override List<string> GetTablesNames()
         {
             string query = "SELECT table_name FROM all_tables;";
             List<string> tablesNames = new List<string>();
@@ -109,7 +71,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public bool Select(string tableName, string query)
+        public override bool Select(string tableName, string query)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
@@ -136,7 +98,7 @@ namespace FYP_ETL.Base
             }
         }
 
-        public bool Insert(string tableName)
+        public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
             if (table == null)
@@ -155,7 +117,6 @@ namespace FYP_ETL.Base
             string fieldsString = HelperODBC.CreateFieldsString(fieldsList);
             string valuesString = HelperODBC.CreateValuesString(fieldsList);
             cmd = new OdbcCommand("INSERT INTO " + tableName+ " " + fieldsString + " VALUES " + valuesString, this.connection);
-            Console.WriteLine("INSERT INTO " + tableName + " "+ fieldsString + " VALUES " + valuesString);
             da.InsertCommand = cmd;
 
             try
@@ -172,17 +133,13 @@ namespace FYP_ETL.Base
             }
         }
 
-        public bool SetDatatableSchema(string tableName)
+        public override bool SetDatatableSchema(string tableName)
         {
             string query = "select * from "+ tableName + " where 1=0;";
             bool result = this.Select(tableName, query);
             if (result)
             {
                 this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
-                foreach(DataColumn col in this.GetTable(tableName).columns)
-                {
-                    Console.WriteLine(col.ColumnName);
-                }
             }
             return result;
         }
@@ -190,8 +147,7 @@ namespace FYP_ETL.Base
         public override bool Equals(Object obj)
         {
             return (obj is ODBCDatabase)
-                && ((ODBCDatabase)obj).connectionString == this.connectionString;
-                 
+                && ((ODBCDatabase)obj).connectionString == this.connectionString;        
         }
 
 
