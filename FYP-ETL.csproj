@@ -108,9 +108,11 @@
     <Compile Include="Base\Expression.cs" />
     <Compile Include="Base\HelperAccess.cs" />
     <Compile Include="Base\HelperMySQL.cs" />
+    <Compile Include="Base\HelperODBC.cs" />
     <Compile Include="Base\HelperPostgreSQL.cs" />
     <Compile Include="Base\HelperSQLServer.cs" />
     <Compile Include="Base\MySQLDatabase.cs" />
+    <Compile Include="Base\ODBCDatabase.cs" />
     <Compile Include="Base\PostgreSQLDatabase.cs" />
     <Compile Include="Base\SQLServerDatabase.cs" />
     <Compile Include="Base\Table.cs" />
