@@ -19,7 +19,7 @@ namespace FYP_ETL
         private DataGridUserControl dataGridUserControlDestination = new DataGridUserControl();
         private List<Tuple<Point, Point>> points = new List<Tuple<Point, Point>>();
         private List<Tuple<Dictionary<string, string>, Dictionary<string, string>>> tablesAndColumnsToJoinOn = new List<Tuple<Dictionary<string, string>, Dictionary<string, string>>>();
-
+        private DataGridUserControl dataGridUserControlJoinSource = new DataGridUserControl();
 
         public ETLParent()
         {
@@ -139,9 +139,23 @@ namespace FYP_ETL
             string tableName = e.Node.Text;
             string databaseName = e.Node.Parent.Text;
             Database database = Global.GetSourceDatabaseByName(databaseName);
+            if (Global.DatabaseSourceExpanded != null && Global.DatabaseSourceExpanded != database)
+            {
+                MessageBox.Show("Cannot expand tables from different source databases", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (Global.DatabaseSourceExpanded == null)
+            {
+                Global.DatabaseSourceExpanded = database;
+            }
             Table table = database.GetTable(tableName);
             if (Global.TableSourceAlreadyExpanded(table))
             {
+                return;
+            }
+            if (!Global.CanExpandTable(table))
+            {
+                MessageBox.Show("Cannot expand tables from different source databases", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             database.Close();
@@ -234,6 +248,8 @@ namespace FYP_ETL
                 {
                     _instance.joinButton.Visible = false;
                     _instance.clearButton.Visible = false;
+                    Global.DatabaseSourceExpanded = null;
+                    Global.TablesSourceExpanded = new List<Table>();
                     return;
                 }
                 for (int i = 0; i < _instance.dataGridUserControlsSource.Count; ++i)
@@ -282,9 +298,9 @@ namespace FYP_ETL
                 dataGridUserControl.databaseName = e.Node.Text;
                 dataGridUserControl.isSource = false;
                 dataGridUserControl.Top = 10;
-                dataGridUserControl.Left = 450; //to be fixed
+                dataGridUserControl.Left = clearButton.Left + 600; //to be fixed
                 dataGridUserControl.Width = 140;
-                dataGridUserControl.Height = 280;
+                dataGridUserControl.Height = 300;
                 dataGridUserControl.Show();
                 dataGridUserControl.Point = new Point(450, 10);
                 splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
@@ -294,7 +310,33 @@ namespace FYP_ETL
 
         private void JoinButton_Click(object sender, EventArgs e)
         {
-            string query = Global.GetJoinQuery(this.tablesAndColumnsToJoinOn);
+            bool result = Global.CreateJoinTable(this.tablesAndColumnsToJoinOn);
+            if (result)
+            {
+                Table joinTable = Global.JoinResultSourceTable;
+                if (joinTable.tableName != null && joinTable.tableName != "")
+                {
+                    List<string> columnsList = joinTable.GetColumnsNames();
+                    DataTable columnsDatatable = Helper.ConvertListToDataTable(columnsList);
+                    DataGridUserControl dataGridUserControl = new DataGridUserControl();
+                    dataGridUserControl.TableNameLabel = "Source Table";
+                    dataGridUserControl.GridViewSource = columnsDatatable;
+                    dataGridUserControl.databaseName = Global.DatabaseSourceExpanded.databaseName;
+                    dataGridUserControl.isSource = true;
+                    dataGridUserControl.Top = 10;
+                    dataGridUserControl.Left = clearButton.Left + 200;
+                    dataGridUserControl.Width = 140;
+                    dataGridUserControl.Height = 300;
+                    dataGridUserControl.Show();
+                    dataGridUserControl.Point = new Point(clearButton.Left + 50, 10);
+                    splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
+                    this.dataGridUserControlJoinSource = dataGridUserControl;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not join tables", "Join error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SplitContainerMiddle_Panel1_Paint(object sender, PaintEventArgs e)

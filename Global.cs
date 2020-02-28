@@ -16,6 +16,9 @@ namespace FYP_ETL
         private static Table tableDestinationExpanded = new Table();
         private static string joinQuery = "";
         private static DataTable joinDatatable = SetJoinDatatableSchema();
+        private static Database databaseSourceExpanded = null;
+        private static Database databaseDestinationExpanded = null;
+        private static Table joinResultSourceTable = new Table();
 
         public static List<Database> DatabasesSource
         {
@@ -40,6 +43,7 @@ namespace FYP_ETL
             get { return tableDestinationExpanded; }
             set { tableDestinationExpanded = value; }
         }
+
         public static string JoinQuery
         {
             get { return joinQuery; }
@@ -50,6 +54,24 @@ namespace FYP_ETL
         {
             get { return joinDatatable; }
             set { joinDatatable = value; }
+        }
+
+        public static Database DatabaseSourceExpanded
+        {
+            get { return databaseSourceExpanded; }
+            set { databaseSourceExpanded = value; }
+        }
+
+        public static Database DatabaseDestinationExpanded
+        {
+            get { return databaseDestinationExpanded; }
+            set { databaseDestinationExpanded = value; }
+        }
+
+        public static Table JoinResultSourceTable
+        {
+            get { return joinResultSourceTable; }
+            set { joinResultSourceTable = value; }
         }
 
         public static Database GetSourceDatabaseByName(string databaseName)
@@ -124,6 +146,22 @@ namespace FYP_ETL
             return null;
         }
 
+        public static bool CanExpandTable(Table table)
+        {
+            if (DatabaseSourceExpanded == null)
+            {
+                return true;
+            }
+            foreach(Table dbTable in DatabaseSourceExpanded.tables)
+            {
+                if (table == dbTable)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private static DataTable SetJoinDatatableSchema()
         {
             DataTable dataTable = new DataTable();
@@ -163,6 +201,23 @@ namespace FYP_ETL
                 query += ";";
             }
             return query;
+        }
+
+        public static bool CreateJoinTable(List<Tuple<Dictionary<string, string>, Dictionary<string, string>>> tablesAndColumnsToJoinOn)
+        {
+            string query = GetJoinQuery(tablesAndColumnsToJoinOn);
+            bool result = false;
+            if (DatabaseSourceExpanded != null && TablesSourceExpanded.Count > 0)
+            {
+                Table table = new Table();
+                string tableName = "source_table";
+                table.tableName = tableName;
+                DatabaseSourceExpanded.tables.Add(table);
+                result = DatabaseSourceExpanded.Select(tableName, query);
+                table.SetColumnsFromDatatable();
+                JoinResultSourceTable = table;
+            }
+            return result;
         }
     }
 }
