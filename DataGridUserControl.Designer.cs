@@ -47,9 +47,12 @@
             this.ColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ColumnsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ColumnsDataGridView.Location = new System.Drawing.Point(0, 0);
+            this.ColumnsDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ColumnsDataGridView.Name = "ColumnsDataGridView";
-            this.ColumnsDataGridView.Size = new System.Drawing.Size(145, 202);
+            this.ColumnsDataGridView.RowHeadersWidth = 51;
+            this.ColumnsDataGridView.Size = new System.Drawing.Size(193, 249);
             this.ColumnsDataGridView.TabIndex = 0;
+            this.ColumnsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ColumnsDataGridView_CellContentClick);
             this.ColumnsDataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColumnsDataGridView_DragDrop);
             this.ColumnsDataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.ColumnsDataGridView_DragEnter);
             this.ColumnsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColumnsDataGridView_MouseDown);
@@ -57,9 +60,10 @@
             // tableNameLabel
             // 
             this.tableNameLabel.AutoSize = true;
-            this.tableNameLabel.Location = new System.Drawing.Point(3, 6);
+            this.tableNameLabel.Location = new System.Drawing.Point(4, 7);
+            this.tableNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tableNameLabel.Name = "tableNameLabel";
-            this.tableNameLabel.Size = new System.Drawing.Size(35, 13);
+            this.tableNameLabel.Size = new System.Drawing.Size(46, 17);
             this.tableNameLabel.TabIndex = 1;
             this.tableNameLabel.Text = "label1";
             // 
@@ -69,9 +73,10 @@
             this.closeButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("closeButton.BackgroundImage")));
             this.closeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.closeButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.closeButton.Location = new System.Drawing.Point(122, 3);
+            this.closeButton.Location = new System.Drawing.Point(163, 4);
+            this.closeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(21, 20);
+            this.closeButton.Size = new System.Drawing.Size(28, 25);
             this.closeButton.TabIndex = 2;
             this.closeButton.UseVisualStyleBackColor = false;
             this.closeButton.Click += new System.EventHandler(this.CloseButton_Click);
@@ -80,6 +85,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -91,17 +97,19 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.ColumnsDataGridView);
-            this.splitContainer1.Size = new System.Drawing.Size(145, 231);
-            this.splitContainer1.SplitterDistance = 25;
+            this.splitContainer1.Size = new System.Drawing.Size(193, 284);
+            this.splitContainer1.SplitterDistance = 30;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 3;
             // 
             // DataGridUserControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "DataGridUserControl";
-            this.Size = new System.Drawing.Size(145, 231);
+            this.Size = new System.Drawing.Size(193, 284);
             ((System.ComponentModel.ISupportInitialize)(this.ColumnsDataGridView)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

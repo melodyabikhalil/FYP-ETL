@@ -116,7 +116,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1257, 30);
+            this.menuStrip.Size = new System.Drawing.Size(1324, 30);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -374,7 +374,7 @@
             this.toolStripButton1});
             this.toolStrip.Location = new System.Drawing.Point(0, 30);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1257, 31);
+            this.toolStrip.Size = new System.Drawing.Size(1324, 31);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -452,7 +452,7 @@
             this.statusStrip.Location = new System.Drawing.Point(0, 769);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip.Size = new System.Drawing.Size(1257, 26);
+            this.statusStrip.Size = new System.Drawing.Size(1324, 26);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -469,7 +469,7 @@
             this.sourceTreeView.Location = new System.Drawing.Point(0, 0);
             this.sourceTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.sourceTreeView.Name = "sourceTreeView";
-            this.sourceTreeView.Size = new System.Drawing.Size(223, 653);
+            this.sourceTreeView.Size = new System.Drawing.Size(235, 653);
             this.sourceTreeView.TabIndex = 4;
             this.sourceTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.SourceTreeView_AfterSelect);
             // 
@@ -480,32 +480,32 @@
             this.destinationTreeView.Location = new System.Drawing.Point(0, 0);
             this.destinationTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.destinationTreeView.Name = "destinationTreeView";
-            this.destinationTreeView.Size = new System.Drawing.Size(223, 651);
+            this.destinationTreeView.Size = new System.Drawing.Size(264, 651);
             this.destinationTreeView.TabIndex = 5;
             this.destinationTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DestinationTreeView_AfterSelect);
             // 
             // sourceDatabasesLabel
             // 
-            this.sourceDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.sourceDatabasesLabel.BackColor = System.Drawing.SystemColors.Control;
             this.sourceDatabasesLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sourceDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sourceDatabasesLabel.Location = new System.Drawing.Point(0, 0);
             this.sourceDatabasesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.sourceDatabasesLabel.Name = "sourceDatabasesLabel";
-            this.sourceDatabasesLabel.Size = new System.Drawing.Size(223, 48);
+            this.sourceDatabasesLabel.Size = new System.Drawing.Size(235, 48);
             this.sourceDatabasesLabel.TabIndex = 6;
             this.sourceDatabasesLabel.Text = "Source Databases";
             this.sourceDatabasesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // destinationDatabasesLabel
             // 
-            this.destinationDatabasesLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.destinationDatabasesLabel.BackColor = System.Drawing.SystemColors.Control;
             this.destinationDatabasesLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.destinationDatabasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.destinationDatabasesLabel.Location = new System.Drawing.Point(0, 0);
             this.destinationDatabasesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.destinationDatabasesLabel.Name = "destinationDatabasesLabel";
-            this.destinationDatabasesLabel.Size = new System.Drawing.Size(223, 50);
+            this.destinationDatabasesLabel.Size = new System.Drawing.Size(264, 50);
             this.destinationDatabasesLabel.TabIndex = 7;
             this.destinationDatabasesLabel.Text = "Destination Databases";
             this.destinationDatabasesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -526,8 +526,8 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.splitContainerMiddle);
-            this.splitContainerMain.Size = new System.Drawing.Size(1257, 708);
-            this.splitContainerMain.SplitterDistance = 225;
+            this.splitContainerMain.Size = new System.Drawing.Size(1324, 708);
+            this.splitContainerMain.SplitterDistance = 237;
             this.splitContainerMain.SplitterWidth = 5;
             this.splitContainerMain.TabIndex = 9;
             // 
@@ -546,7 +546,7 @@
             // splitContainerSource.Panel2
             // 
             this.splitContainerSource.Panel2.Controls.Add(this.sourceTreeView);
-            this.splitContainerSource.Size = new System.Drawing.Size(223, 706);
+            this.splitContainerSource.Size = new System.Drawing.Size(235, 706);
             this.splitContainerSource.SplitterDistance = 48;
             this.splitContainerSource.SplitterWidth = 5;
             this.splitContainerSource.TabIndex = 0;
@@ -571,8 +571,8 @@
             // splitContainerMiddle.Panel2
             // 
             this.splitContainerMiddle.Panel2.Controls.Add(this.splitContainerDestination);
-            this.splitContainerMiddle.Size = new System.Drawing.Size(1027, 708);
-            this.splitContainerMiddle.SplitterDistance = 797;
+            this.splitContainerMiddle.Size = new System.Drawing.Size(1082, 708);
+            this.splitContainerMiddle.SplitterDistance = 811;
             this.splitContainerMiddle.SplitterWidth = 5;
             this.splitContainerMiddle.TabIndex = 0;
             // 
@@ -613,7 +613,7 @@
             // splitContainerDestination.Panel2
             // 
             this.splitContainerDestination.Panel2.Controls.Add(this.destinationTreeView);
-            this.splitContainerDestination.Size = new System.Drawing.Size(223, 706);
+            this.splitContainerDestination.Size = new System.Drawing.Size(264, 706);
             this.splitContainerDestination.SplitterWidth = 5;
             this.splitContainerDestination.TabIndex = 0;
             // 
@@ -622,7 +622,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1257, 795);
+            this.ClientSize = new System.Drawing.Size(1324, 795);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
