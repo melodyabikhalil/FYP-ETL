@@ -15,6 +15,7 @@ namespace FYP_ETL
     {
         public bool isSource { get; set; }
         public string databaseName { get; set; }
+        public Point point { get; set; }
 
         public string TableNameLabel
         {
@@ -24,13 +25,19 @@ namespace FYP_ETL
 
         public DataTable GridViewSource
         {
-            get { return (DataTable) this.ColumnsDataGridView.DataSource; }
+            get { return (DataTable)this.ColumnsDataGridView.DataSource; }
             set
             {
                 this.ColumnsDataGridView.DataSource = value;
                 ColumnsDataGridView.ClearSelection();
                 ColumnsDataGridView.Update();
             }
+        }
+
+        public Point Point
+        {
+            get { return this.point; }
+            set { this.point = value; }
         }
 
         public DataGridView DataGridViewColumns
@@ -57,5 +64,74 @@ namespace FYP_ETL
             ETLParent.ReloadGridUserControls(this.tableNameLabel.Text, this.GridViewSource, this.isSource);
         }
 
+        private void ColumnsDataGridView_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("data"))
+            {
+                KeyValuePair<Point, Dictionary<string, string>> data1 = (KeyValuePair<Point, Dictionary<string, string>>) e.Data.GetData("data");
+
+                DataGridViewCell clickedCell;
+                Point cursorPos = DataGridViewColumns.PointToClient(new Point(e.X, e.Y));
+                DataGridView.HitTestInfo hit = DataGridViewColumns.HitTest(cursorPos.X, cursorPos.Y);
+                if (hit.Type == DataGridViewHitTestType.Cell)
+                {
+                    clickedCell = DataGridViewColumns.Rows[hit.RowIndex].Cells[hit.ColumnIndex];
+                    Point point = new Point(this.Right, (int)(this.Top + 30 + this.DataGridViewColumns.RowTemplate.Height * clickedCell.RowIndex + clickedCell.RowIndex / 2));
+                    if (isInsideCurrentUserControl(point) && (isInsideCurrentUserControl(data1.Key)))
+                    {
+                        return;
+                    }
+                    Dictionary<string, string> tableAndColumn = new Dictionary<string, string>();
+                    tableAndColumn.Add("table", this.tableNameLabel.Text);
+                    tableAndColumn.Add("column", clickedCell.Value.ToString());
+
+                    KeyValuePair<Point, Dictionary<string, string>> data2 = new KeyValuePair<Point, Dictionary<string, string>>();
+                    data2 = new KeyValuePair<Point, Dictionary<string, string>>(point, tableAndColumn);
+                    ETLParent.SetJoinedColumns(data1, data2);
+                }
+            }
+        }
+
+        private void ColumnsDataGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                DataGridView.HitTestInfo info = DataGridViewColumns.HitTest(e.X, e.Y);
+                if (info.RowIndex >= 0)
+                {
+                    if (info.RowIndex >= 0 && info.ColumnIndex >= 0)
+                    {
+                        string column = (String)DataGridViewColumns.Rows[info.RowIndex].Cells[info.ColumnIndex].Value;
+                        if (column != null)
+                        {
+                            Point point = new Point(this.Right, (int)(this.Top + 30 + this.DataGridViewColumns.RowTemplate.Height * info.RowIndex + info.RowIndex / 2));
+                            Dictionary<string, string> tableAndColumn = new Dictionary<string, string>();
+                            tableAndColumn.Add("table", this.tableNameLabel.Text);
+                            tableAndColumn.Add("column", column);
+
+                            KeyValuePair<Point, Dictionary<string, string>> data = new KeyValuePair<Point, Dictionary<string, string>>();
+                            data = new KeyValuePair<Point, Dictionary<string, string>>(point, tableAndColumn);
+
+                            DataObject dragData = new DataObject("data", data);
+                            ColumnsDataGridView.DoDragDrop(dragData, DragDropEffects.Copy);
+                        }
+                    }
+                }       
+            }
+        }
+
+        private void ColumnsDataGridView_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private bool isInsideCurrentUserControl(Point point)
+        {
+            bool isInside = point.X > this.Left 
+                && point.X < this.Right 
+                && point.Y > this.Top + this.point.Y 
+                && point.Y < this.Bottom + this.point.Y;
+            return isInside;
+        }
     }
 }

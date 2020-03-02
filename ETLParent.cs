@@ -17,13 +17,17 @@ namespace FYP_ETL
         private static ETLParent _instance;
         private List<DataGridUserControl> dataGridUserControlsSource = new List<DataGridUserControl>();
         private DataGridUserControl dataGridUserControlDestination = new DataGridUserControl();
-        private List<Point> points = new List<Point>();
+        private List<Tuple<Point, Point>> points = new List<Tuple<Point, Point>>();
+        private List<Tuple<Dictionary<string, string>, Dictionary<string, string>>> tablesAndColumnsToJoinOn = new List<Tuple<Dictionary<string, string>, Dictionary<string, string>>>();
+        private DataGridUserControl dataGridUserControlJoinSource = new DataGridUserControl();
+
         public ETLParent()
         {
             InitializeComponent();
             _instance = this;
             this.HideMainContainer();
             this.joinButton.Visible = false;
+            this.clearButton.Visible = false;
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)
@@ -135,9 +139,23 @@ namespace FYP_ETL
             string tableName = e.Node.Text;
             string databaseName = e.Node.Parent.Text;
             Database database = Global.GetSourceDatabaseByName(databaseName);
+            if (Global.DatabaseSourceExpanded != null && Global.DatabaseSourceExpanded != database)
+            {
+                MessageBox.Show("Cannot expand tables from different source databases", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (Global.DatabaseSourceExpanded == null)
+            {
+                Global.DatabaseSourceExpanded = database;
+            }
             Table table = database.GetTable(tableName);
             if (Global.TableSourceAlreadyExpanded(table))
             {
+                return;
+            }
+            if (!Global.CanExpandTable(table))
+            {
+                MessageBox.Show("Cannot expand tables from different source databases", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             database.Close();
@@ -166,9 +184,11 @@ namespace FYP_ETL
             dataGridUserControl.Width = 140;
             dataGridUserControl.Height = 180;
             dataGridUserControl.Show();
+            dataGridUserControl.Point = new Point(50, tableIndex * 200 + 10);
             splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
             this.dataGridUserControlsSource.Add(dataGridUserControl);
             this.joinButton.Visible = true;
+            this.clearButton.Visible = true;
         }
 
         private void HideMainContainer()
@@ -227,11 +247,15 @@ namespace FYP_ETL
                 if (_instance.dataGridUserControlsSource.Count == 0)
                 {
                     _instance.joinButton.Visible = false;
+                    _instance.clearButton.Visible = false;
+                    Global.DatabaseSourceExpanded = null;
+                    Global.TablesSourceExpanded = new List<Table>();
                     return;
                 }
                 for (int i = 0; i < _instance.dataGridUserControlsSource.Count; ++i)
                 {
                     _instance.dataGridUserControlsSource[i].Top = i * 200 + 10;
+                    _instance.dataGridUserControlsSource[i].Point = new Point(50, i * 200 + 10);
                 }
             }
             else
@@ -252,7 +276,7 @@ namespace FYP_ETL
             Table table = database.GetTable(tableName);
             if (this.dataGridUserControlDestination.TableNameLabel != "label1")
             {
-                MessageBox.Show("Only 1 database destination can be expanded", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Only 1 table destination can be expanded", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -274,10 +298,11 @@ namespace FYP_ETL
                 dataGridUserControl.databaseName = e.Node.Text;
                 dataGridUserControl.isSource = false;
                 dataGridUserControl.Top = 10;
-                dataGridUserControl.Left = 450; //to be fixed
+                dataGridUserControl.Left = clearButton.Left + 600; //to be fixed
                 dataGridUserControl.Width = 140;
-                dataGridUserControl.Height = 280;
+                dataGridUserControl.Height = 300;
                 dataGridUserControl.Show();
+                dataGridUserControl.Point = new Point(450, 10);
                 splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
                 this.dataGridUserControlDestination = dataGridUserControl;
             }
@@ -285,47 +310,70 @@ namespace FYP_ETL
 
         private void JoinButton_Click(object sender, EventArgs e)
         {
-            foreach (DataGridUserControl dataGridUserControl in this.dataGridUserControlsSource)
+            bool result = Global.CreateJoinTable(this.tablesAndColumnsToJoinOn);
+            if (result)
             {
-                DataGridViewCell dgv = dataGridUserControl.DataGridViewColumns.CurrentCell;
-                if (dataGridUserControl.DataGridViewColumns.CurrentCell.Selected)
+                Table joinTable = Global.JoinResultSourceTable;
+                if (joinTable.tableName != null && joinTable.tableName != "")
                 {
-                    Point point = new Point(dataGridUserControl.Right, (int)(dataGridUserControl.Top + 30 + dataGridUserControl.DataGridViewColumns.RowTemplate.Height * 1.2 * dataGridUserControl.DataGridViewColumns.CurrentCell.RowIndex));
-                    bool pointExists = false;
-                    foreach (Point existingPoint in points)
-                    {
-                        if (existingPoint.X == point.X && existingPoint.Y == point.Y)
-                        {
-                            pointExists = true;
-                            break;
-                        }
-                    }
-                    if (!pointExists)
-                    {
-                        points.Add(point);
-                    }
+                    List<string> columnsList = joinTable.GetColumnsNames();
+                    DataTable columnsDatatable = Helper.ConvertListToDataTable(columnsList);
+                    DataGridUserControl dataGridUserControl = new DataGridUserControl();
+                    dataGridUserControl.TableNameLabel = "Source Table";
+                    dataGridUserControl.GridViewSource = columnsDatatable;
+                    dataGridUserControl.databaseName = Global.DatabaseSourceExpanded.databaseName;
+                    dataGridUserControl.isSource = true;
+                    dataGridUserControl.Top = 10;
+                    dataGridUserControl.Left = clearButton.Left + 200;
+                    dataGridUserControl.Width = 140;
+                    dataGridUserControl.Height = 300;
+                    dataGridUserControl.Show();
+                    dataGridUserControl.Point = new Point(clearButton.Left + 50, 10);
+                    splitContainerMiddle.Panel1.Controls.Add(dataGridUserControl);
+                    this.dataGridUserControlJoinSource = dataGridUserControl;
                 }
             }
-            this.splitContainerMiddle.Panel1.Invalidate();
-            this.splitContainerMiddle.Panel1.Update();
+            else
+            {
+                MessageBox.Show("Could not join tables", "Join error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-        
+
         private void SplitContainerMiddle_Panel1_Paint(object sender, PaintEventArgs e)
         {
-            if (points.Count > 1)
+            if (points.Count > 0)
             {
-                for (int i = 0; i < points.Count - 1; ++i)
+                for (int i = 0; i < points.Count; ++i)
                 {
-                    for (int j = i+1; j < points.Count; ++j)
-                    {
-                        Point cornerOne = new Point(points[i].X + 20, points[i].Y);
-                        Point cornertwo = new Point(points[j].X + 20, points[j].Y);
-                        e.Graphics.DrawLine(Pens.Black, points[i], cornerOne);
-                        e.Graphics.DrawLine(Pens.Black, points[j], cornertwo);
-                        e.Graphics.DrawLine(Pens.Black, cornerOne, cornertwo);
-                    }
+                    Random random = new Random();
+                    int randomMargin = random.Next(15, 50);
+                    Point cornerOne = new Point(points[i].Item1.X + randomMargin, points[i].Item1.Y);
+                    Point cornertwo = new Point(points[i].Item2.X + randomMargin, points[i].Item2.Y);
+                    e.Graphics.DrawLine(Pens.Black, points[i].Item1, cornerOne);
+                    e.Graphics.DrawLine(Pens.Black, points[i].Item2, cornertwo);
+                    e.Graphics.DrawLine(Pens.Black, cornerOne, cornertwo);
                 }
             }
+        }
+
+        public static void SetJoinedColumns(KeyValuePair<Point, Dictionary<string, string>> data1, KeyValuePair<Point, Dictionary<string, string>> data2)
+        {
+            Point point1 = data1.Key;
+            Point point2 = data2.Key;
+
+            _instance.points.Add(new Tuple<Point, Point>(point1, point2));
+            _instance.tablesAndColumnsToJoinOn.Add(new Tuple<Dictionary<string, string>, Dictionary<string, string>>(data1.Value, data2.Value));
+
+            _instance.splitContainerMiddle.Panel1.Invalidate();
+            _instance.splitContainerMiddle.Panel1.Update();
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            this.points = new List<Tuple<Point, Point>>();
+            this.tablesAndColumnsToJoinOn = new List<Tuple<Dictionary<string, string>, Dictionary<string, string>>>();
+            this.splitContainerMiddle.Panel1.Invalidate();
+            this.splitContainerMiddle.Panel1.Update();
         }
     }
 }
