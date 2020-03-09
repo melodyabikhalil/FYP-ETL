@@ -18,8 +18,7 @@ namespace FYP_ETL
             InitializeComponent();
             this.srcDestPanel.Show();
             this.dbTypePanel.Hide();
-            this.sqlServerPanel.Hide();
-            this.mysqlPanel.Hide();
+            this.dbConnectPanel.Hide();
             this.CenterToParent();
         }
 
@@ -33,6 +32,12 @@ namespace FYP_ETL
                     break;
                 case 1:
                     database = this.CreateSQLServerDatabase();
+                    break;
+                case 2:
+                    database = this.CreatePostgresDatabase();
+                    break;
+                case 3:
+                    database = this.CreateAccessDatabase();
                     break;
                 default:
                     database = this.CreateMysqlDatabase();
@@ -91,44 +96,42 @@ namespace FYP_ETL
 
         private MySQLDatabase CreateMysqlDatabase()
         {
-            string databaseName = MysqlDbNameTextBox.Text;
-            string username = MysqlUsernameTextBox.Text;
-            string password = MysqlPassTextBox.Text;
-            string serverName = MysqlHostTextBox.Text;
+            string databaseName = dbNameTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passTextBox.Text;
+            string serverName = hostTextBox.Text;
             MySQLDatabase mySQLDatabase = new MySQLDatabase(serverName, username, password, databaseName);
             return mySQLDatabase;
         }
 
         private PostgreSQLDatabase CreatePostgresDatabase()
         {
-            //string databaseName = postgresDatabaseNameTextbox.Text;
-            //string username = postgresUsernameTextbox.Text;
-            //string password = postgresPasswordTextbox.Text;
-            //string serverName = postgresHostTextbox.Text;
-            //string schema = postgresSchemaTextbox.Text;
-            //string port = postgresPortTextbox.Text;
-            //PostgreSQLDatabase postgreSQLDatabase = new PostgreSQLDatabase(serverName, username, password, databaseName, port, schema);
-            //return postgreSQLDatabase;
-            return null;
+            string databaseName = dbNameTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passTextBox.Text;
+            string serverName = hostTextBox.Text;
+            string schema = schemaTextBox.Text;
+            string port = portTextBox.Text;
+            PostgreSQLDatabase postgreSQLDatabase = new PostgreSQLDatabase(serverName, username, password, databaseName, port, schema);
+            return postgreSQLDatabase;
         }
 
         private SQLServerDatabase CreateSQLServerDatabase()
         {
-            string databaseName = sqlServerDbNameTextBox.Text;
-            string username = sqlServerUsernameTextBox.Text;
-            string password = sqlServerPassTextBox.Text;
-            string serverName = sqlServerHostTextBox.Text;
-            string schema = sqlServerSchemaTextBox.Text;
+            string databaseName = dbNameTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passTextBox.Text;
+            string serverName = hostTextBox.Text;
+            string schema = schemaTextBox.Text;
             SQLServerDatabase sqlServerDatabase = new SQLServerDatabase(serverName, username, password, databaseName, schema);
             return sqlServerDatabase;
         }
 
         private AccessDatabase CreateAccessDatabase()
         {
-            //string path = accessPathTextbox.Text;
-            //AccessDatabase accessDatabase = new AccessDatabase(path);
-            //return accessDatabase;
-            return null;
+            string path = dbNameTextBox.Text;
+            AccessDatabase accessDatabase = new AccessDatabase(path);
+            return accessDatabase;
         }
 
         //private Database CreateODBCDatabase()
@@ -211,10 +214,64 @@ namespace FYP_ETL
             {
 
                 case 0:
-                    this.mysqlPanel.Show();
+                    schemaLabel.Hide();
+                    schemaTextBox.Hide();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    hostTextBox.Show();
+                    hostLabel.Show();
+                    usernameTextBox.Show();
+                    usernameLabel.Show();
+                    passTextBox.Show();
+                    passwordLabel.Show();
+                    dbNameLabel.Show();
+                    dbNameTextBox.Show();
+                    this.dbConnectPanel.Show();
                     break;
                 case 1:
-                    this.sqlServerPanel.Show();
+                    schemaLabel.Show();
+                    schemaTextBox.Show();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    hostTextBox.Show();
+                    hostLabel.Show();
+                    usernameTextBox.Show();
+                    usernameLabel.Show();
+                    passTextBox.Show();
+                    passwordLabel.Show();
+                    dbNameLabel.Show();
+                    dbNameTextBox.Show();
+                    this.dbConnectPanel.Show();
+                    break;
+                case 2:
+                    schemaLabel.Show();
+                    schemaTextBox.Show();
+                    portLabel.Show();
+                    portTextBox.Show();
+                    hostTextBox.Show();
+                    hostLabel.Show();
+                    usernameTextBox.Show();
+                    usernameLabel.Show();
+                    passTextBox.Show();
+                    passwordLabel.Show();
+                    dbNameLabel.Show();
+                    dbNameTextBox.Show();
+                    this.dbConnectPanel.Show();
+                    break;
+                case 3:
+                    hostTextBox.Hide();
+                    hostLabel.Hide();
+                    usernameTextBox.Hide();
+                    usernameLabel.Hide();
+                    passTextBox.Hide();
+                    passwordLabel.Hide();
+                    dbNameLabel.Text = "Path"; 
+                    dbNameTextBox.Show();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    schemaLabel.Hide();
+                    schemaTextBox.Hide();
+                    this.dbConnectPanel.Show();
                     break;
             }
            
@@ -224,7 +281,7 @@ namespace FYP_ETL
 
         private void backToDbTypes_Click(object sender, EventArgs e)
         {
-            this.mysqlPanel.Hide();
+            this.dbConnectPanel.Hide();
             this.dbTypePanel.Show();
         }
 
@@ -246,8 +303,8 @@ namespace FYP_ETL
 
         private void backToDbType_Click(object sender, EventArgs e)
         {
-            this.sqlServerPanel.Hide();
-            this.mysqlPanel.Hide();
+            
+            this.dbConnectPanel.Hide();
             this.dbTypePanel.Show();
         }
     }
