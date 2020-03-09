@@ -203,6 +203,7 @@ namespace FYP_ETL
 
         private void backToSrcDest_Click(object sender, EventArgs e)
         {
+            this.Text = "Add Database";
             this.dbTypePanel.Hide();
             this.srcDestPanel.Show();
         }
@@ -226,6 +227,7 @@ namespace FYP_ETL
                     passwordLabel.Show();
                     dbNameLabel.Show();
                     dbNameTextBox.Show();
+                    this.Text = this.Text.Insert(4, "MySQL ");
                     this.dbConnectPanel.Show();
                     break;
                 case 1:
@@ -241,6 +243,7 @@ namespace FYP_ETL
                     passwordLabel.Show();
                     dbNameLabel.Show();
                     dbNameTextBox.Show();
+                    this.Text = this.Text.Insert(4, "SQL Server ");
                     this.dbConnectPanel.Show();
                     break;
                 case 2:
@@ -256,6 +259,7 @@ namespace FYP_ETL
                     passwordLabel.Show();
                     dbNameLabel.Show();
                     dbNameTextBox.Show();
+                    this.Text = this.Text.Insert(4, "PostgreSQL ");
                     this.dbConnectPanel.Show();
                     break;
                 case 3:
@@ -271,6 +275,7 @@ namespace FYP_ETL
                     portTextBox.Hide();
                     schemaLabel.Hide();
                     schemaTextBox.Hide();
+                    this.Text = this.Text.Insert(4, "MS Access ");
                     this.dbConnectPanel.Show();
                     break;
             }
