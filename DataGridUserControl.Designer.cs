@@ -52,7 +52,6 @@
             this.ColumnsDataGridView.RowHeadersWidth = 51;
             this.ColumnsDataGridView.Size = new System.Drawing.Size(193, 249);
             this.ColumnsDataGridView.TabIndex = 0;
-            this.ColumnsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ColumnsDataGridView_CellContentClick);
             this.ColumnsDataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColumnsDataGridView_DragDrop);
             this.ColumnsDataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.ColumnsDataGridView_DragEnter);
             this.ColumnsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColumnsDataGridView_MouseDown);
