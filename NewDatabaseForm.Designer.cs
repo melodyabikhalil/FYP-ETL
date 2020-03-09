@@ -94,7 +94,7 @@
             // 
             // portTextBox
             // 
-            this.portTextBox.Location = new System.Drawing.Point(99, 286);
+            this.portTextBox.Location = new System.Drawing.Point(122, 286);
             this.portTextBox.Name = "portTextBox";
             this.portTextBox.Size = new System.Drawing.Size(100, 20);
             this.portTextBox.TabIndex = 15;
@@ -110,7 +110,7 @@
             // 
             // schemaTextBox
             // 
-            this.schemaTextBox.Location = new System.Drawing.Point(99, 235);
+            this.schemaTextBox.Location = new System.Drawing.Point(122, 235);
             this.schemaTextBox.Name = "schemaTextBox";
             this.schemaTextBox.Size = new System.Drawing.Size(100, 20);
             this.schemaTextBox.TabIndex = 13;
@@ -126,7 +126,7 @@
             // 
             // dbNameTextBox
             // 
-            this.dbNameTextBox.Location = new System.Drawing.Point(99, 183);
+            this.dbNameTextBox.Location = new System.Drawing.Point(122, 183);
             this.dbNameTextBox.Name = "dbNameTextBox";
             this.dbNameTextBox.Size = new System.Drawing.Size(100, 20);
             this.dbNameTextBox.TabIndex = 11;
@@ -142,7 +142,7 @@
             // 
             // passTextBox
             // 
-            this.passTextBox.Location = new System.Drawing.Point(97, 132);
+            this.passTextBox.Location = new System.Drawing.Point(120, 132);
             this.passTextBox.Name = "passTextBox";
             this.passTextBox.PasswordChar = '*';
             this.passTextBox.Size = new System.Drawing.Size(100, 20);
@@ -159,7 +159,7 @@
             // 
             // usernameTextBox
             // 
-            this.usernameTextBox.Location = new System.Drawing.Point(97, 84);
+            this.usernameTextBox.Location = new System.Drawing.Point(120, 84);
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(100, 20);
             this.usernameTextBox.TabIndex = 7;
@@ -175,7 +175,7 @@
             // 
             // hostTextBox
             // 
-            this.hostTextBox.Location = new System.Drawing.Point(97, 33);
+            this.hostTextBox.Location = new System.Drawing.Point(120, 33);
             this.hostTextBox.Name = "hostTextBox";
             this.hostTextBox.Size = new System.Drawing.Size(100, 20);
             this.hostTextBox.TabIndex = 5;

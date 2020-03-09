@@ -39,6 +39,9 @@ namespace FYP_ETL
                 case 3:
                     database = this.CreateAccessDatabase();
                     break;
+                case 4:
+                    database = this.CreateODBCDatabase();
+                    break;
                 default:
                     database = this.CreateMysqlDatabase();
                     break;
@@ -134,10 +137,12 @@ namespace FYP_ETL
             return accessDatabase;
         }
 
-        //private Database CreateODBCDatabase()
-        //{
-
-        //}
+        private Database CreateODBCDatabase()
+        {
+            string connectionString = dbNameTextBox.Text;
+            ODBCDatabase odbcDatabase = new ODBCDatabase(connectionString);
+            return odbcDatabase;
+        }
 
         private void ClearTextBoxes()
         {
@@ -276,6 +281,22 @@ namespace FYP_ETL
                     schemaLabel.Hide();
                     schemaTextBox.Hide();
                     this.Text = this.Text.Insert(4, "MS Access ");
+                    this.dbConnectPanel.Show();
+                    break;
+                case 4:
+                    hostTextBox.Hide();
+                    hostLabel.Hide();
+                    usernameTextBox.Hide();
+                    usernameLabel.Hide();
+                    passTextBox.Hide();
+                    passwordLabel.Hide();
+                    dbNameLabel.Text = "Connection String";
+                    dbNameTextBox.Show();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    schemaLabel.Hide();
+                    schemaTextBox.Hide();
+                    this.Text = this.Text.Insert(4, "ODBC ");
                     this.dbConnectPanel.Show();
                     break;
             }
