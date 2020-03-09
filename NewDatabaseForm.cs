@@ -297,12 +297,5 @@ namespace FYP_ETL
             bool isSource = checkedButton.Name == "srcRadioButton";
             this.connectToDb(dbTypesComboBox.SelectedIndex, isSource);
         }
-
-        private void backToDbType_Click(object sender, EventArgs e)
-        {
-            
-            this.dbConnectPanel.Hide();
-            this.dbTypePanel.Show();
-        }
     }
 }
