@@ -298,14 +298,6 @@ namespace FYP_ETL
             this.connectToDb(dbTypesComboBox.SelectedIndex, isSource);
         }
 
-        private void sqlServerConnect_Click(object sender, EventArgs e)
-        {
-            var checkedButton = srcDestPanel.Controls.OfType<RadioButton>()
-                                      .FirstOrDefault(r => r.Checked);
-            bool isSource = checkedButton.Name == "srcRadioButton";
-            this.connectToDb(dbTypesComboBox.SelectedIndex, isSource);
-        }
-
         private void backToDbType_Click(object sender, EventArgs e)
         {
             
