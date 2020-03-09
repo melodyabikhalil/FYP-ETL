@@ -18,89 +18,75 @@ namespace FYP_ETL
             InitializeComponent();
             this.srcDestPanel.Show();
             this.dbTypePanel.Hide();
+            this.sqlServerPanel.Hide();
             this.mysqlPanel.Hide();
             this.CenterToParent();
         }
 
+        private void connectToDb(int dbType, bool isSource)
+        {
+            Database database;
+            switch (dbType)
+            {
+                case 0:
+                    database = this.CreateMysqlDatabase();
+                    break;
+                case 1:
+                    database = this.CreateSQLServerDatabase();
+                    break;
+                default:
+                    database = this.CreateMysqlDatabase();
+                    break;
+            }
+            bool connected = database.Connect();
+            if (connected)
+            {
+                database.tablesNames = database.GetTablesNames();
+                database.CreateTablesList(database.tablesNames);
+                if (isSource)
+                {
+                    bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesSource);
+                    if (databaseExistsAlready)
+                    {
+                        this.ShowErrorDialogAndClose();
+                        return;
+                    }
+                    else
+                    {
+                        Global.DatabasesSource.Add(database);
+                    }
+                }
+                else
+                {
+                    bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesDestination);
+                    if (databaseExistsAlready)
+                    {
+                        this.ShowErrorDialogAndClose();
+                        return;
+                    }
+                    else
+                    {
+                        Global.DatabasesDestination.Add(database);
+                    }
+                }
+                this.AddNodesToTreeView(isSource, database);
+                ETLParent.ShowMainContainer();
+                this.Close();
+            }
+            else
+            {
+                var pressed = MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                if (pressed == DialogResult.Cancel)
+                {
+                    this.Close();
+                }
+            }
+
+        }
+
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            //string activeTab = DatabaseTab.SelectedTab.Text;
-            //string mysqlTab = MysqlTabPage.Text;
-            //string postgresTab = postgresTabPage.Text;
-            //string sqlserverTab = sqlServerTabPage.Text;
-            //string accessTab = accessTabPage.Text;
-            //string odbcTab = odbcTabPage.Text;
-
-            Database database;
-
-            //if (activeTab == mysqlTab)
-            //{
-            //    database = this.CreateMysqlDatabase();
-            //}
-            //else if (activeTab == postgresTab)
-            //{
-            //    database = this.CreatePostgresDatabase();
-            //}
-            //else if (activeTab == sqlserverTab)
-            //{
-            //    database = this.CreateSQLServerDatabase();
-            //}
-            //else if (activeTab == accessTab)
-            //{
-            //    database = this.CreateAccessDatabase();
-            //}
-            //else
-            //{
-            //    //this.CreateODBCDatabase();
-            //    database = this.CreateMysqlDatabase(); //to be removed once odbc is implemented
-            //}
-
-            
-            //bool connected = database.Connect();
-            //if (connected)
-            //{
-            //    database.tablesNames = database.GetTablesNames();
-            //    database.CreateTablesList(database.tablesNames);
-
-            //    bool isSource = sourceRadioButton.Checked;
-            //    if (isSource)
-            //    {
-            //        bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesSource);
-            //        if (databaseExistsAlready)
-            //        {
-            //            this.ShowErrorDialogAndClose();
-            //            return;
-            //        }
-            //        else
-            //        {
-            //            Global.DatabasesSource.Add(database);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesDestination);
-            //        if (databaseExistsAlready)
-            //        {
-            //            this.ShowErrorDialogAndClose();
-            //            return;
-            //        }
-            //        else
-            //        {
-            //            Global.DatabasesDestination.Add(database);
-            //        }
-            //    }
-            //    this.AddNodesToTreeView(isSource, database);
-            //    ETLParent.ShowMainContainer();
-            //    this.Close();
-            //}
-            //else
-            //{
-            //    var pressed = MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-            //    if (pressed == DialogResult.Cancel)
-            //    {
-            //        this.Close();
-            //    }
-            //}
+           
         }
 
         private MySQLDatabase CreateMysqlDatabase()
@@ -128,14 +114,13 @@ namespace FYP_ETL
 
         private SQLServerDatabase CreateSQLServerDatabase()
         {
-            //string databaseName = sqlserverDatabaseNameTextbox.Text;
-            //string username = sqlserverUsernameTextbox.Text;
-            //string password = sqlserverPasswordTextbox.Text;
-            //string serverName = sqlserverHostTextbox.Text;
-            //string schema = sqlserverSchemaTextbox.Text;
-            //SQLServerDatabase sqlServerDatabase = new SQLServerDatabase(serverName, username, password, databaseName, schema);
-            //return sqlServerDatabase;
-            return null;
+            string databaseName = sqlServerDbNameTextBox.Text;
+            string username = sqlServerUsernameTextBox.Text;
+            string password = sqlServerPassTextBox.Text;
+            string serverName = sqlServerHostTextBox.Text;
+            string schema = sqlServerSchemaTextBox.Text;
+            SQLServerDatabase sqlServerDatabase = new SQLServerDatabase(serverName, username, password, databaseName, schema);
+            return sqlServerDatabase;
         }
 
         private AccessDatabase CreateAccessDatabase()
@@ -228,6 +213,9 @@ namespace FYP_ETL
                 case 0:
                     this.mysqlPanel.Show();
                     break;
+                case 1:
+                    this.sqlServerPanel.Show();
+                    break;
             }
            
             
@@ -242,55 +230,25 @@ namespace FYP_ETL
 
         private void Connect_Click(object sender, EventArgs e)
         {
-            Database database = this.CreateMysqlDatabase();
-            bool connected = database.Connect();
-            if (connected)
-            {
-                database.tablesNames = database.GetTablesNames();
-                database.CreateTablesList(database.tablesNames);
-
-                var checkedButton = srcDestPanel.Controls.OfType<RadioButton>()
+            var checkedButton = srcDestPanel.Controls.OfType<RadioButton>()
                                       .FirstOrDefault(r => r.Checked);
-                bool isSource = checkedButton.Name == "srcRadioButton";
-                if (isSource)
-                {
-                    bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesSource);
-                    if (databaseExistsAlready)
-                    {
-                        this.ShowErrorDialogAndClose();
-                        return;
-                    }
-                    else
-                    {
-                        Global.DatabasesSource.Add(database);
-                    }
-                }
-                else
-                {
-                    bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesDestination);
-                    if (databaseExistsAlready)
-                    {
-                        this.ShowErrorDialogAndClose();
-                        return;
-                    }
-                    else
-                    {
-                        Global.DatabasesDestination.Add(database);
-                    }
-                }
-                this.AddNodesToTreeView(isSource, database);
-                ETLParent.ShowMainContainer();
-                this.Close();
-            }
-            else
-            {
-                var pressed = MessageBox.Show("Could not connect to database", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-                if (pressed == DialogResult.Cancel)
-                {
-                    this.Close();
-                }
-            }
+            bool isSource = checkedButton.Name == "srcRadioButton";
+            this.connectToDb(dbTypesComboBox.SelectedIndex, isSource);
+        }
 
+        private void sqlServerConnect_Click(object sender, EventArgs e)
+        {
+            var checkedButton = srcDestPanel.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            bool isSource = checkedButton.Name == "srcRadioButton";
+            this.connectToDb(dbTypesComboBox.SelectedIndex, isSource);
+        }
+
+        private void backToDbType_Click(object sender, EventArgs e)
+        {
+            this.sqlServerPanel.Hide();
+            this.mysqlPanel.Hide();
+            this.dbTypePanel.Show();
         }
     }
 }
