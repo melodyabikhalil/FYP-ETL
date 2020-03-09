@@ -92,11 +92,6 @@ namespace FYP_ETL
 
         }
 
-        private void ConnectButton_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         private MySQLDatabase CreateMysqlDatabase()
         {
             string databaseName = dbNameTextBox.Text;
@@ -299,10 +294,7 @@ namespace FYP_ETL
                     this.Text = this.Text.Insert(4, "ODBC ");
                     this.dbConnectPanel.Show();
                     break;
-            }
-           
-            
-            
+            }   
         }
 
         private void backToDbTypes_Click(object sender, EventArgs e)
