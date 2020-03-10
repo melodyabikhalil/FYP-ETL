@@ -16,50 +16,41 @@ namespace FYP_ETL
         public NewDatabaseForm()
         {
             InitializeComponent();
+            this.srcDestPanel.Show();
+            this.dbTypePanel.Hide();
+            this.dbConnectPanel.Hide();
             this.CenterToParent();
         }
 
-        private void ConnectButton_Click(object sender, EventArgs e)
+        private void connectToDb(int dbType, bool isSource)
         {
-            string activeTab = DatabaseTab.SelectedTab.Text;
-            string mysqlTab = MysqlTabPage.Text;
-            string postgresTab = postgresTabPage.Text;
-            string sqlserverTab = sqlServerTabPage.Text;
-            string accessTab = accessTabPage.Text;
-            string odbcTab = odbcTabPage.Text;
-
             Database database;
-
-            if (activeTab == mysqlTab)
+            switch (dbType)
             {
-                database = this.CreateMysqlDatabase();
+                case 0:
+                    database = this.CreateMysqlDatabase();
+                    break;
+                case 1:
+                    database = this.CreateSQLServerDatabase();
+                    break;
+                case 2:
+                    database = this.CreatePostgresDatabase();
+                    break;
+                case 3:
+                    database = this.CreateAccessDatabase();
+                    break;
+                case 4:
+                    database = this.CreateODBCDatabase();
+                    break;
+                default:
+                    database = this.CreateMysqlDatabase();
+                    break;
             }
-            else if (activeTab == postgresTab)
-            {
-                database = this.CreatePostgresDatabase();
-            }
-            else if (activeTab == sqlserverTab)
-            {
-                database = this.CreateSQLServerDatabase();
-            }
-            else if (activeTab == accessTab)
-            {
-                database = this.CreateAccessDatabase();
-            }
-            else
-            {
-                //this.CreateODBCDatabase();
-                database = this.CreateMysqlDatabase(); //to be removed once odbc is implemented
-            }
-
-            
             bool connected = database.Connect();
             if (connected)
             {
                 database.tablesNames = database.GetTablesNames();
                 database.CreateTablesList(database.tablesNames);
-
-                bool isSource = sourceRadioButton.Checked;
                 if (isSource)
                 {
                     bool databaseExistsAlready = this.DatabaseExistsAlready(database, Global.DatabasesSource);
@@ -98,52 +89,55 @@ namespace FYP_ETL
                     this.Close();
                 }
             }
+
         }
 
         private MySQLDatabase CreateMysqlDatabase()
         {
-            string databaseName = mysqlDatabaseNameTextbox.Text;
-            string username = mysqlUsernameTextbox.Text;
-            string password = mysqlPasswordTextbox.Text;
-            string serverName = mysqlHostTextbox.Text;
+            string databaseName = dbNameTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passTextBox.Text;
+            string serverName = hostTextBox.Text;
             MySQLDatabase mySQLDatabase = new MySQLDatabase(serverName, username, password, databaseName);
             return mySQLDatabase;
         }
 
         private PostgreSQLDatabase CreatePostgresDatabase()
         {
-            string databaseName = postgresDatabaseNameTextbox.Text;
-            string username = postgresUsernameTextbox.Text;
-            string password = postgresPasswordTextbox.Text;
-            string serverName = postgresHostTextbox.Text;
-            string schema = postgresSchemaTextbox.Text;
-            string port = postgresPortTextbox.Text;
+            string databaseName = dbNameTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passTextBox.Text;
+            string serverName = hostTextBox.Text;
+            string schema = schemaTextBox.Text;
+            string port = portTextBox.Text;
             PostgreSQLDatabase postgreSQLDatabase = new PostgreSQLDatabase(serverName, username, password, databaseName, port, schema);
             return postgreSQLDatabase;
         }
 
         private SQLServerDatabase CreateSQLServerDatabase()
         {
-            string databaseName = sqlserverDatabaseNameTextbox.Text;
-            string username = sqlserverUsernameTextbox.Text;
-            string password = sqlserverPasswordTextbox.Text;
-            string serverName = sqlserverHostTextbox.Text;
-            string schema = sqlserverSchemaTextbox.Text;
+            string databaseName = dbNameTextBox.Text;
+            string username = usernameTextBox.Text;
+            string password = passTextBox.Text;
+            string serverName = hostTextBox.Text;
+            string schema = schemaTextBox.Text;
             SQLServerDatabase sqlServerDatabase = new SQLServerDatabase(serverName, username, password, databaseName, schema);
             return sqlServerDatabase;
         }
 
         private AccessDatabase CreateAccessDatabase()
         {
-            string path = accessPathTextbox.Text;
+            string path = dbNameTextBox.Text;
             AccessDatabase accessDatabase = new AccessDatabase(path);
             return accessDatabase;
         }
 
-        //private Database CreateODBCDatabase()
-        //{
-
-        //}
+        private Database CreateODBCDatabase()
+        {
+            string connectionString = dbNameTextBox.Text;
+            ODBCDatabase odbcDatabase = new ODBCDatabase(connectionString);
+            return odbcDatabase;
+        }
 
         private void ClearTextBoxes()
         {
@@ -189,6 +183,132 @@ namespace FYP_ETL
             }
             TreeNode node = ETLParent.AddBranch(database.databaseName, treeview);
             ETLParent.AddChildrenNodes(database.tablesNames, node.Index, treeview);
+        }
+
+        private void SrcDestNex_Click(object sender, EventArgs e)
+        {
+            
+            this.dbTypePanel.Show();
+            var checkedButton = srcDestPanel.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            if(checkedButton.Name == "srcRadioButton")
+            {
+                this.Text = "Add Source Database";
+            }
+            if (checkedButton.Name == "destRadioButton")
+            {
+                this.Text = "Add Destination Database";
+            }
+        }
+
+        private void backToSrcDest_Click(object sender, EventArgs e)
+        {
+            this.Text = "Add Database";
+            this.dbTypePanel.Hide();
+            this.srcDestPanel.Show();
+        }
+
+        private void dbTypeButton_Click(object sender, EventArgs e)
+        {
+            this.dbTypePanel.Hide();
+            switch (this.dbTypesComboBox.SelectedIndex)
+            {
+
+                case 0:
+                    schemaLabel.Hide();
+                    schemaTextBox.Hide();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    hostTextBox.Show();
+                    hostLabel.Show();
+                    usernameTextBox.Show();
+                    usernameLabel.Show();
+                    passTextBox.Show();
+                    passwordLabel.Show();
+                    dbNameLabel.Show();
+                    dbNameTextBox.Show();
+                    this.Text = this.Text.Insert(4, "MySQL ");
+                    this.dbConnectPanel.Show();
+                    break;
+                case 1:
+                    schemaLabel.Show();
+                    schemaTextBox.Show();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    hostTextBox.Show();
+                    hostLabel.Show();
+                    usernameTextBox.Show();
+                    usernameLabel.Show();
+                    passTextBox.Show();
+                    passwordLabel.Show();
+                    dbNameLabel.Show();
+                    dbNameTextBox.Show();
+                    this.Text = this.Text.Insert(4, "SQL Server ");
+                    this.dbConnectPanel.Show();
+                    break;
+                case 2:
+                    schemaLabel.Show();
+                    schemaTextBox.Show();
+                    portLabel.Show();
+                    portTextBox.Show();
+                    hostTextBox.Show();
+                    hostLabel.Show();
+                    usernameTextBox.Show();
+                    usernameLabel.Show();
+                    passTextBox.Show();
+                    passwordLabel.Show();
+                    dbNameLabel.Show();
+                    dbNameTextBox.Show();
+                    this.Text = this.Text.Insert(4, "PostgreSQL ");
+                    this.dbConnectPanel.Show();
+                    break;
+                case 3:
+                    hostTextBox.Hide();
+                    hostLabel.Hide();
+                    usernameTextBox.Hide();
+                    usernameLabel.Hide();
+                    passTextBox.Hide();
+                    passwordLabel.Hide();
+                    dbNameLabel.Text = "Path"; 
+                    dbNameTextBox.Show();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    schemaLabel.Hide();
+                    schemaTextBox.Hide();
+                    this.Text = this.Text.Insert(4, "MS Access ");
+                    this.dbConnectPanel.Show();
+                    break;
+                case 4:
+                    hostTextBox.Hide();
+                    hostLabel.Hide();
+                    usernameTextBox.Hide();
+                    usernameLabel.Hide();
+                    passTextBox.Hide();
+                    passwordLabel.Hide();
+                    dbNameLabel.Text = "Connection String";
+                    dbNameTextBox.Show();
+                    portLabel.Hide();
+                    portTextBox.Hide();
+                    schemaLabel.Hide();
+                    schemaTextBox.Hide();
+                    this.Text = this.Text.Insert(4, "ODBC ");
+                    this.dbConnectPanel.Show();
+                    break;
+            }   
+        }
+
+        private void backToDbTypes_Click(object sender, EventArgs e)
+        {
+            this.dbConnectPanel.Hide();
+            this.dbTypePanel.Show();
+        }
+
+        private void Connect_Click(object sender, EventArgs e)
+        {
+            var checkedButton = srcDestPanel.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            bool isSource = checkedButton.Name == "srcRadioButton";
+            this.connectToDb(dbTypesComboBox.SelectedIndex, isSource);
         }
     }
 }
